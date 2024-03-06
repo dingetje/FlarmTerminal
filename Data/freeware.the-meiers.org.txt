@@ -1,0 +1,3 @@
+CoolTerm can be used to playback NMEA data to COM port
+
+https://freeware.the-meiers.org/

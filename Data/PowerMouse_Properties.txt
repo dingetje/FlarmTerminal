@@ -1,0 +1,48 @@
+Device Type       : PowerFLARM-AM
+DEVICEID          : FLANGA11W-010293
+Capabilities      : Second Data Port
+                  : Slot for USB stick
+                  : Barometric sensor
+                  : The device is or can be IGC approved
+Software Version  : 7.21
+Expiration Date   : 01.11.2024
+FLARM Version     : 1.23
+Build Version     : 050d97247
+Serial Number     : 10293
+REGION            : ALL
+OBSTDB            : 1
+OBSTEXP           : 
+ID                : FFFFFF
+NMEAOUT           : Protocol Version 6, 
+                  : GPRMC, GPGGA, GPGSA, plus FLARM proprietary (incl. PGRMZ)
+BAUD              : 19200
+ACFT              : aircraft with reciprocating engine(s)
+RANGE             : 65535
+VRANGE            : 500
+PRIV              : Disabled
+NOTRACK           : Disabled
+Speed threshold   : 255 m/s
+LOGINT            : 4 SEC.
+PILOT             : 
+COPIL             : 
+GLIDERID          : 
+GLIDERTYPE        : 
+COMPID            : 
+COMPCLASS         : 
+CFLAGS            : 0
+UI                : 0
+AUDIOOUT          : 0
+AUDIOVOLUME       : 100
+VOL               : 3
+BATTERYTYPE       : 0
+BRIGHTNESS        : 100
+RADIOID           : FLARMID=D02835
+LIC               : IGC:1;USBH:1;PRE:1
+LS                : OK
+NMEAOUT1          : Protocol Version 6, 
+                  : GPRMC, GPGGA, GPGSA, plus FLARM proprietary (incl. PGRMZ)
+NMEAOUT2          : Protocol Version 6, 
+                  : GPRMC, GPGGA, GPGSA, plus FLARM proprietary (incl. PGRMZ)
+BAUD1             : 19200
+BAUD2             : 19200
+IGCSER            : 8KM
