@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlarmDisplayPFLAUSend", "FlarmDisplayPFLAUSend\FlarmDisplayPFLAUSend.csproj", "{0F9F755B-5DFB-4ABD-9358-010EB7E6E2BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F9F755B-5DFB-4ABD-9358-010EB7E6E2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F9F755B-5DFB-4ABD-9358-010EB7E6E2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F9F755B-5DFB-4ABD-9358-010EB7E6E2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9F755B-5DFB-4ABD-9358-010EB7E6E2BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {329325F1-4B52-4A7B-97A5-6421E0235A52}
+	EndGlobalSection
+EndGlobal
