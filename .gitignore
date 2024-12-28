@@ -1,0 +1,20 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Data/try.txt
+/Source/FlarmDisplayPFLAUSend/.vs/FlarmDisplayPFLAUSend
+/Source/FlarmDisplayPFLAUSend/FlarmDisplayPFLAUSend/obj
+/Source/FlarmDisplayPFLAUSend/packages/SerialPortStream.2.4.2
+/Source/FlarmTerminal/.vs
+/Source/FlarmTerminal/FlarmMessageParser/bin/Debug
+/Source/FlarmTerminal/FlarmMessageParser/obj
+/Source/FlarmTerminal/FlarmTerminal/bin/Debug
+/Source/FlarmTerminal/FlarmTerminal/obj
+/Source/FlarmTerminal/NMEAParser/bin/Debug/net6.0
+/Source/FlarmTerminal/NMEAParser/obj
+/Source/FlarmTerminal/NMEAParser.In
+/Source/FlarmTerminal/NMEAParser.keep
+/Source/FlarmTerminal/packages
+/Source/FlarmTerminal/FlarmTerminal.v12.suo
