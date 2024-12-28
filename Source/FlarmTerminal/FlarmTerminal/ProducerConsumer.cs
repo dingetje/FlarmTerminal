@@ -1,9 +1,8 @@
-﻿using NMEA;
+﻿using UCNLNMEA;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Versioning;
 using System.Threading;
-using NMEA;
 
 namespace FlarmTerminal
 {

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using NMEA;
+using UCNLNMEA;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -37,7 +37,7 @@ namespace FlarmTerminal
     internal class ProcessMessages
     {
         private delegate void ProcessCommandDelegate(object[] parameters);
-        private Dictionary<NMEA.SentenceIdentifiers, ProcessCommandDelegate> commandProcessor;
+        private Dictionary<UCNLNMEA.SentenceIdentifiers, ProcessCommandDelegate> commandProcessor;
 
         public delegate void NewFixHandler(DateTime fixTime, GeographicDimension latitude, GeographicDimension longitude);
         public NewFixHandler NewFix;
@@ -80,10 +80,10 @@ namespace FlarmTerminal
         {
             commandProcessor = new Dictionary<SentenceIdentifiers, ProcessCommandDelegate>()
             {
-                { NMEA.SentenceIdentifiers.GGA, new ProcessCommandDelegate(ProcessGGA)},
-                { NMEA.SentenceIdentifiers.GSV, new ProcessCommandDelegate(ProcessGSV)},
-                { NMEA.SentenceIdentifiers.GLL, new ProcessCommandDelegate(ProcessGLL)},
-                { NMEA.SentenceIdentifiers.RMC, new ProcessCommandDelegate(ProcessRMC)},
+                { UCNLNMEA.SentenceIdentifiers.GGA, new ProcessCommandDelegate(ProcessGGA)},
+                { UCNLNMEA.SentenceIdentifiers.GSV, new ProcessCommandDelegate(ProcessGSV)},
+                { UCNLNMEA.SentenceIdentifiers.GLL, new ProcessCommandDelegate(ProcessGLL)},
+                { UCNLNMEA.SentenceIdentifiers.RMC, new ProcessCommandDelegate(ProcessRMC)},
 //                { NMEA.SentenceIdentifiers.VTG, new ProcessCommandDelegate(ProcessVTG)},
 //                { NMEA.SentenceIdentifiers.TXT, new ProcessCommandDelegate(ProcessTXT)}
             };

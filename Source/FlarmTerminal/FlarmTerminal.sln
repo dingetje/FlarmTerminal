@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlarmTerminal", "FlarmTermi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlarmMessageParser", "FlarmMessageParser\FlarmMessageParser.csproj", "{5313205B-9D8D-498D-902B-2CCC03F52B45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NMEAParser", "NMEAParser\NMEAParser.csproj", "{16B45334-D1EE-4570-834E-552FF38CF8E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCNLNMEA", "UCNLNMEA\UCNLNMEA.csproj", "{B3A1D2EE-F187-4604-8A5C-16920D5DF5E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +22,10 @@ Global
 		{5313205B-9D8D-498D-902B-2CCC03F52B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5313205B-9D8D-498D-902B-2CCC03F52B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5313205B-9D8D-498D-902B-2CCC03F52B45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16B45334-D1EE-4570-834E-552FF38CF8E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16B45334-D1EE-4570-834E-552FF38CF8E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16B45334-D1EE-4570-834E-552FF38CF8E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16B45334-D1EE-4570-834E-552FF38CF8E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3A1D2EE-F187-4604-8A5C-16920D5DF5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A1D2EE-F187-4604-8A5C-16920D5DF5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A1D2EE-F187-4604-8A5C-16920D5DF5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A1D2EE-F187-4604-8A5C-16920D5DF5E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

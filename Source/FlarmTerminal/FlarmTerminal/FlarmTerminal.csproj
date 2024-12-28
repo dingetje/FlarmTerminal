@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlarmMessageParser\FlarmMessageParser.csproj" />
-    <ProjectReference Include="..\NMEAParser\NMEAParser.csproj" />
+    <ProjectReference Include="..\UCNLNMEA\UCNLNMEA.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
