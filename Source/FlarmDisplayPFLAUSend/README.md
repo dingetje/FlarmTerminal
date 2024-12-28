@@ -1,0 +1,1 @@
+This project is a console application to quickly try sending PFLAU sentences.
