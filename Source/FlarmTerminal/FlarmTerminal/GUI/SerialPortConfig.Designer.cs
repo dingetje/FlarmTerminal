@@ -61,9 +61,9 @@ namespace FlarmTerminal.GUI
             // 
             panel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(-2, -2);
+            panel1.Location = new Point(1, 1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(442, 84);
+            panel1.Size = new Size(436, 84);
             panel1.TabIndex = 0;
             // 
             // label1
@@ -79,7 +79,8 @@ namespace FlarmTerminal.GUI
             // 
             pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             pictureBox1.Image = Properties.Resources.serial_port_icon;
-            pictureBox1.Location = new Point(446, -2);
+            pictureBox1.Location = new Point(443, 1);
+            pictureBox1.Margin = new System.Windows.Forms.Padding(5);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(88, 84);
             pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -92,10 +93,10 @@ namespace FlarmTerminal.GUI
             lvComPorts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnIcon, columnName, columnLongName });
             lvComPorts.FullRowSelect = true;
             lvComPorts.GridLines = true;
-            lvComPorts.Location = new Point(-2, 88);
+            lvComPorts.Location = new Point(6, 91);
             lvComPorts.MultiSelect = false;
             lvComPorts.Name = "lvComPorts";
-            lvComPorts.Size = new Size(536, 139);
+            lvComPorts.Size = new Size(522, 133);
             lvComPorts.TabIndex = 2;
             lvComPorts.UseCompatibleStateImageBehavior = false;
             lvComPorts.View = System.Windows.Forms.View.Details;
@@ -117,7 +118,7 @@ namespace FlarmTerminal.GUI
             // buttonRefresh
             // 
             buttonRefresh.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            buttonRefresh.Location = new Point(448, 233);
+            buttonRefresh.Location = new Point(445, 230);
             buttonRefresh.Name = "buttonRefresh";
             buttonRefresh.Size = new Size(75, 23);
             buttonRefresh.TabIndex = 3;
@@ -173,7 +174,7 @@ namespace FlarmTerminal.GUI
             // button1
             // 
             button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            button1.Location = new Point(448, 377);
+            button1.Location = new Point(445, 374);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 9;
@@ -184,7 +185,7 @@ namespace FlarmTerminal.GUI
             // 
             button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             button2.DialogResult = System.Windows.Forms.DialogResult.OK;
-            button2.Location = new Point(346, 422);
+            button2.Location = new Point(343, 419);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 10;
@@ -195,7 +196,7 @@ namespace FlarmTerminal.GUI
             // 
             button3.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             button3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            button3.Location = new Point(448, 422);
+            button3.Location = new Point(445, 419);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 11;
@@ -265,7 +266,7 @@ namespace FlarmTerminal.GUI
             groupBox1.Controls.Add(comboBoxDataBits);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(comboBoxBaudRate);
-            groupBox1.Location = new Point(12, 238);
+            groupBox1.Location = new Point(15, 235);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(264, 207);
             groupBox1.TabIndex = 17;
@@ -288,6 +289,7 @@ namespace FlarmTerminal.GUI
             MinimizeBox = false;
             MinimumSize = new Size(550, 450);
             Name = "SerialPortConfig";
+            Padding = new System.Windows.Forms.Padding(3);
             Text = "Serial Port Configuration";
             Load += SerialPortConfig_Load;
             Shown += SerialPortConfig_Shown;

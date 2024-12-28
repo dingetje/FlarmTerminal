@@ -1256,57 +1256,6 @@ namespace UCNLNMEA
                 },
                 
                 #endregion
-                #region FLARM
-                {
-                        ManufacturerCodes.FLA,
-
-                        new Dictionary<string, string>()
-                        {
-                            // $PFLAA,<AlarmLevel>,<RelativeNorth>,<RelativeEast>,<RelativeVertical>,<IDType>,<ID>,<Track>,<TurnRate>,<GroundSpeed>,<ClimbRate>,<AcftType>[,<NoTrack>[,<Source>,<RSSI>]]
-                            // Data on other proximate aircraft, intended for connected devices with sufficient
-                            // CPU performance. This sentence should be treated with utmost flexibility and
-                            // tolerance on a best effort base. Individual parameters may be empty. The sentence
-                            // is only sent when port baud rate is 19.2k or higher. In case of serial port congestion
-                            // or high CPU load, this sentence may be omitted for several objects independent of
-                            // the alarm level. On devices with SSR/ADS-B Module, ADS-B and non-directional
-                            // targets are output as well (transponder Mode-C/S only from protocol version 6 and
-                            // higher).
-                            {"A", "x,x,x,x,x,hhhhhhhh,x,x,x,x.x,hh,x,x,x.x"},
-
-                            // $PFLAE,<QueryType>,<Severity>,<ErrorCode>[,<Message>]
-                            // Self-test results after startup and error information during operation.
-                            // Always watch for this sentence. Inform the user when functionality is not
-                            // available due to errors.
-                            {"E", "c-c,x,hh,c-c"},
-
-                            // $PFLAL,<DebugMessage>
-                            // Debug message that is periodically emitted. The content of the debug message is
-                            // for debug purposes only, and the content and periodicity can change between
-                            // firmware versions.
-                            // System integrators are asked to store this message on some externally accessible
-                            // storage medium. It can e.g. be included in IGC files. Having access to these
-                            // messages aids in resolving problems in customer installations.
-                            {"L", "c-c"},
-
-                            // $PFLAU,<RX>,<TX>,<GPS>,<Power>,<AlarmLevel>,<RelativeBearing>,<AlarmType>,<RelativeVertical>,<RelativeDistance>[,<ID>]
-                            // Heartbeat message; output once per second. Consumers should use this message
-                            // to detect the presence (and absence) of a compatible data stream.
-                            // The sentence summarizes the most relevant status information from the last one second interval:
-                            // RF status (RX, TX), power state, and the most important current threat, either traffic, an obstacle, or an alert zone.
-                            // Consumers with limited resources (e.g. with respect to display capabilities or computational resources)
-                            // can thus use PFLAU to display basic safety information. Other consumers shall also use
-                            // PFLAA for extended information.
-                            //
-                            {"U", "x,x,x,x,x,x,x,x,x,x,x"},
-
-                            // $PFLAV,<QueryType>,<HwVersion>,<SwVersion>[,<ObstVersion>]
-                            // Version information after startup. Allow at least 20 s after power-up.
-                            // Version information should be passed to the user.
-                            // Example: $PFLAV,A,1.00,7.22,*0A (no obstacle database)
-                            {"V", "c-c,x.x,x.x,c-c" }
-                        }
-                },
-                #endregion
 
                 #region Furuno
 
