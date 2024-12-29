@@ -750,7 +750,7 @@ namespace FlarmTerminal
             }
         }
 
-        internal void UpdateDirectionLEDs(bool[] on, int alarmLevel)
+        internal async void UpdateDirectionLEDs(bool[] on, int alarmLevel)
         {
             if (_flarmDisplay != null)
             {
@@ -764,7 +764,7 @@ namespace FlarmTerminal
                         _flarmDisplay.SetLED(led.Value, b ? color : FlarmDisplay.LEDColor.Off, alarmLevel > 0);
                         if (alarmLevel > 0)
                         {
-                            _flarmDisplay.PlayBeep(alarmLevel);
+                            await _flarmDisplay.PlayBeep(alarmLevel);
                         }
                     }
                 }
