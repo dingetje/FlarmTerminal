@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System.Collections.Generic;
 using System;
+#if WINDOWS
 using System.Management;
+#endif
 using System.Linq;
 using System.Runtime.Versioning;
 
@@ -9,6 +11,8 @@ using System.Runtime.Versioning;
 #nullable enable
 public static class SerialPortSearcher
 {
+#if WINDOWS
+
     public static SerialPortInfo? GetPortInfo(string portName)
     {
         using (var entity = new ManagementClass("Win32_PnPEntity"))
@@ -31,6 +35,7 @@ public static class SerialPortSearcher
                 }
             }
         }
+#endif
         return null;
     }
 

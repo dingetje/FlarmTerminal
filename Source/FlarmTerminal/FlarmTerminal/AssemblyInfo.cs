@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dingetje")]
 [assembly: AssemblyProduct("FlarmTerminal")]
-[assembly: AssemblyCopyright("Copyleft (L) 2024")]
+[assembly: AssemblyCopyright("Copyleft (L) 2024-2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
