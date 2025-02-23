@@ -20,6 +20,7 @@ using System.Reflection;
 using System.IO.Ports;
 using System.Collections;
 using System.Resources;
+using Microsoft.Extensions.Logging;
 
 namespace FlarmTerminal
 {
@@ -47,6 +48,7 @@ namespace FlarmTerminal
 
         private FileStream? _fsRecording = null!;
         private FlarmDisplay? _flarmDisplay = null;
+        private Serilog.ILogger _log;
 
         private enum DataSource
         {
@@ -60,8 +62,10 @@ namespace FlarmTerminal
 
         public bool IsPaused { get => _isPaused; }
 
-        public MainForm()
+        public MainForm(Serilog.ILogger log)
         {
+            _log = log;
+            log.Information("MainForm started");
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
         }
@@ -109,7 +113,9 @@ namespace FlarmTerminal
                             break;
                     }
                     Properties.Settings.Default.Parity = comportconfig.Parity.ToString();
+                    _log.Information($"COM port properties: Name: '{_serialPortInfo.PortName}', Baud Rate: {comportconfig.BaudRate}, Data Bits: {comportconfig.DataBits}, Stop Bits: {Properties.Settings.Default.StopBits}, Parity: {comportconfig.Parity}, Hand Shake: {comportconfig.HandShake}");
                     var path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+                    _log.Debug($"COM port configuration path: {path}");
                     Properties.Settings.Default.Save();
                 }
                 catch (Exception ex)
@@ -152,13 +158,16 @@ namespace FlarmTerminal
                         }
 
                         _comPortHandler = new COMPortHandler(this,
-                                                             _serialPortInfo.PortName,
-                                                             Properties.Settings.Default.BaudRate,
-                                                             Properties.Settings.Default.DataBits,
-                                                             ptmp,
-                                                             sb);
+                                                                 _log,
+                                                                 _serialPortInfo.PortName,
+                                                                 Properties.Settings.Default.BaudRate,
+                                                                 Properties.Settings.Default.DataBits,
+                                                                 ptmp,
+                                                                 sb);
+                        _log.Information($"Connecting with COM port: {_serialPortInfo.PortName}...");
                         _comPortHandler.Connect();
                         // we're connected!
+                        _log.Information($"Connected with COM port: {_serialPortInfo.PortName}!");
                         commandToolStripMenuItem.Enabled = true;
                         toolStripDropDownConnectButton.Image = Resources.green_led;
                         toolStripStatusComPortProperties.Text = _comPortHandler.GetPortProperties();
@@ -176,10 +185,12 @@ namespace FlarmTerminal
                 {
                     using (new CenterWinDialog(this))
                     {
-                        MessageBox.Show($"Failed to connect to COM port '{_serialPortInfo.PortName}', Error: {ex.Message}",
-                        Program.ApplicationName,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        var msg = $"Failed to connect to COM port '{_serialPortInfo.PortName}', Error: {ex.Message}";
+                        _log.Error(msg);
+                        MessageBox.Show(msg,
+                            Program.ApplicationName,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                     }
                 }
             }
@@ -187,10 +198,12 @@ namespace FlarmTerminal
             {
                 using (new CenterWinDialog(this))
                 {
-                    MessageBox.Show($"Select COM port first in settings dialog",
+                    var msg = $"Select COM port first in settings dialog";
+                    _log.Warning(msg);
+                    MessageBox.Show(msg,
                     Program.ApplicationName,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
                 }
             }
         }
@@ -336,6 +349,7 @@ namespace FlarmTerminal
             {
                 textBoxTerminal.SelectionColor = System.Drawing.Color.Red;
                 textBoxTerminal.SelectedText = command;
+                _log.Debug($"Sending command: '{command}'");
                 _comPortHandler.Send(command);
                 var pos = command.IndexOf(",");
                 if (pos > 0)
@@ -802,6 +816,7 @@ namespace FlarmTerminal
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _log.Information("Exiting application");
             Environment.Exit(0);
         }
     }

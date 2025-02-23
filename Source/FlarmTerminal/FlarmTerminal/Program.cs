@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
 using FlarmTerminal.GUI;
@@ -21,10 +22,11 @@ namespace FlarmTerminal
         static void Main()
         {
             var log = logger.GetLogger();
-            log.Information(ApplicationName + " V1.0.0.0" );
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0.0";
+            log.Information($"{ApplicationName} V{version}" );
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainForm(log));
         }
     }
 }

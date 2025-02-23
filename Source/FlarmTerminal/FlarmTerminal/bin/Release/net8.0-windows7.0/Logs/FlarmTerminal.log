@@ -1,0 +1,106 @@
+2025-02-23 15:42:10.655 +01:00 [DBG] Logger initialized from configuration.
+2025-02-23 15:42:36.368 +01:00 [INF] Flarm Terminal V1.0.0.0
+2025-02-23 15:42:36.431 +01:00 [INF] MainForm started
+2025-02-23 15:45:12.954 +01:00 [DBG] Logger initialized from configuration.
+2025-02-23 15:45:13.017 +01:00 [INF] Flarm Terminal V1.0.0.0
+2025-02-23 15:45:13.072 +01:00 [INF] MainForm started
+2025-02-23 15:52:09.454 +01:00 [DBG] Logger initialized from configuration.
+2025-02-23 15:52:09.585 +01:00 [INF] Flarm Terminal V1.0.0.0
+2025-02-23 15:52:09.709 +01:00 [INF] MainForm started
+2025-02-23 15:54:24.720 +01:00 [INF] COM port properties: Name: 'COM6', Baud Rate: 38400, Data Bits: 8, Stop Bits: 1, Parity: None, Hand Shake: None
+2025-02-23 15:54:24.724 +01:00 [DBG] COM port configuration path: C:\Users\antoinem\AppData\Local\Dingetje\FlarmTerminal_Url_tqti5ujeashtu5hx20bfr4vhj5lkoroo\1.0.0.0\user.config
+2025-02-23 15:54:44.346 +01:00 [INF] COM port properties: Name: 'COM6', Baud Rate: 38400, Data Bits: 8, Stop Bits: 1, Parity: None, Hand Shake: None
+2025-02-23 15:54:44.348 +01:00 [DBG] COM port configuration path: C:\Users\antoinem\AppData\Local\Dingetje\FlarmTerminal_Url_tqti5ujeashtu5hx20bfr4vhj5lkoroo\1.0.0.0\user.config
+2025-02-23 15:55:44.753 +01:00 [INF] COM port properties: Name: 'COM6', Baud Rate: 57600, Data Bits: 8, Stop Bits: 1, Parity: None, Hand Shake: None
+2025-02-23 15:55:44.754 +01:00 [DBG] COM port configuration path: C:\Users\antoinem\AppData\Local\Dingetje\FlarmTerminal_Url_tqti5ujeashtu5hx20bfr4vhj5lkoroo\1.0.0.0\user.config
+2025-02-23 16:09:36.046 +01:00 [DBG] Logger initialized from configuration.
+2025-02-23 16:09:36.117 +01:00 [INF] Flarm Terminal V1.0.0.0
+2025-02-23 16:09:36.187 +01:00 [INF] MainForm started
+2025-02-23 16:09:41.441 +01:00 [INF] Connecting with COM port: COM6...
+2025-02-23 16:09:41.513 +01:00 [DBG] Starting task queue for COM port data handling
+2025-02-23 16:09:41.557 +01:00 [INF] Connected with COM port: COM6!
+2025-02-23 16:09:41.905 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+
+2025-02-23 16:09:41.925 +01:00 [DBG] $GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+2025-02-23 16:09:42.185 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,-259,F,2*19
+
+2025-02-23 16:09:42.913 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+2025-02-23 16:09:43.158 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+
+2025-02-23 16:09:43.189 +01:00 [DBG] $PGRMZ,-262,F,2*11
+
+2025-02-23 16:09:43.898 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+
+2025-02-23 16:09:43.930 +01:00 [DBG] $GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+2025-02-23 16:09:44.175 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,-259,F,2*19
+
+2025-02-23 16:09:44.913 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+2025-02-23 16:09:45.144 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+
+2025-02-23 16:09:45.191 +01:00 [DBG] $PGRMZ,-259,F,2*19
+
+2025-02-23 16:09:45.889 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+
+2025-02-23 16:09:45.919 +01:00 [DBG] $GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+2025-02-23 16:09:46.151 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+
+2025-02-23 16:09:46.182 +01:00 [DBG] $PGRMZ,-259,F,2*19
+
+2025-02-23 16:09:46.911 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+
+2025-02-23 16:09:47.145 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+
+2025-02-23 16:09:47.193 +01:00 [DBG] $PGRMZ,-259,F,2*19
+
+2025-02-23 16:13:12.846 +01:00 [DBG] Logger initialized from configuration.
+2025-02-23 16:13:12.914 +01:00 [INF] Flarm Terminal V1.0.0.0
+2025-02-23 16:13:12.980 +01:00 [INF] MainForm started
+2025-02-23 16:13:22.545 +01:00 [INF] Connecting with COM port: COM6...
+2025-02-23 16:13:22.601 +01:00 [DBG] Starting task queue for COM port data handling
+2025-02-23 16:13:22.626 +01:00 [INF] Connected with COM port: COM6!
+2025-02-23 16:13:22.891 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+2025-02-23 16:13:22.919 +01:00 [DBG] $GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+2025-02-23 16:13:23.149 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+2025-02-23 16:13:23.181 +01:00 [DBG] $PGRMZ,-259,F,2*19
+2025-02-23 16:13:23.927 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+2025-02-23 16:13:24.145 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+2025-02-23 16:13:24.175 +01:00 [DBG] $PGRMZ,-262,F,2*11
+2025-02-23 16:13:24.917 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+2025-02-23 16:13:25.149 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+2025-02-23 16:13:25.165 +01:00 [DBG] $PGRMZ,-262,F,2*11
+2025-02-23 16:13:25.908 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+2025-02-23 16:13:26.141 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+2025-02-23 16:13:26.188 +01:00 [DBG] $PGRMZ,-262,F,2*11
+2025-02-23 16:13:26.917 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+2025-02-23 16:13:27.148 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+2025-02-23 16:13:27.180 +01:00 [DBG] $PGRMZ,-262,F,2*11
+2025-02-23 16:13:27.910 +01:00 [DBG] $GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+2025-02-23 16:13:28.142 +01:00 [DBG] $PFLAU,0,0,0,1,0,,0,,,*4F
+2025-02-23 16:13:28.188 +01:00 [DBG] $PGRMZ,-262,F,2*11

@@ -19,12 +19,14 @@ namespace FlarmTerminal
 
         public FlarmTerminalLogger()
         {
-            // Enable Serilog self-logging to a file
+            // Enable Serilog self-logging to a file for debugging
+#if DEBUG
+            // Enable Serilog self-logging to a file for debugging
             var selfLogFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", "serilog-selflog.txt");
             Directory.CreateDirectory(Path.GetDirectoryName(selfLogFile));
             var selfLogWriter = new StreamWriter(selfLogFile, true) { AutoFlush = true };
             SelfLog.Enable(selfLogWriter);
-
+#endif
             try
             {
                 var configuration = new ConfigurationBuilder()
@@ -35,7 +37,7 @@ namespace FlarmTerminal
                 _logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(configuration)
                     .CreateLogger();
-                _logger.Information("Logger initialized from configuration.");
+                _logger.Debug("Logger initialized from configuration.");
             }
             catch (Exception ex)
             {
@@ -46,7 +48,7 @@ namespace FlarmTerminal
                     .WriteTo.File("Logs/fallback-log-.txt", rollingInterval: RollingInterval.Day)
                     .CreateLogger();
 
-                _logger.Error(ex, "Failed to initialize Serilog from configuration. Using fallback logger.");
+                _logger.Warning(ex, "Failed to initialize Serilog from configuration. Using fallback logger.");
             }
         }
     }

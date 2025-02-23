@@ -27,6 +27,7 @@ namespace FlarmTerminal
         private bool _isClosing = false;
         private MainForm? _mainForm = null!;
         private string _lastData = string.Empty;
+        private Serilog.ILogger _log;
 
         public bool IsConnected { 
             get 
@@ -44,9 +45,10 @@ namespace FlarmTerminal
             Disconnect();
         }
 
-        public COMPortHandler(MainForm form, string PortName, int BaudRate = 19200, int DataBits = 8, Parity p = Parity.None, StopBits sb = StopBits.One)
+        public COMPortHandler(MainForm form, Serilog.ILogger log, string PortName, int BaudRate = 19200, int DataBits = 8, Parity p = Parity.None, StopBits sb = StopBits.One)
         {
             _mainForm = form;
+            _log = log;
             _portName = PortName;
             _baudRate = BaudRate;
             _dataBits = DataBits;
@@ -66,8 +68,10 @@ namespace FlarmTerminal
                 // FLARM data is terminated with \r\n
                 _serialPortStream.NewLine = "\r\n";
                 _serialPortStream.Open();
+                // add event handler for incoming data
                 _serialPortStream.DataReceived += _serialPort_DataReceived;
                 _isClosing = false;
+                _log.Debug("Starting task queue for COM port data handling");
                 _taskQueue = new TaskQueue<string>(1, _mainForm);
             }
         }
@@ -126,7 +130,7 @@ namespace FlarmTerminal
             {
                 try
                 {
-                    // read all available date
+                    // read all available date, not necessarily a full line though and potentially multiple lines
                     var newData = _serialPortStream?.ReadExisting();
                     _lastData += newData;
                     if (_lastData.EndsWith("\r\n"))
@@ -135,6 +139,7 @@ namespace FlarmTerminal
                         {
                             return;
                         }
+                        _log.Debug(_lastData.Trim(new[] { '\r', '\n' }));
                         _taskQueue?.EnqueueTask(_lastData);
                         _lastData = string.Empty;
                     }
