@@ -5,6 +5,9 @@
     <Compile Update="GUI\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="GUI\DeviceIDDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="GUI\FlarmDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

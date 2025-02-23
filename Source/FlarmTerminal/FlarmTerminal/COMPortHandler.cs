@@ -184,7 +184,9 @@ namespace FlarmTerminal
         }
         internal string? GetPortProperties()
         {
-            return _baudRate + "," + _dataBits + ParityToChar() + StopBitsToChar();
+            var result = _baudRate + "," + _dataBits + ParityToChar() + StopBitsToChar();
+            _log.Debug($"COM port properties: {result}");
+            return result;
         }
     }
 }

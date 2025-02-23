@@ -50,6 +50,8 @@ namespace FlarmTerminal
         private FlarmDisplay? _flarmDisplay = null;
         private Serilog.ILogger _log;
 
+        private Dictionary<string,string> _properties = new Dictionary<string, string>();
+
         private enum DataSource
         {
             SOURCE_FLARM,
@@ -179,6 +181,7 @@ namespace FlarmTerminal
                         _flarmMessagesParser.IGCEnabledDetected += HandleIGCEnabled;
                         _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
                         Application.DoEvents();
+                        ReadProperties();
                     }
                 }
                 catch (Exception ex)
@@ -286,9 +289,18 @@ namespace FlarmTerminal
             }
         }
 
+        private bool IsConnected()
+        {
+            if (_comPortHandler != null)
+            {
+                return _comPortHandler.IsConnected;
+            }
+            return false;
+        }
+
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_comPortHandler != null && _comPortHandler.IsConnected)
+            if (IsConnected())
             {
                 try
                 {
@@ -340,6 +352,11 @@ namespace FlarmTerminal
             if (Properties.Settings.Default.AutoConnect)
             {
                 connectToolStripMenuItem_Click(this, null);
+                if (IsConnected() && _dataSource == DataSource.SOURCE_FLARM)
+                {
+                    // send commands to read device properties
+                    ReadProperties();
+                }
             }
         }
 
@@ -488,6 +505,7 @@ namespace FlarmTerminal
 
         public void WriteProperties(string key, string value)
         {
+            _properties[key] = value;
             var keyPadRight = key;
             while (keyPadRight.Length < 18)
             {
@@ -533,8 +551,9 @@ namespace FlarmTerminal
         private void requestVersionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAV,R\r\n");
+            WriteCommand("$PFLAC,R,FLARMVER\r\n");
         }
-        
+
         private void EnableFileTimer(bool state)
         {
             if (this.InvokeRequired)
@@ -818,6 +837,36 @@ namespace FlarmTerminal
         {
             _log.Information("Exiting application");
             Environment.Exit(0);
+        }
+
+        private void setDeviceIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeviceIDDialog dlg = new DeviceIDDialog(GetDeviceID());
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (dlg.getDeviceIDType() == DeviceIDDialog.DeviceIDType.ICAO)
+                {
+                    // ICAO Address
+                    WriteCommand($"$PFLAC,S,ID,1,{dlg.getICAOAddress()}\r\n");
+                }
+                else
+                {
+                    // Standard Serial Number
+                    WriteCommand($"$PFLAC,S,ID,0\r\n");
+                }
+            }
+        }
+
+        public string GetDeviceID()
+        {
+            if (_properties.ContainsKey("ID") && _properties.ContainsKey("RADIOID"))
+            {
+                if (_properties["RADIOID"].Contains("ICAO"))
+                {
+                    return _properties["ID"];
+                }
+            }
+            return "";
         }
     }
 }

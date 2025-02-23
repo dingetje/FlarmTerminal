@@ -77,6 +77,7 @@
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripButtonRecord = new System.Windows.Forms.ToolStripButton();
             recordTtimer = new System.Windows.Forms.Timer(components);
+            setDeviceIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -90,7 +91,7 @@
             // 
             textBoxTerminal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxTerminal.BackColor = System.Drawing.Color.LightYellow;
-            textBoxTerminal.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            textBoxTerminal.Font = new System.Drawing.Font("Consolas", 9.75F);
             textBoxTerminal.Location = new System.Drawing.Point(0, 24);
             textBoxTerminal.MinimumSize = new System.Drawing.Size(400, 300);
             textBoxTerminal.Name = "textBoxTerminal";
@@ -105,7 +106,7 @@
             // 
             richTextBoxProperties.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             richTextBoxProperties.BackColor = System.Drawing.Color.LightSteelBlue;
-            richTextBoxProperties.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            richTextBoxProperties.Font = new System.Drawing.Font("Courier New", 9.75F);
             richTextBoxProperties.Location = new System.Drawing.Point(2, 24);
             richTextBoxProperties.Name = "richTextBoxProperties";
             richTextBoxProperties.ReadOnly = true;
@@ -259,7 +260,7 @@
             // 
             // commandToolStripMenuItem
             // 
-            commandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { requestVersionsToolStripMenuItem, requestIDToolStripMenuItem, requestToolStripMenuItem, requestSelftestResultToolStripMenuItem, readIDToolStripMenuItem, readPropertiesToolStripMenuItem, simulateScenarioToolStripMenuItem, dANGERToolStripMenuItem });
+            commandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { requestVersionsToolStripMenuItem, requestIDToolStripMenuItem, requestToolStripMenuItem, requestSelftestResultToolStripMenuItem, readIDToolStripMenuItem, readPropertiesToolStripMenuItem, simulateScenarioToolStripMenuItem, dANGERToolStripMenuItem, setDeviceIDToolStripMenuItem });
             commandToolStripMenuItem.Enabled = false;
             commandToolStripMenuItem.Name = "commandToolStripMenuItem";
             commandToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -394,7 +395,7 @@
             // label1Terminal
             // 
             label1Terminal.AutoSize = true;
-            label1Terminal.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            label1Terminal.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             label1Terminal.Location = new System.Drawing.Point(1, 3);
             label1Terminal.Name = "label1Terminal";
             label1Terminal.Size = new System.Drawing.Size(118, 20);
@@ -404,7 +405,7 @@
             // labelProperties
             // 
             labelProperties.AutoSize = true;
-            labelProperties.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            labelProperties.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             labelProperties.Location = new System.Drawing.Point(6, 5);
             labelProperties.Name = "labelProperties";
             labelProperties.Size = new System.Drawing.Size(81, 20);
@@ -473,6 +474,13 @@
             // 
             recordTtimer.Interval = 400;
             recordTtimer.Tick += recordTtimer_Tick;
+            // 
+            // setDeviceIDToolStripMenuItem
+            // 
+            setDeviceIDToolStripMenuItem.Name = "setDeviceIDToolStripMenuItem";
+            setDeviceIDToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            setDeviceIDToolStripMenuItem.Text = "&Set Device ID...";
+            setDeviceIDToolStripMenuItem.Click += setDeviceIDToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -557,6 +565,7 @@
         private System.Windows.Forms.ToolStripMenuItem clearAllFlightLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelClearMemory;
+        private System.Windows.Forms.ToolStripMenuItem setDeviceIDToolStripMenuItem;
     }
 }
 
