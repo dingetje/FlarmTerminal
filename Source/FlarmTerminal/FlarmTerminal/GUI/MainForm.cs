@@ -21,6 +21,8 @@ using System.IO.Ports;
 using System.Collections;
 using System.Resources;
 using Microsoft.Extensions.Logging;
+using UCNLNMEA;
+using VPKSoft.WinFormsRtfPrint;
 
 namespace FlarmTerminal
 {
@@ -36,7 +38,6 @@ namespace FlarmTerminal
         private List<string>? _lines = null!;
         private int _lineIndex = 0;
         private TaskQueue<string>? _taskQueue = null!;
-
         private System.Timers.Timer _rawFileTimer;
 
         private bool _isClosing = false;
@@ -45,12 +46,17 @@ namespace FlarmTerminal
         private bool _isRecording = false;
         private bool _isInitialized = false;
         private bool _recordImageOn = true;
-
+        private bool _requestSelfTestResultsMode = false;
         private FileStream? _fsRecording = null!;
         private FlarmDisplay? _flarmDisplay = null;
         private Serilog.ILogger _log;
 
-        private Dictionary<string,string> _properties = new Dictionary<string, string>();
+        private string headerText = Program.ApplicationName;
+        private string footerText = "Page {0}";
+        private int _currentPrintPosition;
+        private int _currentPageNumber;
+
+        private Dictionary<string, string> _properties = new Dictionary<string, string>();
 
         private enum DataSource
         {
@@ -70,8 +76,42 @@ namespace FlarmTerminal
             log.Information("MainForm started");
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
+            toolStripStatusComPortProperties.Text = COMPortSettingsToString();
         }
 
+        private void PrintPropertiesRichTextBox()
+        {
+            RtfPrint.RichTextBox = richTextBoxProperties;
+            RtfPrint.PrintRichTextContents();
+        }
+        private void PrintTerminalRichTextBox()
+        {
+            RtfPrint.RichTextBox = textBoxTerminal;
+            RtfPrint.PrintRichTextContents();
+        }
+
+        private string COMPortSettingsToString()
+        {
+            var settings = Properties.Settings.Default.COMPort;
+            settings += $", {Properties.Settings.Default.BaudRate}";
+
+            settings += $", {Properties.Settings.Default.DataBits}";
+            switch (Properties.Settings.Default.Parity)
+            {
+                default:
+                case "None":
+                    settings += "N";
+                    break;
+                case "Even":
+                    settings += "E";
+                    break;
+                case "Odd":
+                    settings += "O";
+                    break;
+            }
+            settings += $"{Properties.Settings.Default.StopBits}";
+            return settings;
+        }
         private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
             _isClosing = true;
@@ -181,6 +221,7 @@ namespace FlarmTerminal
                         _flarmMessagesParser.IGCEnabledDetected += HandleIGCEnabled;
                         _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
                         Application.DoEvents();
+                        // send commands to read device properties
                         ReadProperties();
                     }
                 }
@@ -231,10 +272,19 @@ namespace FlarmTerminal
                         _isInitialized = true;
                         _flarmDisplay?.SetLED(FlarmDisplay.LEDNames.Power, FlarmDisplay.LEDColor.Green, false);
 
-                        if (_dataSource == DataSource.SOURCE_FLARM)
+                        if (_dataSource == DataSource.SOURCE_FLARM && !_requestSelfTestResultsMode)
                         {
                             // send commands to read device properties
                             ReadProperties();
+                        }
+                    }
+
+                    if (_requestSelfTestResultsMode)
+                    {
+                        _lastCommand = "$PFLAE";
+                        if (serialData.Contains("$PFLAE,A*33"))
+                        {
+                            _requestSelfTestResultsMode = false;
                         }
                     }
                     if (serialData.StartsWith("$PFLAC,A,CLEARMEM,"))
@@ -352,11 +402,6 @@ namespace FlarmTerminal
             if (Properties.Settings.Default.AutoConnect)
             {
                 connectToolStripMenuItem_Click(this, null);
-                if (IsConnected() && _dataSource == DataSource.SOURCE_FLARM)
-                {
-                    // send commands to read device properties
-                    ReadProperties();
-                }
             }
         }
 
@@ -371,7 +416,7 @@ namespace FlarmTerminal
                 var pos = command.IndexOf(",");
                 if (pos > 0)
                 {
-                    _lastCommand = command.Substring(0, pos - 1);
+                    _lastCommand = command.Substring(0, pos);
                 }
             }
         }
@@ -388,6 +433,7 @@ namespace FlarmTerminal
 
         private void requestSelftestResultToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _requestSelfTestResultsMode = true;
             // Request Self Test Result
             // In that case, all errors are returned one by one, with one sentence per error.The
             // terminating $PFLAE,A sentence is used to denote the end of the command.
@@ -847,12 +893,12 @@ namespace FlarmTerminal
                 if (dlg.getDeviceIDType() == DeviceIDDialog.DeviceIDType.ICAO)
                 {
                     // ICAO Address
-                    WriteCommand($"$PFLAC,S,ID,1,{dlg.getICAOAddress()}\r\n");
+                    WriteCommand($"$PFLAC,S,ID,{dlg.getICAOAddress()}\r\n");
                 }
                 else
                 {
                     // Standard Serial Number
-                    WriteCommand($"$PFLAC,S,ID,0\r\n");
+                    WriteCommand($"$PFLAC,S,ID,0xffffff\r\n");
                 }
             }
         }
@@ -867,6 +913,16 @@ namespace FlarmTerminal
                 }
             }
             return "";
+        }
+
+        private void printPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintPropertiesRichTextBox();
+        }
+
+        private void printRawSerialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintTerminalRichTextBox();
         }
     }
 }

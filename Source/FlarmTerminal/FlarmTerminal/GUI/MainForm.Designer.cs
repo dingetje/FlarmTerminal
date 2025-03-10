@@ -46,6 +46,9 @@
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             readFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            printToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            printRawSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             COMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             autoConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +68,7 @@
             resetToFactorySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             clearMemoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             clearAllFlightLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            setDeviceIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -77,7 +81,6 @@
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripButtonRecord = new System.Windows.Forms.ToolStripButton();
             recordTtimer = new System.Windows.Forms.Timer(components);
-            setDeviceIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -95,6 +98,7 @@
             textBoxTerminal.Location = new System.Drawing.Point(0, 24);
             textBoxTerminal.MinimumSize = new System.Drawing.Size(400, 300);
             textBoxTerminal.Name = "textBoxTerminal";
+            textBoxTerminal.ReadOnly = true;
             textBoxTerminal.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             textBoxTerminal.ShowSelectionMargin = true;
             textBoxTerminal.Size = new System.Drawing.Size(590, 587);
@@ -199,7 +203,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { readFileToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { readFileToolStripMenuItem, printToolStripMenuItem1, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             fileToolStripMenuItem.Text = "&File";
@@ -208,7 +212,7 @@
             // 
             readFileToolStripMenuItem.Image = Properties.Resources.file;
             readFileToolStripMenuItem.Name = "readFileToolStripMenuItem";
-            readFileToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            readFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             readFileToolStripMenuItem.Text = "Playback &File...";
             readFileToolStripMenuItem.Click += readFileToolStripMenuItem_Click;
             // 
@@ -217,9 +221,30 @@
             exitToolStripMenuItem.Image = Properties.Resources.exit_PNG35;
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
-            exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
+            // printToolStripMenuItem1
+            // 
+            printToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { printPropertiesToolStripMenuItem, printRawSerialToolStripMenuItem });
+            printToolStripMenuItem1.Name = "printToolStripMenuItem1";
+            printToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            printToolStripMenuItem1.Text = "Print";
+            // 
+            // printPropertiesToolStripMenuItem
+            // 
+            printPropertiesToolStripMenuItem.Name = "printPropertiesToolStripMenuItem";
+            printPropertiesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            printPropertiesToolStripMenuItem.Text = "Print Properties...";
+            printPropertiesToolStripMenuItem.Click += printPropertiesToolStripMenuItem_Click;
+            // 
+            // printRawSerialToolStripMenuItem
+            // 
+            printRawSerialToolStripMenuItem.Name = "printRawSerialToolStripMenuItem";
+            printRawSerialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            printRawSerialToolStripMenuItem.Text = "Print Raw Serial...";
+            printRawSerialToolStripMenuItem.Click += printRawSerialToolStripMenuItem_Click;
             // 
             // settingsToolStripMenuItem
             // 
@@ -357,6 +382,13 @@
             clearAllFlightLogsToolStripMenuItem.Text = "Clear All Flight Logs";
             clearAllFlightLogsToolStripMenuItem.Click += clearAllFlightLogsToolStripMenuItem_Click;
             // 
+            // setDeviceIDToolStripMenuItem
+            // 
+            setDeviceIDToolStripMenuItem.Name = "setDeviceIDToolStripMenuItem";
+            setDeviceIDToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            setDeviceIDToolStripMenuItem.Text = "&Set Device ID...";
+            setDeviceIDToolStripMenuItem.Click += setDeviceIDToolStripMenuItem_Click;
+            // 
             // helpToolStripMenuItem
             // 
             helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { aboutToolStripMenuItem });
@@ -475,13 +507,6 @@
             recordTtimer.Interval = 400;
             recordTtimer.Tick += recordTtimer_Tick;
             // 
-            // setDeviceIDToolStripMenuItem
-            // 
-            setDeviceIDToolStripMenuItem.Name = "setDeviceIDToolStripMenuItem";
-            setDeviceIDToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            setDeviceIDToolStripMenuItem.Text = "&Set Device ID...";
-            setDeviceIDToolStripMenuItem.Click += setDeviceIDToolStripMenuItem_Click;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -566,6 +591,9 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelClearMemory;
         private System.Windows.Forms.ToolStripMenuItem setDeviceIDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem printPropertiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printRawSerialToolStripMenuItem;
     }
 }
 
