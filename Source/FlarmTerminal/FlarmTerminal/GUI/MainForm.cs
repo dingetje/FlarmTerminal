@@ -82,12 +82,12 @@ namespace FlarmTerminal
         private void PrintPropertiesRichTextBox()
         {
             RtfPrint.RichTextBox = richTextBoxProperties;
-            RtfPrint.PrintRichTextContents();
+            RtfPrint.PrintRichTextContents(true, true);
         }
         private void PrintTerminalRichTextBox()
         {
             RtfPrint.RichTextBox = textBoxTerminal;
-            RtfPrint.PrintRichTextContents();
+            RtfPrint.PrintRichTextContents(true, true);
         }
 
         private string COMPortSettingsToString()
@@ -221,8 +221,6 @@ namespace FlarmTerminal
                         _flarmMessagesParser.IGCEnabledDetected += HandleIGCEnabled;
                         _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
                         Application.DoEvents();
-                        // send commands to read device properties
-                        ReadProperties();
                     }
                 }
                 catch (Exception ex)
@@ -310,6 +308,17 @@ namespace FlarmTerminal
                             }
                         }
                     }
+                    // properties?
+                    if (serialData.StartsWith("$PFLAC,A,") && _flarmMessagesParser != null)
+                    {
+                        _flarmMessagesParser.ParseProperties(serialData);
+                        textBoxTerminal.SelectionColor = System.Drawing.Color.Blue;
+                    }
+                    if (_isRecording && _fsRecording != null)
+                    {
+                        var bytes = System.Text.Encoding.ASCII.GetBytes(serialData);
+                        _fsRecording.Write(bytes, 0, bytes.Length);
+                    }
                     if (_lastCommand != string.Empty && serialData.StartsWith(_lastCommand + ",A"))
                     {
                         textBoxTerminal.SelectionColor = System.Drawing.Color.Blue;
@@ -319,16 +328,6 @@ namespace FlarmTerminal
                     else
                     {
                         textBoxTerminal.AppendText(serialData);
-                    }
-                    // properties?
-                    if (serialData.StartsWith("$PFLAC,A,") && _flarmMessagesParser != null)
-                    {
-                        _flarmMessagesParser.ParseProperties(serialData);
-                    }
-                    if (_isRecording && _fsRecording != null)
-                    {
-                        var bytes = System.Text.Encoding.ASCII.GetBytes(serialData);
-                        _fsRecording.Write(bytes, 0, bytes.Length);
                     }
                     Application.DoEvents();
                 }));
