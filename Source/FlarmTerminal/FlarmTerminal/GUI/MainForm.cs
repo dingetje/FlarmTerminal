@@ -410,7 +410,7 @@ namespace FlarmTerminal
             {
                 textBoxTerminal.SelectionColor = System.Drawing.Color.Red;
                 textBoxTerminal.SelectedText = command;
-                _log.Debug($"Sending command: '{command}'");
+                _log.Debug($"Sending command: '{command.Replace("\r\n","")}'");
                 _comPortHandler.Send(command);
                 var pos = command.IndexOf(",");
                 if (pos > 0)
@@ -428,6 +428,10 @@ namespace FlarmTerminal
         private void requestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAN,R,RANGE\r\n");
+            // allow to get response
+            Thread.Sleep(500);
+            var carpDialog = new CARPRadarPlot();
+            carpDialog.Show();
         }
 
         private void requestSelftestResultToolStripMenuItem_Click(object sender, EventArgs e)
