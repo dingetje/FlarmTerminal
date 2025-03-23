@@ -9,6 +9,7 @@
 /Source/FlarmDisplayPFLAUSend/packages/SerialPortStream.2.4.2
 /Source/FlarmTerminal/.vs
 /Source/FlarmTerminal/FlarmMessageParser/bin/Debug
+/Source/FlarmTerminal/FlarmMessageParser/bin/Release
 /Source/FlarmTerminal/FlarmMessageParser/obj
 /Source/FlarmTerminal/FlarmTerminal/bin/Debug
 /Source/FlarmTerminal/FlarmTerminal/obj
@@ -19,6 +20,16 @@
 /Source/FlarmTerminal/packages
 /Source/FlarmTerminal/FlarmTerminal.v12.suo
 /Source/FlarmTerminal/FlarmTerminal/GUI/Beeper.cs
-/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/FlarmTerminal.dll
-/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/FlarmTerminal.pdb
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/*
 /Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/Logs/FlarmTerminal.log
+/Source/FlarmTerminal/FlarmTerminal/bin/publish
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/FlarmMessageParser.dll
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/FlarmMessageParser.pdb
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/FlarmTerminal.deps.json
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/FlarmTerminal.exe
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/Microsoft.AspNetCore.SystemWebAdapters.dll
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/System.Runtime.Caching.dll
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/UCNLNMEA.dll
+/Source/FlarmTerminal/FlarmTerminal/bin/Release/net8.0-windows7.0/UCNLNMEA.pdb
+/Source/FlarmTerminal/FlarmTerminal/Properties/PublishProfiles/ClickOnceProfile.pubxml
+/Source/FlarmTerminal/FlarmTerminal/Properties/PublishProfiles/ClickOnceProfile.pubxml.user
