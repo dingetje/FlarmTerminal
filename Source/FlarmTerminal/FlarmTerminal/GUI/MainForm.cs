@@ -410,8 +410,8 @@ namespace FlarmTerminal
             {
                 textBoxTerminal.SelectionColor = System.Drawing.Color.Red;
                 textBoxTerminal.SelectedText = command;
-                _log.Debug($"Sending command: '{command.Replace("\r\n","")}'");
-                _comPortHandler.Send(command);
+                _log.Debug($"Sending command: 'command'");
+                _comPortHandler.Send(command + "\r\n");
                 var pos = command.IndexOf(",");
                 if (pos > 0)
                 {
@@ -422,12 +422,12 @@ namespace FlarmTerminal
 
         private void requestDebugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteCommand("$PFLAS,R\r\n");
+            WriteCommand("$PFLAS,R");
         }
 
         private void requestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteCommand("$PFLAN,R,RANGE\r\n");
+            WriteCommand("$PFLAN,R,RANGE");
             // allow to get response
             Thread.Sleep(500);
             var carpDialog = new CARPRadarPlot();
@@ -440,7 +440,7 @@ namespace FlarmTerminal
             // Request Self Test Result
             // In that case, all errors are returned one by one, with one sentence per error.The
             // terminating $PFLAE,A sentence is used to denote the end of the command.
-            WriteCommand("$PFLAE,R\r\n");
+            WriteCommand("$PFLAE,R");
         }
 
         private void textBoxTerminal_MouseDown(object sender, MouseEventArgs e)
@@ -515,9 +515,9 @@ namespace FlarmTerminal
 
         private void readIDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteCommand("$PFLAC,R,RADIOID\r\n");
-            WriteCommand("$PFLAC,R,ID\r\n");
-            WriteCommand("$PFLAC,R,DEVICEID\r\n");
+            WriteCommand("$PFLAC,R,RADIOID");
+            WriteCommand("$PFLAC,R,ID");
+            WriteCommand("$PFLAC,R,DEVICEID");
         }
 
         private void ReadProperties()
@@ -528,27 +528,27 @@ namespace FlarmTerminal
                 // issue all commands to read properties
                 foreach (var item in Enum.GetValues(typeof(FlarmProperties.ConfigurationItems)))
                 {
-                    WriteCommand($"$PFLAC,R,{item}\r\n");
+                    WriteCommand($"$PFLAC,R,{item}");
                     Application.DoEvents();
                 }
                 Thread.Sleep(100);
                 Application.DoEvents();
                 // read radio ID and stop properties reading mode
-                WriteCommand($"$PFLAC,R,RADIOID\r\n");
+                WriteCommand($"$PFLAC,R,RADIOID");
             }
         }
         private void HandleIGCEnabled(object? sender, bool e)
         {
             foreach (var item in Enum.GetValues(typeof(FlarmProperties.IGCSpecific)))
             {
-                WriteCommand($"$PFLAC,R,{item}\r\n");
+                WriteCommand($"$PFLAC,R,{item}");
             }
         }
         private void HandleDualPortEnabled(object? sender, bool e)
         {
             foreach (var item in Enum.GetValues(typeof(FlarmProperties.PowerFlarmSpecific)))
             {
-                WriteCommand($"$PFLAC,R,{item}\r\n");
+                WriteCommand($"$PFLAC,R,{item}");
             }
         }
 
@@ -599,8 +599,8 @@ namespace FlarmTerminal
 
         private void requestVersionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteCommand("$PFLAV,R\r\n");
-            WriteCommand("$PFLAC,R,FLARMVER\r\n");
+            WriteCommand("$PFLAV,R");
+            WriteCommand("$PFLAC,R,FLARMVER");
         }
 
         private void EnableFileTimer(bool state)
@@ -787,12 +787,12 @@ namespace FlarmTerminal
 
         private void scenario1CollissionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteCommand("$PFLAF,S,1\r\n");
+            WriteCommand("$PFLAF,S,1");
         }
 
         private void requestRunningScenarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteCommand("$PFLAF,R\r\n");
+            WriteCommand("$PFLAF,R");
         }
 
         internal void UpdateFLARMLeftLED(bool[] on)
@@ -857,7 +857,7 @@ namespace FlarmTerminal
         {
             if (MessageBox.Show("Are you sure you want to reset this FLARM to factory settings?", ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                WriteCommand("$PFLAR,99\r\n");
+                WriteCommand("$PFLAR,99");
             }
         }
 
@@ -865,7 +865,7 @@ namespace FlarmTerminal
         {
             if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM?", ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                WriteCommand("$PFLAC,S,CLEARMEM\r\n");
+                WriteCommand("$PFLAC,S,CLEARMEM");
             }
         }
 
@@ -873,7 +873,7 @@ namespace FlarmTerminal
         {
             if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM?", ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                WriteCommand("$PFLAC,CLEARLOGS\r\n");
+                WriteCommand("$PFLAC,CLEARLOGS");
             }
         }
 
@@ -896,12 +896,12 @@ namespace FlarmTerminal
                 if (dlg.getDeviceIDType() == DeviceIDDialog.DeviceIDType.ICAO)
                 {
                     // ICAO Address
-                    WriteCommand($"$PFLAC,S,ID,{dlg.getICAOAddress()}\r\n");
+                    WriteCommand($"$PFLAC,S,ID,{dlg.getICAOAddress()}");
                 }
                 else
                 {
                     // Standard Serial Number
-                    WriteCommand($"$PFLAC,S,ID,0xffffff\r\n");
+                    WriteCommand($"$PFLAC,S,ID,0xffffff");
                 }
             }
         }
