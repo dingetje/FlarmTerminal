@@ -43,6 +43,21 @@ namespace FlarmTerminal
             {
                 _mainForm?.UpdateDirectionLEDs(on, AlarmLevel);
             };
+            _processMessages.FLARMCARPDataReceived += (char antenna, double[] rangeDoubles) =>
+            {
+                _mainForm?.UpdateCARPRadar(antenna, rangeDoubles);
+            };
+            _processMessages.FLARMCARPTimeSpanReceived += (DateTime start, DateTime end) =>
+            {
+                _mainForm?.UpdateCARPTimeSpan(start,end);
+            };
+            _processMessages.FLARMCARPPoints += (long points) =>
+            {
+                if (_mainForm != null)
+                {
+                    _mainForm.CarpPoints = points;
+                }
+            };
         }
 
         public void Dispose()

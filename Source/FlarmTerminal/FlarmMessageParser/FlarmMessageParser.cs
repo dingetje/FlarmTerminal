@@ -233,7 +233,7 @@ namespace FlarmTerminal
                                     WriteProperties(key, value == "0" ? "Disabled" : "Enabled");
                                     break;
                                 case "SWVER":
-                                    WriteProperties("Software Version", value);
+                                    WriteProperties("Firmware Version", value);
                                     break;
                                 case "FLARMVER":
                                     WriteProperties("FLARM Version", value);

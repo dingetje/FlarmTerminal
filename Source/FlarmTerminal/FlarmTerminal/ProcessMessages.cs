@@ -37,18 +37,25 @@ namespace FlarmTerminal
     internal class ProcessMessages
     {
         private delegate void ProcessCommandDelegate(object[] parameters);
+
         private Dictionary<UCNLNMEA.SentenceIdentifiers, ProcessCommandDelegate> commandProcessor;
 
-        public delegate void NewFixHandler(DateTime fixTime, GeographicDimension latitude, GeographicDimension longitude);
+        public delegate void NewFixHandler(DateTime fixTime, GeographicDimension latitude,
+            GeographicDimension longitude);
+
         public NewFixHandler NewFix;
 
-        public delegate void GroundSpeedMeasurementHandler(double trackTrue, double trackMagnetic, double speedKnots, string skUnits, double speedKmh, string sKmUnits);
+        public delegate void GroundSpeedMeasurementHandler(double trackTrue, double trackMagnetic, double speedKnots,
+            string skUnits, double speedKmh, string sKmUnits);
+
         public GroundSpeedMeasurementHandler GroundSpeedMeashurement;
 
         public delegate void SatellitesInfoUpdatedHandler(SatelliteData[] satellites);
+
         public SatellitesInfoUpdatedHandler SatellitesInfoUpdated;
 
         public delegate void GPSTextReceivedHandler(string text);
+
         public GPSTextReceivedHandler GPSTextReceived = null;
 
         delegate T NullChecker<T>(object parameter);
@@ -56,6 +63,7 @@ namespace FlarmTerminal
         NullChecker<int> intNullChecker = (x => x == null ? -1 : (int)x);
         NullChecker<double> dobleNullChecker = (x => x == null ? double.NaN : (double)x);
         NullChecker<string> stringNullChecker = (x => x == null ? string.Empty : (string)x);
+
         public delegate void GlobalGPSDataHandler(DateTime date,
             string GPSQuality, int usedSatellitesNumber,
             double precisionHorizontalDilution, double antennaAltitude, string altitudeUnits,
@@ -64,26 +72,38 @@ namespace FlarmTerminal
 
         // update four LEDs on the FLARM device for RX,TX, GPS, Power
         public delegate void LedUpdate(bool[] on);
+
         public LedUpdate FLARMLedStatusRecieved = null;
 
         // update for upper and lower LEDs
         public delegate void LedUpdateAboveLower(bool[] on, bool Alarm);
+
         public LedUpdateAboveLower FLARMLedAboveBelowStatusRecieved;
 
         public delegate void LedDirection(bool[] on, int AlarmLevel);
+
         public LedDirection FLARMLedDirectionRecieved = null;
 
         public GlobalGPSDataHandler GlobalGPSData = null;
         List<SatelliteData> satellites;
-        
+
+        public delegate void CARPDataReceived(char antenna, double[] rangeDoubles);
+        public CARPDataReceived FLARMCARPDataReceived = null;
+
+        public delegate void CARPTimeSpan(DateTime startTime, DateTime endTime);
+        public CARPTimeSpan FLARMCARPTimeSpanReceived = null;
+
+        public delegate void CARPPointStats(long pointCount);
+        public CARPPointStats FLARMCARPPoints = null;
+
         public ProcessMessages()
         {
             commandProcessor = new Dictionary<SentenceIdentifiers, ProcessCommandDelegate>()
             {
-                { UCNLNMEA.SentenceIdentifiers.GGA, new ProcessCommandDelegate(ProcessGGA)},
-                { UCNLNMEA.SentenceIdentifiers.GSV, new ProcessCommandDelegate(ProcessGSV)},
-                { UCNLNMEA.SentenceIdentifiers.GLL, new ProcessCommandDelegate(ProcessGLL)},
-                { UCNLNMEA.SentenceIdentifiers.RMC, new ProcessCommandDelegate(ProcessRMC)},
+                { UCNLNMEA.SentenceIdentifiers.GGA, new ProcessCommandDelegate(ProcessGGA) },
+                { UCNLNMEA.SentenceIdentifiers.GSV, new ProcessCommandDelegate(ProcessGSV) },
+                { UCNLNMEA.SentenceIdentifiers.GLL, new ProcessCommandDelegate(ProcessGLL) },
+                { UCNLNMEA.SentenceIdentifiers.RMC, new ProcessCommandDelegate(ProcessRMC) },
 //                { NMEA.SentenceIdentifiers.VTG, new ProcessCommandDelegate(ProcessVTG)},
 //                { NMEA.SentenceIdentifiers.TXT, new ProcessCommandDelegate(ProcessTXT)}
             };
@@ -103,19 +123,24 @@ namespace FlarmTerminal
                 //
             }
         }
+
         public void Process(NMEAProprietarySentence nmea)
         {
             try
             {
-                switch(nmea.Manufacturer)
+                switch (nmea.Manufacturer)
                 {
                     case ManufacturerCodes.FLA:
-                        switch(nmea.SentenceIDString)
+                        switch (nmea.SentenceIDString)
                         {
                             case "U":
                                 ProcessFLAU(nmea.parameters);
                                 break;
+                            case "N":
+                                ProcessFLAN(nmea.parameters);
+                                break;
                         }
+
                         break;
                 }
 
@@ -135,6 +160,7 @@ namespace FlarmTerminal
                 {
                     date = (DateTime)parameters[0];
                 }
+
                 var gpsQualityIndicator = (string)parameters[5];
                 var satellitesInUse = intNullChecker(parameters[6]);
                 var precisionHorizontalDilution = dobleNullChecker(parameters[7]);
@@ -146,7 +172,8 @@ namespace FlarmTerminal
 
                 if (GlobalGPSData != null)
                 {
-                    GlobalGPSData(date, gpsQualityIndicator, satellitesInUse, precisionHorizontalDilution, antennaAltitude, antennaAltitudeUnits,
+                    GlobalGPSData(date, gpsQualityIndicator, satellitesInUse, precisionHorizontalDilution,
+                        antennaAltitude, antennaAltitudeUnits,
                         geoidalSeparation, geoidalSeparationUnits, differentialReferenceStation);
                 }
             }
@@ -208,8 +235,10 @@ namespace FlarmTerminal
                     if (NewFix != null)
                     {
                         NewFix((DateTime)parameters[4],
-                            new GeographicDimension((double)parameters[0], (Cardinals)Enum.Parse(typeof(Cardinals), (string)parameters[1])),
-                            new GeographicDimension((double)parameters[2], (Cardinals)Enum.Parse(typeof(Cardinals), (string)parameters[3])));
+                            new GeographicDimension((double)parameters[0],
+                                (Cardinals)Enum.Parse(typeof(Cardinals), (string)parameters[1])),
+                            new GeographicDimension((double)parameters[2],
+                                (Cardinals)Enum.Parse(typeof(Cardinals), (string)parameters[3])));
                     }
                 }
             }
@@ -277,8 +306,10 @@ namespace FlarmTerminal
                     {
                         ledStatus[i] = (int)parameters[i] != 0;
                     }
+
                     FLARMLedStatusRecieved?.Invoke(ledStatus);
                 }
+
                 // all required data and delegate defined?
                 if (FLARMLedAboveBelowStatusRecieved != null && parameters[6] != null && parameters[7] != null)
                 {
@@ -289,6 +320,7 @@ namespace FlarmTerminal
                     ledStatus[1] = !ledStatus[0];
                     FLARMLedAboveBelowStatusRecieved?.Invoke(ledStatus, Alarm);
                 }
+
                 if (FLARMLedDirectionRecieved != null)
                 {
                     if (parameters[5] != null)
@@ -362,9 +394,90 @@ namespace FlarmTerminal
                                 ledStatus[9] = true;
                             }
                         }
+
                         Debug.WriteLine("Relative Bearing: " + RelativeBearing);
                         Debug.WriteLine("LED Status: " + string.Join(",", ledStatus));
                         FLARMLedDirectionRecieved?.Invoke(ledStatus, AlarmLevel);
+                    }
+                }
+            }
+            catch
+            {
+                //
+            }
+        }
+
+        /// <summary>
+        /// PFLAN,A,RANGE
+        ///
+        /// This is the CARP range data for PowerFlarm only
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <remarks>
+        /// Example:
+        /// $PFLAN,R,RANGE
+        /// $PFLAN,A,RANGE,RFTOP,A,3637,4986,5080,4423,4311,4061,3733,4131,4743,4774,4330,4428,3299,3177,3477,2849,2632,2937,2552,2553*5E
+        /// $PFLAN,A,RANGE,RFCNT,A,2460,2277,2119,1777,1571,1824,2438,2807,3365,4405,3134,2397,2118,1927,1957,1997,2070,1955,1796,2581*4A
+        /// $PFLAN,A,RANGE,RFDEV,A,3342,4797,4638,3907,16704,13749,2910,3640,4232,4103,11965,16312,3058,3549,3640,2821,2587,15203,2561,2305*79
+        /// $PFLAN,A,RANGE,RFTOP,B,2092,2258,1837,1754,2730,2525,3412,3190,3189,2728,1743,2464,2118,1825,1965,1807,1472,1587,1526,1576*57
+        /// $PFLAN,A,RANGE,RFCNT,B,793,511,392,409,633,807,830,695,676,1184,1228,1339,1456,1697,1506,1347,1227,1149,1023,1172*79
+        /// $PFLAN,A,RANGE,RFDEV,B,2465,2731,2246,2136,2737,2398,18519,3477,3991,3477,1813,2644,1909,1557,1886,1430,1287,1494,1676,1536*71
+        /// $PFLAN,A,RANGE,STATS,67049*36
+        /// $PFLAN,A,RANGE,TIMESPAN,1620905845,1632663140*7E
+        /// $PFLAN,A,RANGE*4B
+        /// </remarks>
+        private void ProcessFLAN(object[] parameters)
+        {
+            try
+            {
+                if (parameters[0] != null)
+                {
+                    if (parameters.Length == 24 && (string)parameters[0] == "A" && (string)parameters[1] == "RANGE")
+                    {
+                        if ((string)parameters[2] == "RFTOP" || (string)parameters[2] == "RFCNT" || (string)parameters[2] == "RFDEV")
+                        {
+                            char antenna = parameters[3].ToString()[0];
+                            switch ((string)parameters[2])
+                            {
+                                case "RFCNT":
+                                    break;
+                                case "RFTOP":
+                                    if (FLARMCARPDataReceived != null)
+                                    {
+                                        double[] rangeDoubles = new double[20];
+                                        for (int i = 0; i < 20; i++)
+                                        {
+                                            rangeDoubles[i] = Convert.ToDouble(parameters[4 + i]);
+                                        }
+                                        FLARMCARPDataReceived?.Invoke(antenna, rangeDoubles);
+                                    }
+                                    break;
+                                case "RFDEV":
+                                    break;
+                            }
+                        }
+                    }
+                    if (parameters.Length == 4 && (string)parameters[2] == "STATS")
+                    {
+                        if (FLARMCARPPoints != null)
+                        {
+                            var points = Convert.ToInt64(parameters[3]);
+                            FLARMCARPPoints?.Invoke(points);
+                        }
+                    }
+                    if (parameters.Length == 5 && (string)parameters[2] == "TIMESPAN")
+                    {
+                        if (FLARMCARPTimeSpanReceived != null)
+                        {
+                            // Convert UNIX timestamps to DateTime
+                            var timestamp1 = Convert.ToInt64(parameters[3]);
+                            var timestamp2 = Convert.ToInt64(parameters[4]);
+                            var dateTimeStart = DateTimeOffset.FromUnixTimeSeconds(timestamp1).UtcDateTime;
+                            var dateTimeEnd = DateTimeOffset.FromUnixTimeSeconds(timestamp2).UtcDateTime;
+
+                            // Invoke the delegate with the times
+                            FLARMCARPTimeSpanReceived?.Invoke(dateTimeStart,dateTimeEnd);
+                        }
                     }
                 }
             }

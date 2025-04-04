@@ -1303,7 +1303,19 @@ namespace UCNLNMEA
                             // Version information after startup. Allow at least 20 s after power-up.
                             // Version information should be passed to the user.
                             // Example: $PFLAV,A,1.00,7.22,*0A (no obstacle database)
-                            {"V", "c-c,x.x,x.x,c-c" }
+                            {"V", "c-c,x.x,x.x,c-c" },
+
+                            // $PFLAN,A,RANGE,RFTOP,A,3637,4986,5080,4423,4311,4061,3733,4131,4743,4774,4330,4428,3299,3177,3477,2849,2632,2937,2552,2553*5E
+                            // $PFLAN,A,RANGE,RFCNT,A,2460,2277,2119,1777,1571,1824,2438,2807,3365,4405,3134,2397,2118,1927,1957,1997,2070,1955,1796,2581*4A
+                            // $PFLAN,A,RANGE,RFDEV,A,3342,4797,4638,3907,16704,13749,2910,3640,4232,4103,11965,16312,3058,3549,3640,2821,2587,15203,2561,2305*79
+                            //
+                            // CARP range in meters and count of objects in the range. Can be for antenna A or B
+                            //
+                            // $PFLAN,A,RANGE,STATS,67049*36
+                            // $PFLAN,A,RANGE,TIMESPAN,1620905845,1632663140*7E
+                            //
+                            // Time span in seconds since 1-1-1970 UTC
+                            {"N", "A,RANGE,c-c,c,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x" }
                         }
                 },
                 #endregion

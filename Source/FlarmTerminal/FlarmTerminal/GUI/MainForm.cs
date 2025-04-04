@@ -51,12 +51,22 @@ namespace FlarmTerminal
         private FlarmDisplay? _flarmDisplay = null;
         private Serilog.ILogger _log;
 
-        private string headerText = Program.ApplicationName;
-        private string footerText = "Page {0}";
-        private int _currentPrintPosition;
-        private int _currentPageNumber;
-
+        private Dictionary<char, List<double>> _carpData = new Dictionary<char, List<double>>();
         private Dictionary<string, string> _properties = new Dictionary<string, string>();
+
+        private CarpDateTime _carpDateTime = new();
+        
+        public CarpDateTime CarpDateTime
+        {
+            get { return _carpDateTime; }
+        }
+
+        public Dictionary<string,string> DeviceProperties
+        {
+            get { return _properties; }
+        }
+
+        public long CarpPoints { get; set; } = 0;
 
         private enum DataSource
         {
@@ -66,9 +76,15 @@ namespace FlarmTerminal
 
         private DataSource _dataSource = DataSource.SOURCE_FLARM;
 
-        public bool IsClosing { get => _isClosing; }
+        public bool IsClosing
+        {
+            get => _isClosing;
+        }
 
-        public bool IsPaused { get => _isPaused; }
+        public bool IsPaused
+        {
+            get => _isPaused;
+        }
 
         public MainForm(Serilog.ILogger log)
         {
@@ -77,6 +93,11 @@ namespace FlarmTerminal
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
             toolStripStatusComPortProperties.Text = COMPortSettingsToString();
+            // add flarm parser and event handler for new data
+            _flarmMessagesParser = new FlarmMessagesParser();
+            _flarmMessagesParser.NewPropertiesData += HandleNewPropertiesData;
+            _flarmMessagesParser.IGCEnabledDetected += HandleIGCEnabled;
+            _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
         }
 
         private void PrintPropertiesRichTextBox()
@@ -84,6 +105,7 @@ namespace FlarmTerminal
             RtfPrint.RichTextBox = richTextBoxProperties;
             RtfPrint.PrintRichTextContents(true, true);
         }
+
         private void PrintTerminalRichTextBox()
         {
             RtfPrint.RichTextBox = textBoxTerminal;
@@ -109,9 +131,11 @@ namespace FlarmTerminal
                     settings += "O";
                     break;
             }
+
             settings += $"{Properties.Settings.Default.StopBits}";
             return settings;
         }
+
         private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
         {
             _isClosing = true;
@@ -154,9 +178,12 @@ namespace FlarmTerminal
                             Properties.Settings.Default.StopBits = 2;
                             break;
                     }
+
                     Properties.Settings.Default.Parity = comportconfig.Parity.ToString();
-                    _log.Information($"COM port properties: Name: '{_serialPortInfo.PortName}', Baud Rate: {comportconfig.BaudRate}, Data Bits: {comportconfig.DataBits}, Stop Bits: {Properties.Settings.Default.StopBits}, Parity: {comportconfig.Parity}, Hand Shake: {comportconfig.HandShake}");
-                    var path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+                    _log.Information(
+                        $"COM port properties: Name: '{_serialPortInfo.PortName}', Baud Rate: {comportconfig.BaudRate}, Data Bits: {comportconfig.DataBits}, Stop Bits: {Properties.Settings.Default.StopBits}, Parity: {comportconfig.Parity}, Hand Shake: {comportconfig.HandShake}");
+                    var path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal)
+                        .FilePath;
                     _log.Debug($"COM port configuration path: {path}");
                     Properties.Settings.Default.Save();
                 }
@@ -165,9 +192,9 @@ namespace FlarmTerminal
                     using (new CenterWinDialog(this))
                     {
                         MessageBox.Show($"Failed to save COM port '{_serialPortInfo.PortName}', Error: {ex.Message}",
-                                Program.ApplicationName,
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                            Program.ApplicationName,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 }
             }
@@ -187,6 +214,7 @@ namespace FlarmTerminal
                         {
                             pout = ptmp;
                         }
+
                         StopBits sb = StopBits.One;
                         switch (Properties.Settings.Default.StopBits)
                         {
@@ -200,12 +228,12 @@ namespace FlarmTerminal
                         }
 
                         _comPortHandler = new COMPortHandler(this,
-                                                                 _log,
-                                                                 _serialPortInfo.PortName,
-                                                                 Properties.Settings.Default.BaudRate,
-                                                                 Properties.Settings.Default.DataBits,
-                                                                 ptmp,
-                                                                 sb);
+                            _log,
+                            _serialPortInfo.PortName,
+                            Properties.Settings.Default.BaudRate,
+                            Properties.Settings.Default.DataBits,
+                            ptmp,
+                            sb);
                         _log.Information($"Connecting with COM port: {_serialPortInfo.PortName}...");
                         _comPortHandler.Connect();
                         // we're connected!
@@ -215,11 +243,6 @@ namespace FlarmTerminal
                         toolStripStatusComPortProperties.Text = _comPortHandler.GetPortProperties();
                         // don't allow to change COM port while connected
                         COMPortToolStripMenuItem.Enabled = false;
-                        // add flarm parser and event handler for new data
-                        _flarmMessagesParser = new FlarmMessagesParser();
-                        _flarmMessagesParser.NewPropertiesData += HandleNewPropertiesData;
-                        _flarmMessagesParser.IGCEnabledDetected += HandleIGCEnabled;
-                        _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
                         Application.DoEvents();
                     }
                 }
@@ -231,8 +254,8 @@ namespace FlarmTerminal
                         _log.Error(msg);
                         MessageBox.Show(msg,
                             Program.ApplicationName,
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 }
             }
@@ -243,9 +266,9 @@ namespace FlarmTerminal
                     var msg = $"Select COM port first in settings dialog";
                     _log.Warning(msg);
                     MessageBox.Show(msg,
-                    Program.ApplicationName,
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                        Program.ApplicationName,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
         }
@@ -256,6 +279,7 @@ namespace FlarmTerminal
             {
                 return;
             }
+
             if (textBoxTerminal.InvokeRequired)
             {
                 textBoxTerminal.Invoke(new EventHandler(delegate
@@ -264,6 +288,7 @@ namespace FlarmTerminal
                     {
                         _isInitialized = false;
                     }
+
                     // selftest status?
                     if (!_isInitialized && serialData.Contains("$PFLAE,A,"))
                     {
@@ -285,6 +310,7 @@ namespace FlarmTerminal
                             _requestSelfTestResultsMode = false;
                         }
                     }
+
                     if (serialData.StartsWith("$PFLAC,A,CLEARMEM,"))
                     {
                         var items = serialData.Split(',');
@@ -302,23 +328,27 @@ namespace FlarmTerminal
                                     toolStripStatusLabelClearMemory.Visible = false;
                                     using (new CenterWinDialog(this))
                                     {
-                                        MessageBox.Show("FLARM memory cleared", ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        MessageBox.Show("FLARM memory cleared", ProductName, MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
                                     }
                                 }
                             }
                         }
                     }
+
                     // properties?
                     if (serialData.StartsWith("$PFLAC,A,") && _flarmMessagesParser != null)
                     {
                         _flarmMessagesParser.ParseProperties(serialData);
                         textBoxTerminal.SelectionColor = System.Drawing.Color.Blue;
                     }
+
                     if (_isRecording && _fsRecording != null)
                     {
                         var bytes = System.Text.Encoding.ASCII.GetBytes(serialData);
                         _fsRecording.Write(bytes, 0, bytes.Length);
                     }
+
                     if (_lastCommand != string.Empty && serialData.StartsWith(_lastCommand + ",A"))
                     {
                         textBoxTerminal.SelectionColor = System.Drawing.Color.Blue;
@@ -329,6 +359,7 @@ namespace FlarmTerminal
                     {
                         textBoxTerminal.AppendText(serialData);
                     }
+
                     Application.DoEvents();
                 }));
             }
@@ -344,6 +375,7 @@ namespace FlarmTerminal
             {
                 return _comPortHandler.IsConnected;
             }
+
             return false;
         }
 
@@ -366,9 +398,9 @@ namespace FlarmTerminal
                     using (new CenterWinDialog(this))
                     {
                         MessageBox.Show($"Failed to close COM port '{_serialPortInfo.PortName}', Error: {ex.Message}",
-                        Program.ApplicationName,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                            Program.ApplicationName,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
                 }
             }
@@ -383,8 +415,10 @@ namespace FlarmTerminal
                 {
                     toolStripStatusLabelPort.Text = _serialPortInfo.Caption;
                 }
+
                 autoConnectToolStripMenuItem.Checked = Properties.Settings.Default.AutoConnect;
             }
+
             DoubleBuffered = true;
 
             _flarmDisplay = new FlarmDisplay(this);
@@ -429,9 +463,17 @@ namespace FlarmTerminal
         {
             WriteCommand("$PFLAN,R,RANGE");
             // allow to get response
-            Thread.Sleep(500);
-            var carpDialog = new CARPRadarPlot();
-            carpDialog.Show();
+            Thread.Sleep(2000);
+            if (_carpData.ContainsKey('A'))
+            {
+                var carpDialog = new CARPRadarPlot(this);
+                carpDialog.Show();
+            }
+            else
+            {
+                MessageBox.Show("Sorry, no CARP data available", ProductName, MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+            }
         }
 
         private void requestSelftestResultToolStripMenuItem_Click(object sender, EventArgs e)
@@ -531,12 +573,14 @@ namespace FlarmTerminal
                     WriteCommand($"$PFLAC,R,{item}");
                     Application.DoEvents();
                 }
+
                 Thread.Sleep(100);
                 Application.DoEvents();
                 // read radio ID and stop properties reading mode
                 WriteCommand($"$PFLAC,R,RADIOID");
             }
         }
+
         private void HandleIGCEnabled(object? sender, bool e)
         {
             foreach (var item in Enum.GetValues(typeof(FlarmProperties.IGCSpecific)))
@@ -544,6 +588,7 @@ namespace FlarmTerminal
                 WriteCommand($"$PFLAC,R,{item}");
             }
         }
+
         private void HandleDualPortEnabled(object? sender, bool e)
         {
             foreach (var item in Enum.GetValues(typeof(FlarmProperties.PowerFlarmSpecific)))
@@ -560,6 +605,7 @@ namespace FlarmTerminal
             {
                 keyPadRight += " ";
             }
+
             WriteToProperties($"{keyPadRight}: {value}\r\n");
         }
 
@@ -592,7 +638,9 @@ namespace FlarmTerminal
             ReadProperties();
         }
 
-        internal void UpdateGPSData(DateTime date, string gPSQuality, int usedSatellitesNumber, double precisionHorizontalDilution, double antennaAltitude, string altitudeUnits, double geoidalSeparation, string geoidalSeparationUnits, int differentialReferenceStation)
+        internal void UpdateGPSData(DateTime date, string gPSQuality, int usedSatellitesNumber,
+            double precisionHorizontalDilution, double antennaAltitude, string altitudeUnits, double geoidalSeparation,
+            string geoidalSeparationUnits, int differentialReferenceStation)
         {
             toolStripStatusLabelGPSUTC.Text = "UTC: " + date.ToString("HH:mm:ss");
         }
@@ -629,11 +677,12 @@ namespace FlarmTerminal
                     try
                     {
                         _rawFlarmDataFile = File.ReadAllText(opnDlg.FileName);
-                        _lines = _rawFlarmDataFile.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
+                        _lines = _rawFlarmDataFile.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)
+                            .ToList();
                         _lineIndex = 0;
                         _dataSource = DataSource.SOURCE_FILE;
                         _rawFileTimer = new System.Timers.Timer();
-                        _rawFileTimer.Interval = 500;
+                        _rawFileTimer.Interval = 250;
                         _rawFileTimer.AutoReset = false;
                         _rawFileTimer.Enabled = true;
                         _isStopped = false;
@@ -678,6 +727,7 @@ namespace FlarmTerminal
                 _isStopped = false;
                 EnableFileTimer(true);
             }
+
             _isPaused = false;
         }
 
@@ -687,6 +737,7 @@ namespace FlarmTerminal
             {
                 EnableFileTimer(false);
             }
+
             _isPaused = true;
         }
 
@@ -723,6 +774,7 @@ namespace FlarmTerminal
                     _fsRecording.Close();
                     _fsRecording = null;
                 }
+
                 _isRecording = false;
                 recordTtimer.Enabled = false;
                 toolStripButtonRecord.Image = Resources.record;
@@ -745,7 +797,7 @@ namespace FlarmTerminal
                     catch (Exception ex)
                     {
                         MessageBox.Show("Failed to open file for recording: Error: " + ex.ToString(),
-                                                       ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -799,8 +851,10 @@ namespace FlarmTerminal
         {
             if (_flarmDisplay != null)
             {
-                _flarmDisplay.SetLED(FlarmDisplay.LEDNames.RX, on[0] ? FlarmDisplay.LEDColor.Green : FlarmDisplay.LEDColor.Off, true);
-                _flarmDisplay.SetLED(FlarmDisplay.LEDNames.TX, on[1] ? FlarmDisplay.LEDColor.Green : FlarmDisplay.LEDColor.Off, true);
+                _flarmDisplay.SetLED(FlarmDisplay.LEDNames.RX,
+                    on[0] ? FlarmDisplay.LEDColor.Green : FlarmDisplay.LEDColor.Off, true);
+                _flarmDisplay.SetLED(FlarmDisplay.LEDNames.TX,
+                    on[1] ? FlarmDisplay.LEDColor.Green : FlarmDisplay.LEDColor.Off, true);
                 if (on[3])
                 {
                     // if Power is on, GPS is either green or blinking red (no lock)
@@ -818,7 +872,9 @@ namespace FlarmTerminal
                     // if Power is off, GPS is also off
                     _flarmDisplay.SetLED(FlarmDisplay.LEDNames.GPS, FlarmDisplay.LEDColor.Off, false);
                 }
-                _flarmDisplay.SetLED(FlarmDisplay.LEDNames.Power, on[3] ? FlarmDisplay.LEDColor.Green : FlarmDisplay.LEDColor.Red, false);
+
+                _flarmDisplay.SetLED(FlarmDisplay.LEDNames.Power,
+                    on[3] ? FlarmDisplay.LEDColor.Green : FlarmDisplay.LEDColor.Red, false);
             }
         }
 
@@ -855,7 +911,8 @@ namespace FlarmTerminal
 
         private void resetToFactorySettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to reset this FLARM to factory settings?", ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to reset this FLARM to factory settings?", ProductName,
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 WriteCommand("$PFLAR,99");
             }
@@ -863,7 +920,8 @@ namespace FlarmTerminal
 
         private void clearMemoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM?", ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM?", ProductName,
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 WriteCommand("$PFLAC,S,CLEARMEM");
             }
@@ -871,7 +929,8 @@ namespace FlarmTerminal
 
         private void clearAllFlightLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM?", ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM?", ProductName,
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 WriteCommand("$PFLAC,CLEARLOGS");
             }
@@ -915,6 +974,7 @@ namespace FlarmTerminal
                     return _properties["ID"];
                 }
             }
+
             return "";
         }
 
@@ -926,6 +986,35 @@ namespace FlarmTerminal
         private void printRawSerialToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PrintTerminalRichTextBox();
+        }
+
+        internal void UpdateCARPRadar(char antenna, double[] rangeDoubles)
+        {
+            switch (antenna)
+            {
+                case 'A':
+                    _carpData['A'] = rangeDoubles.ToList();
+                    break;
+                case 'B':
+                    _carpData['B'] = rangeDoubles.ToList();
+                    break;
+                default:
+                    break;
+            }
+        }
+        public List<double>? GetCARPData(char antenna)
+        {
+            if (_carpData.TryGetValue(antenna, out var data))
+            {
+                return data;
+            }
+            return null;
+        }
+
+        internal void UpdateCARPTimeSpan(DateTime start, DateTime end)
+        {
+            _carpDateTime.startTime = start;
+            _carpDateTime.endTime = end;
         }
     }
 }
