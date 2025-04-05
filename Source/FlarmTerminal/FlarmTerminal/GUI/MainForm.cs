@@ -4,6 +4,7 @@ using System;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Configuration;
 using RJCP.IO.Ports;
 using Parity = RJCP.IO.Ports.Parity;
@@ -102,6 +103,8 @@ namespace FlarmTerminal
             _flarmMessagesParser.NewPropertiesData += HandleNewPropertiesData;
             _flarmMessagesParser.IGCEnabledDetected += HandleIGCEnabled;
             _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
+            // init the hanging indent for the properties window
+            SetSelectionHangingIndent(richTextBoxProperties, 20);
         }
 
         private void PrintPropertiesRichTextBox()
@@ -606,6 +609,11 @@ namespace FlarmTerminal
                 // issue all commands to read common properties
                 foreach (var item in Enum.GetValues(typeof(FlarmProperties.ConfigurationItems)))
                 {
+                    // read below as last item
+                    if (item.ToString() == "RADIOID")
+                    {
+                        continue;
+                    }
                     WriteCommand($"$PFLAC,R,{item}");
                     Application.DoEvents();
                 }
@@ -637,7 +645,7 @@ namespace FlarmTerminal
         {
             _properties[key] = value;
             var keyPadRight = key;
-            while (keyPadRight.Length < 18)
+            while (keyPadRight.Length < 20)
             {
                 keyPadRight += " ";
             }
@@ -653,12 +661,41 @@ namespace FlarmTerminal
             }
         }
 
-        public void WriteToProperties(string strLogMessage)
+        /// <summary>
+        /// Helper to set the hanging indent for the RichTextBox
+        /// </summary>
+        /// <param name="richTextBox"></param>
+        /// <param name="characterCount"></param>
+        public void SetSelectionHangingIndent(RichTextBox richTextBox, int characterCount)
+        {
+            int fudgeValue = 6; // Adjust this value to increase or decrease the indent
+
+            // Get the font used in the RichTextBox
+            Font font = richTextBox.SelectionFont ?? richTextBox.Font;
+
+            // Create a Graphics object to measure the width of the character
+            using (Graphics g = richTextBox.CreateGraphics())
+            {
+                // Measure the width of a string of multiple characters
+                string sampleText = new string('x', 10);
+                SizeF size = g.MeasureString(sampleText, font);
+
+                // Calculate the average width of a single character
+                float averageCharWidth = size.Width / 10;
+
+                // Calculate the hanging indent based on the character count
+                int hangingIndent = (int)(averageCharWidth * characterCount) + fudgeValue;
+
+                // Set the SelectionHangingIndent property width in pixels
+                richTextBox.SelectionHangingIndent = hangingIndent;
+            }
+        }
+
+    public void WriteToProperties(string strLogMessage)
         {
             richTextBoxProperties.Invoke(new EventHandler(delegate
             {
                 richTextBoxProperties.SelectionColor = System.Drawing.Color.Blue;
-                richTextBoxProperties.SelectionHangingIndent = 160;
                 richTextBoxProperties.SelectedText = strLogMessage;
             }));
         }

@@ -103,23 +103,55 @@ namespace FlarmTerminal.GUI
             }
         }
 
+        private string AlignProperty(string key)
+        {
+            key += ":";
+            while (key.Length < 20)
+            {
+                key += ' ';
+            }
+
+            return key;
+        }
+
+        private void PropertyDrawHelper(FlarmProperties.ConfigurationItems item, int posX, int posY, PaintEventArgs e)
+        {
+            var font = new Font("Consolas", 9);
+            var brush = Brushes.Black;
+            var key = FlarmProperties.GetConfigName(item);
+            if (!string.IsNullOrEmpty(key))
+            {
+                var text = AlignProperty(key);
+                if (_mainForm != null && _mainForm.DeviceProperties.ContainsKey(key))
+                {
+                    text += _mainForm?.DeviceProperties[key];
+                }
+
+                // Define the location to draw the string
+                var point = new PointF(posX, posY); // Adjust the coordinates as needed
+                // Draw the string
+                e.Graphics.DrawString(text, font, brush, point);
+            }
+        }
         private void groupBoxDevice_Paint(object sender, PaintEventArgs e)
         {
-            var deviceText = "Flight recorder:      ";
-            var key = FlarmProperties.GetConfigName(FlarmProperties.ConfigurationItems.DEVTYPE);
-            if (_mainForm != null && _mainForm.DeviceProperties.ContainsKey(key))
-            {
-                deviceText += _mainForm?.DeviceProperties[key];
-            }
-            // Define the font and brush
-            var font = new Font("Segoe UI", 10);
-            var brush = Brushes.Black;
+            var posLeft = 15;
+            var posRight = 350;
+            var lineOffset = 20;
+            var topOffset = 10;
 
-            // Define the location to draw the string
-            var point = new PointF(10, 25); // Adjust the coordinates as needed
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.DEVTYPE, posLeft, topOffset + lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.DEVICEID, posLeft, topOffset + 2 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.SWVER, posLeft, topOffset + 3 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.FLARMVER, posLeft, topOffset + 4 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.RADIOID, posLeft, topOffset + 5 * lineOffset, e);
 
-            // Draw the string
-            e.Graphics.DrawString(deviceText, font, brush, point);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.ACFT, posRight, topOffset + lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.GLIDERTYPE, posRight, topOffset + 2 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.GLIDERID, posRight, topOffset + 3 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.COMPID, posRight, topOffset + 4 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.PRIV, posRight, topOffset + 5 * lineOffset, e);
+            PropertyDrawHelper(FlarmProperties.ConfigurationItems.NOTRACK, posRight, topOffset + 6 * lineOffset, e);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -134,7 +166,7 @@ namespace FlarmTerminal.GUI
                 var remarksText = "Recorded range of the combined antennas is lower than the minimum safe range. Check your installation!";
 
                 // Define the font and brush
-                var font = new Font("Segoe UI", 10, FontStyle.Bold);
+                var font = new Font("Consolas", 9, FontStyle.Bold);
                 var brush = Brushes.Red;
 
                 // Define the location to draw the string
@@ -150,7 +182,7 @@ namespace FlarmTerminal.GUI
                 var startTimeUtc = carpTime.startTime.ToUniversalTime().ToString("u");
                 var endTimeUtc = carpTime.endTime.ToUniversalTime().ToString("u");
                 var carpTimeLabel = $"Plot is based on CARP data collected between {startTimeUtc} UTC and {endTimeUtc} UTC";
-                var font = new Font("Segoe UI", 10);
+                var font = new Font("Consolas", 9);
                 var brush = Brushes.Black;
 
                 // Define the location to draw the string
@@ -171,7 +203,7 @@ namespace FlarmTerminal.GUI
                 {
                     carpPointText += "range should be representative";
                 }
-                var font = new Font("Segoe UI", 10);
+                var font = new Font("Consolas", 9);
                 var brush = Brushes.Black;
 
                 // Define the location to draw the string

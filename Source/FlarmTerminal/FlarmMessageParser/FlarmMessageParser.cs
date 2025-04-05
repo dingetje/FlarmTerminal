@@ -78,7 +78,9 @@ namespace FlarmTerminal
                         {
                             var key = items[2];
                             var value = StripChecksum(items[3].Replace("\r\n", ""));
+                            // default use raw key as property name
                             var propertyName = key;
+                            // but if found in the enum, use the human friendly name
                             if (Enum.TryParse(key, out FlarmProperties.ConfigurationItems configItem))
                             {
                                 propertyName = FlarmProperties.GetConfigName(configItem);
@@ -89,50 +91,50 @@ namespace FlarmTerminal
                                     switch (value)
                                     {
                                         case "1":
-                                            WriteProperties(key, "Glider/Motor Glider");
+                                            WriteProperties(propertyName, "Glider/Motor Glider");
                                             break;
                                         case "2":
-                                            WriteProperties(key, "Tow Plane");
+                                            WriteProperties(propertyName, "Tow Plane");
                                             break;
                                         case "3":
-                                            WriteProperties(key, "Helicopter/Rotorcraft");
+                                            WriteProperties(propertyName, "Helicopter/Rotorcraft");
                                             break;
                                         case "4":
-                                            WriteProperties(key, "Parachute");
+                                            WriteProperties(propertyName, "Parachute");
                                             break;
                                         case "5":
-                                            WriteProperties(key, "Drop plane for skydivers");
+                                            WriteProperties(propertyName, "Drop plane for skydivers");
                                             break;
                                         case "6":
-                                            WriteProperties(key, "Hang glider");
+                                            WriteProperties(propertyName, "Hang glider");
                                             break;
                                         case "7":
-                                            WriteProperties(key, "Para-glider");
+                                            WriteProperties(propertyName, "Para-glider");
                                             break;
                                         case "8":
-                                            WriteProperties(key, "aircraft with reciprocating engine(s)");
+                                            WriteProperties(propertyName, "aircraft with reciprocating engine(s)");
                                             break;
                                         case "9":
-                                            WriteProperties(key, "aircraft with jet/turboprop engine(s)");
+                                            WriteProperties(propertyName, "aircraft with jet/turboprop engine(s)");
                                             break;
                                         case "11":
-                                            WriteProperties(key, "Balloon");
+                                            WriteProperties(propertyName, "Balloon");
                                             break;
                                         case "12":
-                                            WriteProperties(key, "Airship");
+                                            WriteProperties(propertyName, "Airship");
                                             break;
                                         case "13":
-                                            WriteProperties(key, "unmanned aerial vehicle (UAV)");
+                                            WriteProperties(propertyName, "unmanned aerial vehicle (UAV)");
                                             break;
                                         case "10":
                                         case "14":
-                                            WriteProperties(key, "Reserved, do not use!");
+                                            WriteProperties(propertyName, "Reserved, do not use!");
                                             break;
                                         case "15":
-                                            WriteProperties(key, "Static Object");
+                                            WriteProperties(propertyName, "Static Object");
                                             break;
                                         default:
-                                            WriteProperties(key, $"Not supported (type={value})");
+                                            WriteProperties(propertyName, $"Not supported (type={value})");
                                             break;
                                     }
                                     break;
@@ -213,30 +215,30 @@ namespace FlarmTerminal
                                         }
                                         else
                                         {
-                                            WriteProperties(key, value);
+                                            WriteProperties(propertyName, value);
                                         }
                                     }
                                     else
                                     {
-                                        WriteProperties(key, value);
+                                        WriteProperties(propertyName, value);
                                     }
                                     break;
                                 case "LOGINT":
-                                    WriteProperties(key, value + " SEC.");
+                                    WriteProperties(propertyName, value + " SEC.");
                                     break;
                                 case "DEVTYPE":
-                                    WriteProperties(key, value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "REGION":
-                                    WriteProperties(key, value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "DEVICEID":
                                 case "ID":
-                                    WriteProperties(key, value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "NOTRACK":
                                 case "PRIV":
-                                    WriteProperties(key, value == "0" ? "Disabled" : "Enabled");
+                                    WriteProperties(propertyName, value == "0" ? "Disabled" : "Enabled");
                                     break;
                                 case "SWVER":
                                     WriteProperties(propertyName, value);
@@ -260,17 +262,17 @@ namespace FlarmTerminal
                                         switch (value)
                                         {
                                             case "1":
-                                                WriteProperties(key, "ICAO=" + radioId);
+                                                WriteProperties(propertyName, "ICAO=" + radioId);
                                                 break;
                                             default:
                                             case "2":
-                                                WriteProperties(key, "FLARMID=" + radioId);
+                                                WriteProperties(propertyName, "FLARMID=" + radioId);
                                                 break;
                                         }
                                     }
                                     else
                                     {
-                                        WriteProperties(key, value);
+                                        WriteProperties(propertyName, value);
                                     }
                                     break;
                                 case "BAUD":
@@ -279,31 +281,31 @@ namespace FlarmTerminal
                                     switch (value)
                                     {
                                         case "0":
-                                            WriteProperties(key, "4800");
+                                            WriteProperties(propertyName, "4800");
                                             break;
                                         case "1":
-                                            WriteProperties(key, "9600");
+                                            WriteProperties(propertyName, "9600");
                                             break;
                                         case "2":
-                                            WriteProperties(key, "19200");
+                                            WriteProperties(propertyName, "19200");
                                             break;
                                         case "3":
-                                            WriteProperties(key, "28800");
+                                            WriteProperties(propertyName, "28800");
                                             break;
                                         case "4":
-                                            WriteProperties(key, "38400");
+                                            WriteProperties(propertyName, "38400");
                                             break;
                                         case "5":
-                                            WriteProperties(key, "57600");
+                                            WriteProperties(propertyName, "57600");
                                             break;
                                         case "6":
-                                            WriteProperties(key, "115200");
+                                            WriteProperties(propertyName, "115200");
                                             break;
                                         case "7":
-                                            WriteProperties(key, "230400");
+                                            WriteProperties(propertyName, "230400");
                                             break;
                                         default:
-                                            WriteProperties(key, value);
+                                            WriteProperties(propertyName, value);
                                             break;
                                     }
                                     break;
@@ -343,7 +345,7 @@ namespace FlarmTerminal
                                                     protocol -= 90;
                                                 }
                                             }
-                                            WriteProperties(key, protocolVersion);
+                                            WriteProperties(propertyName, protocolVersion);
                                             switch (protocol)
                                             {
                                                 case 0:
@@ -372,15 +374,15 @@ namespace FlarmTerminal
                                         }
                                         else
                                         {
-                                            WriteProperties(key, value);
+                                            WriteProperties(propertyName, value);
                                         }
                                     }
                                     break;
                                 case "THRE":
-                                    WriteProperties("Speed threshold", value + " m/s");
+                                    WriteProperties(propertyName, value + " m/s");
                                     break;
                                 default:
-                                    WriteProperties(key, value);
+                                    WriteProperties(propertyName, value);
                                     break;
                             }
                         }

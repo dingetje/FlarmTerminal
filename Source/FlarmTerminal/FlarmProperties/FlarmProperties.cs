@@ -40,6 +40,7 @@ namespace FlarmTerminal
             VOL,
             BATTERYTYPE,
             BRIGHTNESS,
+            RADIOID
         }
 
         private static Dictionary<ConfigurationItems, string> _configNameLookup = new Dictionary<ConfigurationItems, string>
@@ -48,7 +49,7 @@ namespace FlarmTerminal
             { ConfigurationItems.DEVICEID, "Device ID" },
             { ConfigurationItems.CAP, "Capabilities" },
             { ConfigurationItems.SWVER, "Firmware Version" },
-            { ConfigurationItems.SWEXP, "Software Expiration" },
+            { ConfigurationItems.SWEXP, "Expiration" },
             { ConfigurationItems.FLARMVER, "Flarm Version" },
             { ConfigurationItems.BUILD, "Build" },
             { ConfigurationItems.SER, "Serial Number" },
@@ -71,13 +72,14 @@ namespace FlarmTerminal
             { ConfigurationItems.GLIDERTYPE, "Glider Type" },
             { ConfigurationItems.COMPID, "Competition ID" },
             { ConfigurationItems.COMPCLASS, "Competition Class" },
-            { ConfigurationItems.CFLAGS, "Configuration Flags" },
+            { ConfigurationItems.CFLAGS, "Config Flags" },
             { ConfigurationItems.UI, "User Interface" },
             { ConfigurationItems.AUDIOOUT, "Audio Output" },
             { ConfigurationItems.AUDIOVOLUME, "Audio Volume" },
             { ConfigurationItems.VOL, "Volume Level" },
             { ConfigurationItems.BATTERYTYPE, "Battery Type" },
-            { ConfigurationItems.BRIGHTNESS, "Brightness Level" }
+            { ConfigurationItems.BRIGHTNESS, "Brightness Level" },
+            { ConfigurationItems.RADIOID, "Radio ID" }
         };
 
         public static string GetConfigName(ConfigurationItems item)

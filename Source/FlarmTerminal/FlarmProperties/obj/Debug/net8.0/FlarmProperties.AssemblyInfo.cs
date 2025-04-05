@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FlarmProperties")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3b1191d6b4747917ec54578e978b411737634ca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+99060628a4f7683733f939af04f185bc1db685f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("FlarmProperties")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FlarmProperties")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
