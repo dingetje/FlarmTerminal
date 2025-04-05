@@ -65,6 +65,7 @@ namespace FlarmTerminal
 
         public void ParseProperties(string newData)
         {
+            // answer to a property request?
             if (newData.StartsWith("$PFLAC,A,"))
             {
                 lock (locker)
@@ -77,6 +78,11 @@ namespace FlarmTerminal
                         {
                             var key = items[2];
                             var value = StripChecksum(items[3].Replace("\r\n", ""));
+                            var propertyName = key;
+                            if (Enum.TryParse(key, out FlarmProperties.ConfigurationItems configItem))
+                            {
+                                propertyName = FlarmProperties.GetConfigName(configItem);
+                            }
                             switch (key)
                             {
                                 case "ACFT":
@@ -130,7 +136,7 @@ namespace FlarmTerminal
                                             break;
                                     }
                                     break;
-                                case "CAP":
+                                case "CAP": // device capabilities
                                     if (value.Contains(";"))
                                     {
                                         var capabilities = value.Split(';');
@@ -219,7 +225,7 @@ namespace FlarmTerminal
                                     WriteProperties(key, value + " SEC.");
                                     break;
                                 case "DEVTYPE":
-                                    WriteProperties("Device Type", value);
+                                    WriteProperties(key, value);
                                     break;
                                 case "REGION":
                                     WriteProperties(key, value);
@@ -233,19 +239,19 @@ namespace FlarmTerminal
                                     WriteProperties(key, value == "0" ? "Disabled" : "Enabled");
                                     break;
                                 case "SWVER":
-                                    WriteProperties("Firmware Version", value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "FLARMVER":
-                                    WriteProperties("FLARM Version", value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "BUILD":
-                                    WriteProperties("Build Version", value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "SER":
-                                    WriteProperties("Serial Number", value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "SWEXP":
-                                    WriteProperties("Expiration Date", value);
+                                    WriteProperties(propertyName, value);
                                     break;
                                 case "RADIOID":
                                     if (items.Length > 4)

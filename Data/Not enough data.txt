@@ -1,0 +1,3 @@
+Warning: not enough data points collected: 157 - minimum 200.
+Data might not be representative.
+Sectors without sufficient data for reliability are shown with a lighter color.

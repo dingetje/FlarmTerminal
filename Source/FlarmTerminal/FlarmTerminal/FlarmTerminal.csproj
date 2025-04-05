@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlarmMessageParser\FlarmMessageParser.csproj" />
+    <ProjectReference Include="..\FlarmProperties\FlarmProperties.csproj" />
     <ProjectReference Include="..\UCNLNMEA\UCNLNMEA.csproj" />
   </ItemGroup>
   <ItemGroup>

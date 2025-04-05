@@ -1,0 +1,12 @@
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\bin\Debug\net8.0\FlarmProperties.deps.json
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\bin\Debug\net8.0\FlarmProperties.dll
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\bin\Debug\net8.0\FlarmProperties.pdb
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.AssemblyInfoInputs.cache
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.AssemblyInfo.cs
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.csproj.CoreCompileInputs.cache
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.sourcelink.json
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.dll
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\refint\FlarmProperties.dll
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\FlarmProperties.pdb
+C:\Users\antoinem\Dropbox\Projects\FLARM\FlarmTerminal\Source\FlarmTerminal\FlarmProperties\obj\Debug\net8.0\ref\FlarmProperties.dll

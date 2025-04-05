@@ -21,54 +21,21 @@ namespace FlarmTerminal.GUI
         private MainForm? _mainForm = null!;
         private Radar? _radar = null;
 
+        private bool _initializing = true;
         private bool _belowSafeRange = false;
+        private double[,] _plotValues = {
+            { 3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        };
 
         public CARPRadarPlot(MainForm? m)
         {
             _mainForm = m;
+            _initializing = true;
             InitializeComponent();
-            double[,] values = {
-                { 3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000 },
-                { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
-                };
 
-            var arrayIndex = 1;
-            foreach (var antenna in new char[] { 'A', 'B' })
-            {
-                var rangeDoubles = _mainForm?.GetCARPData(antenna);
-                if (rangeDoubles != null && rangeDoubles.Count == 20)
-                {
-                    for (int i = 0; i < 20; i++)
-                    {
-                        values[arrayIndex, i] = rangeDoubles[i];
-                        if (rangeDoubles[i] < 3000)
-                        {
-                            _belowSafeRange = true;
-                        }
-                    }
-                    arrayIndex++;
-                }
-            }
-
-            _radar = formsPlot1.Plot.Add.Radar(values);
-
-            _radar.Series[0].FillColor = Colors.Transparent;
-            _radar.Series[0].LineColor = Colors.Blue;
-            _radar.Series[0].LineWidth = 3;
-            _radar.Series[0].LinePattern = LinePattern.DenselyDashed;
-
-            _radar.Series[0].LegendText = "Minimum";
-            _radar.Series[1].LegendText = "Antenna A";
-            _radar.Series[2].LegendText = "Antenna B";
-
-            _radar.PolarAxis.StraightLines = true;
-
-            double[] tickPositions = { 1000, 2000, 3000, 5000, 7000, 10000 };
-            string[] tickLabels = tickPositions.Select(x => (x/1000.0).ToString() + " km").ToArray();
-            _radar.PolarAxis.SetCircles(tickPositions, tickLabels);
-
-            formsPlot1.Refresh();
+            RefreshCarpData();
 
             // Initialize print components
             printDocument1 = new PrintDocument();
@@ -82,14 +49,67 @@ namespace FlarmTerminal.GUI
 
             groupBoxRemarks.Paint += new System.Windows.Forms.PaintEventHandler(this.groupBoxRemarks_Paint);
             groupBoxDevice.Paint += new System.Windows.Forms.PaintEventHandler(this.groupBoxDevice_Paint);
+            _initializing = false;
+        }
+
+        public void RefreshCarpData()
+        {
+            GetCarpData();
+
+            if (!_initializing)
+            {
+                if (_radar != null)
+                {
+                    formsPlot1.Plot.Remove(_radar);
+                }
+            }
+
+            _radar = formsPlot1.Plot.Add.Radar(_plotValues);
+            _radar.Series[0].FillColor = Colors.Transparent;
+            _radar.Series[0].LineColor = Colors.Blue;
+            _radar.Series[0].LineWidth = 3;
+            _radar.Series[0].LinePattern = LinePattern.DenselyDashed;
+
+            _radar.Series[0].LegendText = "Minimum";
+            _radar.Series[1].LegendText = "Antenna A";
+            _radar.Series[2].LegendText = "Antenna B";
+
+            _radar.PolarAxis.StraightLines = true;
+
+            double[] tickPositions = { 1000, 2000, 3000, 5000, 7000, 10000 };
+            string[] tickLabels = tickPositions.Select(x => (x / 1000.0).ToString() + " km").ToArray();
+            _radar.PolarAxis.SetCircles(tickPositions, tickLabels);
+            formsPlot1.Refresh();
+        }
+
+        public void GetCarpData()
+        {
+            var arrayIndex = 1;
+            foreach (var antenna in new char[] { 'A', 'B' })
+            {
+                var rangeDoubles = _mainForm?.GetCARPData(antenna);
+                if (rangeDoubles != null && rangeDoubles.Count == 20)
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        _plotValues[arrayIndex, i] = rangeDoubles[i];
+                        if (rangeDoubles[i] < 3000)
+                        {
+                            _belowSafeRange = true;
+                        }
+                    }
+                    arrayIndex++;
+                }
+            }
         }
 
         private void groupBoxDevice_Paint(object sender, PaintEventArgs e)
         {
             var deviceText = "Flight recorder:      ";
-            if (_mainForm != null && _mainForm.DeviceProperties.ContainsKey("Device Type"))
+            var key = FlarmProperties.GetConfigName(FlarmProperties.ConfigurationItems.DEVTYPE);
+            if (_mainForm != null && _mainForm.DeviceProperties.ContainsKey(key))
             {
-                deviceText += _mainForm?.DeviceProperties["Device Type"];
+                deviceText += _mainForm?.DeviceProperties[key];
             }
             // Define the font and brush
             var font = new Font("Segoe UI", 10);

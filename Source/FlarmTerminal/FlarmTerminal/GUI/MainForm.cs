@@ -20,9 +20,11 @@ using System.Reflection;
 using System.IO.Ports;
 using System.Collections;
 using System.Resources;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using UCNLNMEA;
 using VPKSoft.WinFormsRtfPrint;
+using Timer = System.Threading.Timer;
 
 namespace FlarmTerminal
 {
@@ -55,7 +57,9 @@ namespace FlarmTerminal
         private Dictionary<string, string> _properties = new Dictionary<string, string>();
 
         private CarpDateTime _carpDateTime = new();
-        
+        private System.Threading.Timer? _carpDataRequestTimer;
+        private CARPRadarPlot? _carpRadarPlotDialog = null;
+
         public CarpDateTime CarpDateTime
         {
             get { return _carpDateTime; }
@@ -284,7 +288,9 @@ namespace FlarmTerminal
             {
                 textBoxTerminal.Invoke(new EventHandler(delegate
                 {
-                    if (_isInitialized && serialData.Contains("Selftest start"))
+                    if (_isInitialized && 
+                        serialData.Contains("Selftest start") ||
+                        serialData.Contains("Initializing Device Info"))
                     {
                         _isInitialized = false;
                     }
@@ -454,6 +460,44 @@ namespace FlarmTerminal
             }
         }
 
+        private void PopupCarpWindow(object? state)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object?>(PopupCarpWindow), state);
+                return;
+            }
+
+            _carpDataRequestTimer?.Dispose();
+            _carpDataRequestTimer = null;
+
+            // allow to get response
+            if (_carpData.ContainsKey('A'))
+            {
+                if (_carpRadarPlotDialog != null)
+                {
+                    _carpRadarPlotDialog.RefreshCarpData();
+                }
+
+                if (_carpRadarPlotDialog == null)
+                {
+                    _carpRadarPlotDialog ??= new CARPRadarPlot(this);
+                    _carpRadarPlotDialog.FormClosed += CarpRadarPlotDialog_FormClosed; // Add event handler
+                    _carpRadarPlotDialog.Show();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Sorry, no CARP data available", ProductName, MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void CarpRadarPlotDialog_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            _carpRadarPlotDialog = null;
+        }
+
         private void requestDebugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAS,R");
@@ -461,19 +505,11 @@ namespace FlarmTerminal
 
         private void requestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // request CARP data, only PowerFlarms will respond!
             WriteCommand("$PFLAN,R,RANGE");
-            // allow to get response
-            Thread.Sleep(2000);
-            if (_carpData.ContainsKey('A'))
-            {
-                var carpDialog = new CARPRadarPlot(this);
-                carpDialog.Show();
-            }
-            else
-            {
-                MessageBox.Show("Sorry, no CARP data available", ProductName, MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-            }
+            _carpDataRequestTimer = new Timer(PopupCarpWindow);
+            _carpDataRequestTimer.Change(1500, 0);
+            _carpDateTime.startTime = DateTime.Now;
         }
 
         private void requestSelftestResultToolStripMenuItem_Click(object sender, EventArgs e)
@@ -567,7 +603,7 @@ namespace FlarmTerminal
             if (_flarmMessagesParser != null)
             {
                 richTextBoxProperties.Clear();
-                // issue all commands to read properties
+                // issue all commands to read common properties
                 foreach (var item in Enum.GetValues(typeof(FlarmProperties.ConfigurationItems)))
                 {
                     WriteCommand($"$PFLAC,R,{item}");
@@ -911,7 +947,7 @@ namespace FlarmTerminal
 
         private void resetToFactorySettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to reset this FLARM to factory settings?", ProductName,
+            if (MessageBox.Show("Are you sure you want to reset this FLARM device to factory settings?", ProductName,
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 WriteCommand("$PFLAR,99");
@@ -920,7 +956,7 @@ namespace FlarmTerminal
 
         private void clearMemoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM?", ProductName,
+            if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM device?", ProductName,
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 WriteCommand("$PFLAC,S,CLEARMEM");
@@ -929,7 +965,7 @@ namespace FlarmTerminal
 
         private void clearAllFlightLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM?", ProductName,
+            if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM device?", ProductName,
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 WriteCommand("$PFLAC,CLEARLOGS");
