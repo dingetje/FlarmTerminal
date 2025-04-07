@@ -87,6 +87,17 @@ namespace FlarmTerminal
         public GlobalGPSDataHandler GlobalGPSData = null;
         List<SatelliteData> satellites;
 
+        private Dictionary<char,List<Int32>> _carpCnt = new Dictionary<char, List<Int32>>()
+        {
+            { 'A', new List<Int32>() },
+            { 'B', new List<Int32>() }
+        };
+        private Dictionary<char, List<double>> _carpRange = new Dictionary<char, List<Double>>()
+        {
+            { 'A', new List<Double>() },
+            { 'B', new List<Double>() }
+        };
+
         public delegate void CARPDataReceived(char antenna, double[] rangeDoubles);
         public CARPDataReceived FLARMCARPDataReceived = null;
 
@@ -425,6 +436,11 @@ namespace FlarmTerminal
         /// $PFLAN,A,RANGE,STATS,67049*36
         /// $PFLAN,A,RANGE,TIMESPAN,1620905845,1632663140*7E
         /// $PFLAN,A,RANGE*4B
+        ///
+        /// RFTOP = mean range in meters per sector and channel.
+        /// RFCNT = number of data points used to compute the mean range for each sector and channel.
+        /// RFDEV = standard deviation of the data points in each sector per channel.
+        /// Note: Each sector should be checked to have a sufficiently large RFCNT value to be significant
         /// </remarks>
         private void ProcessFLAN(object[] parameters)
         {
@@ -436,20 +452,35 @@ namespace FlarmTerminal
                     {
                         if ((string)parameters[2] == "RFTOP" || (string)parameters[2] == "RFCNT" || (string)parameters[2] == "RFDEV")
                         {
+                            // A or B antenna
                             char antenna = parameters[3].ToString()[0];
                             switch ((string)parameters[2])
                             {
                                 case "RFCNT":
-                                    break;
-                                case "RFTOP":
+                                    _carpCnt[antenna].Clear();
+                                    var rangeDoubles = new double[20];
+                                    for (int i = 0; i < 20; i++)
+                                    {
+                                        _carpCnt[antenna].Add(Convert.ToInt32(parameters[4 + i]));
+                                        if(_carpCnt[antenna][i] > 20)
+                                        {
+                                            rangeDoubles[i] = _carpRange[antenna][i];
+                                        }
+                                        else
+                                        {
+                                            rangeDoubles[i] = 0;
+                                        }
+                                    }
                                     if (FLARMCARPDataReceived != null)
                                     {
-                                        double[] rangeDoubles = new double[20];
-                                        for (int i = 0; i < 20; i++)
-                                        {
-                                            rangeDoubles[i] = Convert.ToDouble(parameters[4 + i]);
-                                        }
                                         FLARMCARPDataReceived?.Invoke(antenna, rangeDoubles);
+                                    }
+                                    break;
+                                case "RFTOP":
+                                    _carpRange[antenna].Clear();
+                                    for (int i = 0; i < 20; i++)
+                                    {
+                                        _carpRange[antenna].Add(Convert.ToDouble(parameters[4 + i]));
                                     }
                                     break;
                                 case "RFDEV":
