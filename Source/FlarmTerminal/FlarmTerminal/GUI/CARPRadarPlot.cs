@@ -26,6 +26,8 @@ namespace FlarmTerminal.GUI
         private double[,] _plotValues = {
             { 3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
         };
 
@@ -65,6 +67,8 @@ namespace FlarmTerminal.GUI
             }
 
             _radar = formsPlot1.Plot.Add.Radar(_plotValues);
+
+            // safe range is 3000m
             _radar.Series[0].FillColor = Colors.Transparent;
             _radar.Series[0].LineColor = Colors.Blue;
             _radar.Series[0].LineWidth = 3;
@@ -74,10 +78,24 @@ namespace FlarmTerminal.GUI
             _radar.Series[1].LegendText = "Antenna A";
             _radar.Series[2].LegendText = "Antenna B";
 
+            _radar.Series[3].FillColor = Colors.Transparent;
+            _radar.Series[3].LineColor = Colors.Blue;
+            _radar.Series[3].LineWidth = 1;
+            _radar.Series[3].LinePattern = LinePattern.Solid;
+
+            _radar.Series[4].FillColor = Colors.Transparent;
+            _radar.Series[4].LineColor = Colors.Red;
+            _radar.Series[4].LineWidth = 1;
+            _radar.Series[4].LinePattern = LinePattern.Solid;
+
+            _radar.Series[3].LegendText = "Max Antenna A";
+            _radar.Series[4].LegendText = "Max Antenna B";
+
             _radar.PolarAxis.StraightLines = true;
 
-            double[] tickPositions = { 1000, 2000, 3000, 5000, 7000, 10000 };
+            double[] tickPositions = { 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000 };
             string[] tickLabels = tickPositions.Select(x => (x / 1000.0).ToString() + " km").ToArray();
+
             _radar.PolarAxis.SetCircles(tickPositions, tickLabels);
             formsPlot1.Refresh();
         }
@@ -97,6 +115,18 @@ namespace FlarmTerminal.GUI
                         {
                             _belowSafeRange = true;
                         }
+                    }
+                    arrayIndex++;
+                }
+            }
+            foreach (var antenna in new char[] { 'A', 'B' })
+            {
+                var rangeDoubles = _mainForm?.GetCARPMaxData(antenna);
+                if (rangeDoubles != null && rangeDoubles.Count == 20)
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        _plotValues[arrayIndex, i] = rangeDoubles[i];
                     }
                     arrayIndex++;
                 }

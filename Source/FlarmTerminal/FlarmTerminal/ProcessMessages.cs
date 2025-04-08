@@ -97,6 +97,11 @@ namespace FlarmTerminal
             { 'A', new List<Double>() },
             { 'B', new List<Double>() }
         };
+        private Dictionary<char, List<double>> _carpStdDev = new Dictionary<char, List<Double>>()
+        {
+            { 'A', new List<Double>() },
+            { 'B', new List<Double>() }
+        };
 
         public delegate void CARPDataReceived(char antenna, double[] rangeDoubles);
         public CARPDataReceived FLARMCARPDataReceived = null;
@@ -106,6 +111,9 @@ namespace FlarmTerminal
 
         public delegate void CARPPointStats(long pointCount);
         public CARPPointStats FLARMCARPPoints = null;
+
+        public delegate void CARPMaxDataReceived(char antenna, double[] rangeDoubles);
+        public CARPMaxDataReceived FLARMMaxCARPDataReceived = null;
 
         public ProcessMessages()
         {
@@ -484,6 +492,16 @@ namespace FlarmTerminal
                                     }
                                     break;
                                 case "RFDEV":
+                                    _carpStdDev[antenna].Clear();
+                                    for (int i = 0; i < 20; i++)
+                                    {
+                                        _carpStdDev[antenna].Add(Convert.ToDouble(parameters[4 + i]));
+                                    }
+
+                                    if (FLARMMaxCARPDataReceived != null)
+                                    {
+                                        FLARMMaxCARPDataReceived?.Invoke(antenna, _carpStdDev[antenna].ToArray());
+                                    }
                                     break;
                             }
                         }

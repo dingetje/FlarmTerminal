@@ -43,14 +43,14 @@
             formsPlot1.DisplayScale = 1F;
             formsPlot1.Location = new System.Drawing.Point(18, 22);
             formsPlot1.Name = "formsPlot1";
-            formsPlot1.Size = new System.Drawing.Size(673, 383);
+            formsPlot1.Size = new System.Drawing.Size(673, 567);
             formsPlot1.TabIndex = 0;
             // 
             // buttonOK
             // 
             buttonOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             buttonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            buttonOK.Location = new System.Drawing.Point(665, 758);
+            buttonOK.Location = new System.Drawing.Point(665, 942);
             buttonOK.Name = "buttonOK";
             buttonOK.Size = new System.Drawing.Size(56, 31);
             buttonOK.TabIndex = 1;
@@ -66,7 +66,7 @@
             groupBoxPlot.Location = new System.Drawing.Point(12, 12);
             groupBoxPlot.MinimumSize = new System.Drawing.Size(530, 420);
             groupBoxPlot.Name = "groupBoxPlot";
-            groupBoxPlot.Size = new System.Drawing.Size(710, 420);
+            groupBoxPlot.Size = new System.Drawing.Size(710, 604);
             groupBoxPlot.TabIndex = 2;
             groupBoxPlot.TabStop = false;
             groupBoxPlot.Text = "Range Plot";
@@ -75,7 +75,7 @@
             // 
             groupBoxRemarks.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxRemarks.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            groupBoxRemarks.Location = new System.Drawing.Point(13, 438);
+            groupBoxRemarks.Location = new System.Drawing.Point(13, 622);
             groupBoxRemarks.MaximumSize = new System.Drawing.Size(0, 120);
             groupBoxRemarks.MinimumSize = new System.Drawing.Size(530, 120);
             groupBoxRemarks.Name = "groupBoxRemarks";
@@ -88,7 +88,7 @@
             // 
             groupBoxDevice.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxDevice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            groupBoxDevice.Location = new System.Drawing.Point(13, 572);
+            groupBoxDevice.Location = new System.Drawing.Point(13, 756);
             groupBoxDevice.MaximumSize = new System.Drawing.Size(0, 220);
             groupBoxDevice.MinimumSize = new System.Drawing.Size(530, 180);
             groupBoxDevice.Name = "groupBoxDevice";
@@ -100,7 +100,7 @@
             // buttonPrint
             // 
             buttonPrint.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            buttonPrint.Location = new System.Drawing.Point(584, 758);
+            buttonPrint.Location = new System.Drawing.Point(584, 942);
             buttonPrint.Name = "buttonPrint";
             buttonPrint.Size = new System.Drawing.Size(61, 31);
             buttonPrint.TabIndex = 5;
@@ -112,13 +112,13 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(734, 801);
+            ClientSize = new System.Drawing.Size(734, 985);
             Controls.Add(groupBoxDevice);
             Controls.Add(buttonPrint);
             Controls.Add(groupBoxRemarks);
             Controls.Add(groupBoxPlot);
             Controls.Add(buttonOK);
-            MinimumSize = new System.Drawing.Size(750, 840);
+            MinimumSize = new System.Drawing.Size(750, 1024);
             Name = "CARPRadarPlot";
             Text = "CARP Range Radar Plot";
             groupBoxPlot.ResumeLayout(false);

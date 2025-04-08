@@ -58,6 +58,10 @@ namespace FlarmTerminal
                     _mainForm.CarpPoints = points;
                 }
             };
+            _processMessages.FLARMMaxCARPDataReceived += (char antenna, double[] rangeDoubles) =>
+            {
+                _mainForm?.UpdateCARPMaxRadar(antenna, rangeDoubles);
+            };
         }
 
         public void Dispose()

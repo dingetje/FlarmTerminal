@@ -55,6 +55,7 @@ namespace FlarmTerminal
         private Serilog.ILogger _log;
 
         private Dictionary<char, List<double>> _carpData = new Dictionary<char, List<double>>();
+        private Dictionary<char, List<double>> _carpMaxData = new Dictionary<char, List<double>>();
         private Dictionary<string, string> _properties = new Dictionary<string, string>();
 
         private CarpDateTime _carpDateTime = new();
@@ -1083,11 +1084,34 @@ namespace FlarmTerminal
             }
             return null;
         }
+        public List<double>? GetCARPMaxData(char antenna)
+        {
+            if (_carpMaxData.TryGetValue(antenna, out var data))
+            {
+                return data;
+            }
+            return null;
+        }
 
         internal void UpdateCARPTimeSpan(DateTime start, DateTime end)
         {
             _carpDateTime.startTime = start;
             _carpDateTime.endTime = end;
+        }
+
+        internal void UpdateCARPMaxRadar(char antenna, double[] rangeDoubles)
+        {
+            switch (antenna)
+            {
+                case 'A':
+                    _carpMaxData['A'] = rangeDoubles.ToList();
+                    break;
+                case 'B':
+                    _carpMaxData['B'] = rangeDoubles.ToList();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
