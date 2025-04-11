@@ -73,23 +73,40 @@ namespace FlarmTerminal.GUI
             _radar.Series[0].LineColor = Colors.Blue;
             _radar.Series[0].LineWidth = 3;
             _radar.Series[0].LinePattern = LinePattern.DenselyDashed;
-
             _radar.Series[0].LegendText = "Minimum";
-            _radar.Series[1].LegendText = "Antenna A";
-            _radar.Series[2].LegendText = "Antenna B";
 
-            _radar.Series[3].FillColor = Colors.Transparent;
-            _radar.Series[3].LineColor = Colors.Blue;
-            _radar.Series[3].LineWidth = 1;
-            _radar.Series[3].LinePattern = LinePattern.Solid;
 
-            _radar.Series[4].FillColor = Colors.Transparent;
-            _radar.Series[4].LineColor = Colors.Red;
-            _radar.Series[4].LineWidth = 1;
-            _radar.Series[4].LinePattern = LinePattern.Solid;
+            if (checkBoxA.Checked)
+            {
+                _radar.Series[1].LegendText = "Antenna A";
 
-            _radar.Series[3].LegendText = "Max Antenna A";
-            _radar.Series[4].LegendText = "Max Antenna B";
+                _radar.Series[3].LegendText = "Max Antenna A";
+                _radar.Series[3].FillColor = Colors.Transparent;
+                _radar.Series[3].LineColor = Colors.Blue;
+                _radar.Series[3].LineWidth = 2;
+                _radar.Series[3].LinePattern = LinePattern.Solid;
+            }
+            else
+            {
+                _radar.Series[1].Values = new double[20];
+                _radar.Series[3].Values = new double[20];
+            }
+
+            if (checkBoxB.Checked)
+            {
+                _radar.Series[2].LegendText = "Antenna B";
+
+                _radar.Series[4].LegendText = "Max Antenna B";
+                _radar.Series[4].FillColor = Colors.Transparent;
+                _radar.Series[4].LineColor = Colors.Red;
+                _radar.Series[4].LineWidth = 2;
+                _radar.Series[4].LinePattern = LinePattern.Solid;
+            }
+            else
+            {
+                _radar.Series[2].Values = new double[20];
+                _radar.Series[4].Values = new double[20];
+            }
 
             _radar.PolarAxis.StraightLines = true;
 
@@ -103,15 +120,16 @@ namespace FlarmTerminal.GUI
         public void GetCarpData()
         {
             var arrayIndex = 1;
+            var rangeData = new List<double>();
             foreach (var antenna in new char[] { 'A', 'B' })
             {
-                var rangeDoubles = _mainForm?.GetCARPData(antenna);
-                if (rangeDoubles != null && rangeDoubles.Count == 20)
+                rangeData = _mainForm?.GetCARPData(antenna);
+                if (rangeData != null && rangeData.Count == 20)
                 {
                     for (int i = 0; i < 20; i++)
                     {
-                        _plotValues[arrayIndex, i] = rangeDoubles[i];
-                        if (rangeDoubles[i] < 3000)
+                        _plotValues[arrayIndex, i] = rangeData[i];
+                        if (rangeData[i] < 3000)
                         {
                             _belowSafeRange = true;
                         }
@@ -126,7 +144,7 @@ namespace FlarmTerminal.GUI
                 {
                     for (int i = 0; i < 20; i++)
                     {
-                        _plotValues[arrayIndex, i] = rangeDoubles[i];
+                        _plotValues[arrayIndex, i] = rangeDoubles[i] + rangeData[i];
                     }
                     arrayIndex++;
                 }
@@ -303,5 +321,14 @@ namespace FlarmTerminal.GUI
         private PrintDialog printDialog1;
         private PrintPreviewDialog printPreviewDialog1;
 
+        private void checkBoxA_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshCarpData();
+        }
+
+        private void checkBoxB_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshCarpData();
+        }
     }
 }

@@ -470,7 +470,7 @@ namespace FlarmTerminal
                                     for (int i = 0; i < 20; i++)
                                     {
                                         _carpCnt[antenna].Add(Convert.ToInt32(parameters[4 + i]));
-                                        if(_carpCnt[antenna][i] > 20)
+                                        if(_carpCnt[antenna][i] > 50)
                                         {
                                             rangeDoubles[i] = _carpRange[antenna][i];
                                         }

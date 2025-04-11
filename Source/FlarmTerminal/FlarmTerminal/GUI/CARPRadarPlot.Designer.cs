@@ -34,6 +34,8 @@
             groupBoxRemarks = new System.Windows.Forms.GroupBox();
             groupBoxDevice = new System.Windows.Forms.GroupBox();
             buttonPrint = new System.Windows.Forms.Button();
+            checkBoxA = new System.Windows.Forms.CheckBox();
+            checkBoxB = new System.Windows.Forms.CheckBox();
             groupBoxPlot.SuspendLayout();
             SuspendLayout();
             // 
@@ -41,9 +43,9 @@
             // 
             formsPlot1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             formsPlot1.DisplayScale = 1F;
-            formsPlot1.Location = new System.Drawing.Point(18, 22);
+            formsPlot1.Location = new System.Drawing.Point(18, 58);
             formsPlot1.Name = "formsPlot1";
-            formsPlot1.Size = new System.Drawing.Size(673, 567);
+            formsPlot1.Size = new System.Drawing.Size(674, 531);
             formsPlot1.TabIndex = 0;
             // 
             // buttonOK
@@ -61,6 +63,8 @@
             // groupBoxPlot
             // 
             groupBoxPlot.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBoxPlot.Controls.Add(checkBoxB);
+            groupBoxPlot.Controls.Add(checkBoxA);
             groupBoxPlot.Controls.Add(formsPlot1);
             groupBoxPlot.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             groupBoxPlot.Location = new System.Drawing.Point(12, 12);
@@ -108,6 +112,28 @@
             buttonPrint.UseVisualStyleBackColor = true;
             buttonPrint.Click += buttonPrint_Click;
             // 
+            // checkBoxA
+            // 
+            checkBoxA.AutoSize = true;
+            checkBoxA.Location = new System.Drawing.Point(18, 31);
+            checkBoxA.Name = "checkBoxA";
+            checkBoxA.Size = new System.Drawing.Size(92, 21);
+            checkBoxA.TabIndex = 1;
+            checkBoxA.Text = "Antenna A";
+            checkBoxA.UseVisualStyleBackColor = true;
+            checkBoxA.CheckedChanged += checkBoxA_CheckedChanged;
+            // 
+            // checkBoxB
+            // 
+            checkBoxB.AutoSize = true;
+            checkBoxB.Location = new System.Drawing.Point(125, 31);
+            checkBoxB.Name = "checkBoxB";
+            checkBoxB.Size = new System.Drawing.Size(91, 21);
+            checkBoxB.TabIndex = 2;
+            checkBoxB.Text = "Antenna B";
+            checkBoxB.UseVisualStyleBackColor = true;
+            checkBoxB.CheckedChanged += checkBoxB_CheckedChanged;
+            // 
             // CARPRadarPlot
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -122,6 +148,7 @@
             Name = "CARPRadarPlot";
             Text = "CARP Range Radar Plot";
             groupBoxPlot.ResumeLayout(false);
+            groupBoxPlot.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -133,5 +160,7 @@
         private System.Windows.Forms.GroupBox groupBoxRemarks;
         private System.Windows.Forms.GroupBox groupBoxDevice;
         private System.Windows.Forms.Button buttonPrint;
+        private System.Windows.Forms.CheckBox checkBoxB;
+        private System.Windows.Forms.CheckBox checkBoxA;
     }
 }
