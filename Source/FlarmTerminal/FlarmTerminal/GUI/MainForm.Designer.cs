@@ -45,10 +45,10 @@
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             readFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             printToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             printRawSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             COMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             autoConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -193,6 +193,7 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, settingsToolStripMenuItem, viewToolStripMenuItem, commandToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(2, 2);
             menuStrip1.Name = "menuStrip1";
@@ -212,39 +213,39 @@
             // 
             readFileToolStripMenuItem.Image = Properties.Resources.file;
             readFileToolStripMenuItem.Name = "readFileToolStripMenuItem";
-            readFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            readFileToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             readFileToolStripMenuItem.Text = "Playback &File...";
             readFileToolStripMenuItem.Click += readFileToolStripMenuItem_Click;
-            // 
-            // exitToolStripMenuItem
-            // 
-            exitToolStripMenuItem.Image = Properties.Resources.exit_PNG35;
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
-            exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            exitToolStripMenuItem.Text = "E&xit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // printToolStripMenuItem1
             // 
             printToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { printPropertiesToolStripMenuItem, printRawSerialToolStripMenuItem });
             printToolStripMenuItem1.Name = "printToolStripMenuItem1";
-            printToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            printToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
             printToolStripMenuItem1.Text = "Print";
             // 
             // printPropertiesToolStripMenuItem
             // 
             printPropertiesToolStripMenuItem.Name = "printPropertiesToolStripMenuItem";
-            printPropertiesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            printPropertiesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             printPropertiesToolStripMenuItem.Text = "Print Properties...";
             printPropertiesToolStripMenuItem.Click += printPropertiesToolStripMenuItem_Click;
             // 
             // printRawSerialToolStripMenuItem
             // 
             printRawSerialToolStripMenuItem.Name = "printRawSerialToolStripMenuItem";
-            printRawSerialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            printRawSerialToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             printRawSerialToolStripMenuItem.Text = "Print Raw Serial...";
             printRawSerialToolStripMenuItem.Click += printRawSerialToolStripMenuItem_Click;
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Image = Properties.Resources.exit_PNG35;
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
+            exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            exitToolStripMenuItem.Text = "E&xit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // settingsToolStripMenuItem
             // 
@@ -285,6 +286,7 @@
             // 
             // commandToolStripMenuItem
             // 
+            commandToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             commandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { requestVersionsToolStripMenuItem, requestIDToolStripMenuItem, requestToolStripMenuItem, requestSelftestResultToolStripMenuItem, readIDToolStripMenuItem, readPropertiesToolStripMenuItem, simulateScenarioToolStripMenuItem, dANGERToolStripMenuItem, setDeviceIDToolStripMenuItem });
             commandToolStripMenuItem.Enabled = false;
             commandToolStripMenuItem.Name = "commandToolStripMenuItem";
@@ -357,12 +359,14 @@
             // dANGERToolStripMenuItem
             // 
             dANGERToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { resetToFactorySettingsToolStripMenuItem, clearMemoryToolStripMenuItem, clearAllFlightLogsToolStripMenuItem });
+            dANGERToolStripMenuItem.Image = (System.Drawing.Image)resources.GetObject("dANGERToolStripMenuItem.Image");
             dANGERToolStripMenuItem.Name = "dANGERToolStripMenuItem";
             dANGERToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             dANGERToolStripMenuItem.Text = "DANGER";
             // 
             // resetToFactorySettingsToolStripMenuItem
             // 
+            resetToFactorySettingsToolStripMenuItem.Image = Properties.Resources.danger_32x32;
             resetToFactorySettingsToolStripMenuItem.Name = "resetToFactorySettingsToolStripMenuItem";
             resetToFactorySettingsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             resetToFactorySettingsToolStripMenuItem.Text = "Reset to factory settings";
@@ -370,6 +374,7 @@
             // 
             // clearMemoryToolStripMenuItem
             // 
+            clearMemoryToolStripMenuItem.Image = Properties.Resources.danger_32x32;
             clearMemoryToolStripMenuItem.Name = "clearMemoryToolStripMenuItem";
             clearMemoryToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             clearMemoryToolStripMenuItem.Text = "Clear Memory";
@@ -377,6 +382,7 @@
             // 
             // clearAllFlightLogsToolStripMenuItem
             // 
+            clearAllFlightLogsToolStripMenuItem.Image = Properties.Resources.danger_32x32;
             clearAllFlightLogsToolStripMenuItem.Name = "clearAllFlightLogsToolStripMenuItem";
             clearAllFlightLogsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             clearAllFlightLogsToolStripMenuItem.Text = "Clear All Flight Logs";
