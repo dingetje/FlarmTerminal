@@ -46,3 +46,6 @@
 /Source/FlarmTerminal/FlarmProperties/obj/FlarmProperties.csproj.nuget.dgspec.json
 /Source/FlarmTerminal/FlarmProperties/obj/project.assets.json
 /Source/FlarmTerminal/FlarmProperties/obj/project.nuget.cache
+*.cache
+/Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.GeneratedMSBuildEditorConfig.editorconfig
+/Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.GlobalUsings.g.cs
