@@ -49,3 +49,11 @@
 *.cache
 /Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.GeneratedMSBuildEditorConfig.editorconfig
 /Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.GlobalUsings.g.cs
+/Source/FlarmTerminal/FlarmProperties/bin/Release/net8.0/FlarmProperties.deps.json
+/Source/FlarmTerminal/FlarmProperties/bin/Release/net8.0/FlarmProperties.dll
+/Source/FlarmTerminal/FlarmProperties/bin/Release/net8.0/FlarmProperties.pdb
+*.dll
+/Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.csproj.BuildWithSkipAnalyzers
+/Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.csproj.FileListAbsolute.txt
+*.pdb
+/Source/FlarmTerminal/FlarmProperties/obj/Release/net8.0/FlarmProperties.sourcelink.json
