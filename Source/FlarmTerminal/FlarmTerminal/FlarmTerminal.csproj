@@ -8,6 +8,7 @@
     <StartupObject>FlarmTerminal.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
     <PackageReference Include="NAudio" Version="2.2.1" />
@@ -36,6 +37,9 @@
     <PackageReference Include="System.IO.Ports" Version="9.0.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlarmMessageParser\FlarmMessageParser.csproj" />

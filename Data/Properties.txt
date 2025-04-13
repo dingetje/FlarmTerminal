@@ -1,0 +1,55 @@
+Device Type         : PowerFLARM-Fusion
+Device ID           : FLAFUS10W-000227
+Capabilities        : Second Data Port
+                    : Slot for USB stick
+                    : SSR transponder/ADS-B receiver
+                    : The device has one or more LEDs
+                    : Barometric sensor
+                    : Audio output connection
+                    : Second radio transceiver for antenna diversity
+                    : Engine noise level sensor
+                    : Interface for Garmin TIS protocol
+                    : The device is or can be IGC approved
+                    : ADS-R/TIS-B reception functionality)
+Firmware Version    : 7.40
+Expiration          : 01.01.2099
+Flarm Version       : 1.23
+Build               : ea7cf80c9
+Serial Number       : 227
+Region              : ALL
+Obstacle Database   : 1
+Obstacle Expiration : 
+ID                  : FFFFFF
+NMEA Output         : Protocol Version 8, 
+                    : GPRMC, GPGGA, GPGSA, plus FLARM proprietary (incl. PGRMZ)
+Baud Rate           : 57600
+Aircraft Type       : Glider/Motor Glider
+Range               : 25000
+Vertical Range      : 1372
+Privacy Mode        : Disabled
+No Track Mode       : Disabled
+Threshold           : 255 m/s
+Log Interval        : 2 SEC.
+Pilot Name          : 
+Co-Pilot Name       : 
+Glider ID           : PH-XXXX
+Glider Type         : 
+LIC                 : AUD:1;ENL:1;IGC:1;RFB:1;TIS:1;ADSR:1
+LS                  : OK
+NMEAOUT1            : Protocol Version 8, 
+                    : GPRMC, GPGGA, GPGSA, plus FLARM proprietary (incl. PGRMZ)
+NMEAOUT2            : Protocol Version 9, 
+                    : No Output
+BAUD1               : 57600
+BAUD2               : 38400
+IGCSER              : AE3
+Competition ID      : 
+Competition Class   : 
+Config Flags        : 0
+User Interface      : 0
+Audio Output        : 1
+Audio Volume        : 100
+Volume Level        : 3
+Battery Type        : 0
+Brightness Level    : 100
+Radio ID            : FLARMID=DF20E3

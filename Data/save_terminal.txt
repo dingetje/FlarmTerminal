@@ -1,0 +1,306 @@
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$PFLAC,R,DEVTYPE
+$PFLAC,R,DEVICEID
+$PFLAC,R,CAP
+$PFLAC,R,SWVER
+$PFLAC,R,SWEXP
+$PFLAC,R,FLARMVER
+$PFLAC,R,BUILD
+$PFLAC,R,SER
+$PFLAC,R,REGION
+$PFLAC,R,OBSTDB
+$PFLAC,R,OBSTEXP
+$PFLAC,R,ID
+$PFLAC,R,NMEAOUT
+$PFLAC,R,BAUD
+$PFLAC,R,ACFT
+$PFLAC,R,RANGE
+$PFLAC,R,VRANGE
+$PFLAC,R,PRIV
+$PFLAC,R,NOTRACK
+$PFLAC,R,THRE
+$PFLAC,R,LOGINT
+$PFLAC,R,PILOT
+$PFLAC,R,COPIL
+$PFLAC,R,GLIDERID
+$PFLAC,R,GLIDERTYPE
+$PFLAC,R,COMPID
+$PFLAC,R,COMPCLASS
+$PFLAC,R,CFLAGS
+$PFLAC,R,UI
+$PFLAC,R,AUDIOOUT
+$PFLAC,R,AUDIOVOLUME
+$PFLAC,R,VOL
+$PFLAC,R,BATTERYTYPE
+$PFLAC,R,BRIGHTNESS
+$PFLAC,A,DEVTYPE,PowerFLARM-Fusion*74
+$PFLAC,R,RADIOID
+$PFLAC,A,DEVICEID,FLAFUS10W-000227*57
+$PFLAC,R,LIC
+$PFLAC,R,LS
+$PFLAC,R,NMEAOUT1
+$PFLAC,R,NMEAOUT2
+$PFLAC,R,BAUD1
+$PFLAC,R,BAUD2
+$PFLAC,R,IGCSER
+$PFLAC,A,CAP,DP2;USBH;XPDR;DLED;BARO;AUD;RFB;ENL;TIS;IGC;ADSR*02
+$PFLAC,A,SWVER,7.40*6D
+$PFLAC,A,SWEXP,01.01.2099*7E
+$PFLAC,A,FLARMVER,1.23*3E
+$PFLAC,A,BUILD,ea7cf80c9*07
+$PFLAC,A,SER,227*46
+$PFLAC,A,REGION,ALL*6C
+$PFLAC,A,OBSTDB,1,0,,*14
+$PFLAC,A,OBSTEXP,*72
+$PFLAC,A,ID,FFFFFF*38
+$PFLAC,A,NMEAOUT,81*75
+$PFLAC,A,BAUD,5*12
+$PFLAC,A,ACFT,1*14
+$PFLAC,A,RANGE,25000*5D
+$PFLAC,A,VRANGE,1372*3B
+$PFLAC,A,PRIV,0*18
+$PFLAC,A,NOTRACK,0*4B
+$PFLAC,A,THRE,255*0C
+$PFLAC,A,LOGINT,2*10
+$PFLAC,A,PILOT,*7B
+$PFLAC,A,COPIL,*6C
+$PFLAC,A,GLIDERID,PH-XXXX*1C
+$PFLAC,A,GLIDERTYPE,*3C
+$PFLAC,A,COMPID,*29
+$PFLAC,A,COMPCLASS,*6A
+$PFLAC,A,CFLAGS,0*19
+$PFLAC,A,UI,0*19
+$PFLAC,A,AUDIOOUT,1*1C
+$PFLAC,A,AUDIOVOLUME,100*5A
+$PFLAC,A,VOL,3*53
+$PFLAC,A,BATTERYTYPE,0*50
+$PFLAC,A,BRIGHTNESS,100*0D
+$PFLAC,A,RADIOID,2,DF20E3*01
+$PFLAC,A,LIC,AUD:1;ENL:1;IGC:1;RFB:1;TIS:1;ADSR:1*0E
+$PFLAC,A,LS,OK*2E
+$PFLAC,A,NMEAOUT1,81*44
+$PFLAC,A,NMEAOUT2,90*47
+$PFLAC,A,BAUD1,5*23
+$PFLAC,A,BAUD2,4*21
+$PFLAC,A,IGCSER,AE3*0B
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$PFLAS,R
+(c) 2011-2024 FLARM Technology Ltd - All Rights Reserved.
+Device identifier: FLAFUS10W-000227, IGC: AE3
+HW 1.0, SW 7.40, Build ea7cf80c9, Date 2024-12-19T07:42:47+00:00
+Expiration date (hard): 2099-01-01T00:00:00+00:00
+Expiration date (soft): 2098-12-02T00:00:00+00:00
+Uptime: 0 days, 00:22:13
+System Configuration:
+cflags               = 0                     (CFLAGS)
+ui                   = 0                     (UI)
+thre                 = 255                   (Inflight Threshold)
+range                = 25000                 (Range)
+vrange               = 1372                  (Vertical Range)
+logint               = 2                     (Logging interval)
+vol                  = 3                     (Buzzer volume)
+pilot                =                       (Pilot)
+copil                =                       (Copilot)
+gliderid             = PH-XXXX               (Aircraft callsign)
+glidertype           =                       (Aircraft type)
+compid               =                       (Comp. sig.)
+compclass            =                       (Comp. class)
+priv                 = 0                     (Stealth Mode)
+notrack              = 0                     (No track flag)
+acft                 = 1                     (Aircraft type)
+nmeaout              = 81                    (NMEA Output)
+nmeaout1             = 81                    (NMEA Output 1)
+nmeaout2             = 90                    (NMEA Output 2)
+baud                 = 5                     (Baudrate)
+baud1                = 5                     (Baudrate 1)
+baud2                = 4                     (Baudrate 2)
+ID                   = FFFFFF                (Configured ID)
+pcasrange            = 9260                  (PCAS Range)
+adsbrange            = 18520                 (ADSB Range)
+pcasvrange           = 1524                  (PCAS Vertical Range)
+adsbvrange           = 1524                  (ADSB Vertical Range)
+xpdr                 = 0                     (Transponder)
+rssi_threshold       = -1                    (Mode C suppression threshold)
+rssi_bandwidth       = -1                    (Mode C suppression bandwidth)
+modec                = 1                     (Mode C processing enabled)
+modesalt             = 1                     (Use Mode S altitude)
+ownmodec             = 0                     (Own mode C suppression method)
+pcaspflau            = 0                     (Output PCAS targets as $PFLAU)
+pcaspflau1           = 0                     (Output PCAS targets as $PFLAU on 1)
+pcaspflau2           = 0                     (Output PCAS targets as $PFLAU on 2)
+pcasbeep             = 1                     (Beep on PCAS alarms)
+adsbwarnings         = 0                     (Enable ADS-B warnings)
+rebroadcastservices  = 3                     (Rebroadcast services)
+msg                  = 1                     (Messaging functionality)
+adsl                 = 1                     (ADS-L transmission enabled)
+brightness           = 100                   (LCD Brightness)
+pcascalibration      = 30                    (PCAS calibration)
+batterytype          = 0                     (Battery Type)
+audioout             = 1                     (Audio Out Enabled)
+audiovolume          = 100                   (Audio Volume)
+gpsleapsecond        = 18                    (GPS leap second)
+swver                = 7.40                  (Software version)
+swexp                = 01.01.2099            (Software exp. date)
+flarmver             = 1.23                  (FLARM software version)
+hwrev                = 1.0                   (Hardware revision)
+devtype              = PowerFLARM-Fusion     (Device type)
+obstname             =                       (Obstacle database name)
+obstdate             =                       (Obstacle database date)
+igcser               = AE3                   (IGC Serial)
+cap                  = DP2;USBH;XPDR;DLED;BARO;AUD;RFB;ENL;TIS;IGC;ADSR  (Device capabilities)
+region               = ALL                   (Device region)
+build                = ea7cf80c9             (Build designator)
+deviceid             = FLAFUS10W-000227      (Device identifier)
+radioid              = DF20E3                (Radio ID)
+idType               = 2                     (ID Type)
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$PFLAL,00221839 PWR STATE 4 LVL 34 BAT 0.00 EXT 14.90 TEMP 29.6*02
+$PFLAL,00221829 RF A CD 0.0 AM 0.0 TX 0.0 RX 0.0 AM/CD inf DROP 0.0*43
+$PFLAL,00221829 RF B CD 0.0 AM 0.0 TX 0.0 RX 0.0 AM/CD inf DROP 0.0*40
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,282,F,2*32
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35
+$GPRMC,,V,,,,,,,,,,N*53
+$GPGGA,,,,,,0,00,99.99,,,,,,*48
+$GPGSA,A,1,,,,,,,,,,,,,99.99,99.99,99.99*30
+$PFLAU,0,0,0,1,0,,0,,,*4F
+$PGRMZ,285,F,2*35

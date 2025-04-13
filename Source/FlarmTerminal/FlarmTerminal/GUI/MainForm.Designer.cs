@@ -118,6 +118,7 @@
             richTextBoxProperties.Size = new System.Drawing.Size(536, 584);
             richTextBoxProperties.TabIndex = 0;
             richTextBoxProperties.Text = "";
+            richTextBoxProperties.MouseDown += richTextBoxProperties_MouseDown;
             // 
             // statusStrip
             // 

@@ -26,6 +26,11 @@ using Microsoft.Extensions.Logging;
 using UCNLNMEA;
 using VPKSoft.WinFormsRtfPrint;
 using Timer = System.Threading.Timer;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Controls;
+using System.Windows.Media; // Add this namespace for Brushes and FontFamily
+using FontAwesome.Sharp;
+using Color = System.Drawing.Color;
 
 namespace FlarmTerminal
 {
@@ -67,7 +72,7 @@ namespace FlarmTerminal
             get { return _carpDateTime; }
         }
 
-        public Dictionary<string,string> DeviceProperties
+        public Dictionary<string, string> DeviceProperties
         {
             get { return _properties; }
         }
@@ -108,13 +113,13 @@ namespace FlarmTerminal
             SetSelectionHangingIndent(richTextBoxProperties, 20);
         }
 
-        private void PrintPropertiesRichTextBox()
+        private void PrintPropertiesRichTextBox(object? sender, EventArgs e)
         {
             RtfPrint.RichTextBox = richTextBoxProperties;
             RtfPrint.PrintRichTextContents(true, true);
         }
 
-        private void PrintTerminalRichTextBox()
+        private void PrintTerminalRichTextBox(object? sender, EventArgs e)
         {
             RtfPrint.RichTextBox = textBoxTerminal;
             RtfPrint.PrintRichTextContents(true, true);
@@ -292,7 +297,7 @@ namespace FlarmTerminal
             {
                 textBoxTerminal.Invoke(new EventHandler(delegate
                 {
-                    if (_isInitialized && 
+                    if (_isInitialized &&
                         serialData.Contains("Selftest start") ||
                         serialData.Contains("Initializing Device Info"))
                     {
@@ -453,7 +458,7 @@ namespace FlarmTerminal
             if (_comPortHandler != null && _comPortHandler.IsConnected)
             {
                 textBoxTerminal.SelectionColor = System.Drawing.Color.Red;
-                textBoxTerminal.SelectedText = command;
+                textBoxTerminal.SelectedText = command + Environment.NewLine;
                 _log.Debug($"Sending command: 'command'");
                 _comPortHandler.Send(command + "\r\n");
                 var pos = command.IndexOf(",");
@@ -531,19 +536,32 @@ namespace FlarmTerminal
             if (e.Button == MouseButtons.Right)
             {
                 var contextMenu = new System.Windows.Forms.ContextMenuStrip();
-                var menuItem = new ToolStripMenuItem("Clear");
+                var menuItem = new ToolStripMenuItem("Save As...");
+                menuItem.Image = IconChar.Save.ToBitmap(IconFont.Solid, 32, Color.Black);
+                menuItem.Click += new EventHandler(SaveTerminalToFile);
+                contextMenu.Items.Add(menuItem);
+                menuItem = new ToolStripMenuItem("Print...");
+                menuItem.Image = IconChar.Print.ToBitmap(IconFont.Solid, 32, Color.Black);
+                menuItem.Click += new EventHandler(PrintTerminalRichTextBox);
+                contextMenu.Items.Add(menuItem);
+                menuItem = new ToolStripMenuItem("Clear");
+                menuItem.Image = IconChar.Eraser.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(ClearAction);
                 contextMenu.Items.Add(menuItem);
                 menuItem = new ToolStripMenuItem("Cut");
+                menuItem.Image = IconChar.Cut.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(CutAction);
                 contextMenu.Items.Add(menuItem);
-                menuItem = new ToolStripMenuItem("Copy");
+                menuItem = new ToolStripMenuItem("Copy Selection");
+                menuItem.Image = IconChar.Copy.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(CopyAction);
                 contextMenu.Items.Add(menuItem);
                 menuItem = new ToolStripMenuItem("Copy All (Rich Text)");
+                menuItem.Image = IconChar.Copy.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(CopyAllRichText);
                 contextMenu.Items.Add(menuItem);
                 menuItem = new ToolStripMenuItem("Copy All (Plain Text)");
+                menuItem.Image = IconChar.Copy.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(CopyAllPlainText);
                 contextMenu.Items.Add(menuItem);
 
@@ -552,6 +570,32 @@ namespace FlarmTerminal
                 //                contextMenu.Items.Add(menuItem);
 
                 textBoxTerminal.ContextMenuStrip = contextMenu;
+            }
+        }
+
+        private void SaveTerminalToFile(object? sender, EventArgs e)
+        {
+            try
+            {
+                using (var saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                    saveFileDialog.Title = "Save Terminal Output";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllText(saveFileDialog.FileName, textBoxTerminal.Text);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                using (new CenterWinDialog(this))
+                {
+                    MessageBox.Show($"Failed to save file, Error: {ex.Message}",
+                        Program.ApplicationName,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -667,7 +711,7 @@ namespace FlarmTerminal
         /// </summary>
         /// <param name="richTextBox"></param>
         /// <param name="characterCount"></param>
-        public void SetSelectionHangingIndent(RichTextBox richTextBox, int characterCount)
+        public void SetSelectionHangingIndent(System.Windows.Forms.RichTextBox richTextBox, int characterCount)
         {
             int fudgeValue = 6; // Adjust this value to increase or decrease the indent
 
@@ -692,7 +736,7 @@ namespace FlarmTerminal
             }
         }
 
-    public void WriteToProperties(string strLogMessage)
+        public void WriteToProperties(string strLogMessage)
         {
             richTextBoxProperties.Invoke(new EventHandler(delegate
             {
@@ -1054,12 +1098,12 @@ namespace FlarmTerminal
 
         private void printPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PrintPropertiesRichTextBox();
+            PrintPropertiesRichTextBox(sender, e);
         }
 
         private void printRawSerialToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PrintTerminalRichTextBox();
+            PrintTerminalRichTextBox(sender, e);
         }
 
         internal void UpdateCARPRadar(char antenna, double[] rangeDoubles)
@@ -1111,6 +1155,43 @@ namespace FlarmTerminal
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void richTextBoxProperties_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var contextMenu = new System.Windows.Forms.ContextMenuStrip();
+                var menuItem = new ToolStripMenuItem("Save As...");
+                menuItem.Image = IconChar.Save.ToBitmap(IconFont.Solid, 32, Color.Black);
+                menuItem.Click += new EventHandler(SavePropertiesToFile);
+                contextMenu.Items.Add(menuItem);
+                menuItem = new ToolStripMenuItem("Print...");
+                menuItem.Image = IconChar.Print.ToBitmap(IconFont.Solid, 32, Color.Black);
+                menuItem.Click += new EventHandler(PrintPropertiesRichTextBox);
+                contextMenu.Items.Add(menuItem);
+                richTextBoxProperties.ContextMenuStrip = contextMenu;
+            }
+        }
+
+        private void SavePropertiesToFile(object? sender, EventArgs e)
+        {
+            try
+            {
+                using (var saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                    saveFileDialog.Title = "Save Properties Output";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        File.WriteAllText(saveFileDialog.FileName, richTextBoxProperties.Text);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
