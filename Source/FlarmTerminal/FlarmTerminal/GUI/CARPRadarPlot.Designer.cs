@@ -31,11 +31,11 @@
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
             buttonOK = new System.Windows.Forms.Button();
             groupBoxPlot = new System.Windows.Forms.GroupBox();
+            checkBoxB = new System.Windows.Forms.CheckBox();
+            checkBoxA = new System.Windows.Forms.CheckBox();
             groupBoxRemarks = new System.Windows.Forms.GroupBox();
             groupBoxDevice = new System.Windows.Forms.GroupBox();
             buttonPrint = new System.Windows.Forms.Button();
-            checkBoxA = new System.Windows.Forms.CheckBox();
-            checkBoxB = new System.Windows.Forms.CheckBox();
             groupBoxPlot.SuspendLayout();
             SuspendLayout();
             // 
@@ -75,6 +75,32 @@
             groupBoxPlot.TabStop = false;
             groupBoxPlot.Text = "Range Plot";
             // 
+            // checkBoxB
+            // 
+            checkBoxB.AutoSize = true;
+            checkBoxB.Checked = true;
+            checkBoxB.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBoxB.Location = new System.Drawing.Point(125, 31);
+            checkBoxB.Name = "checkBoxB";
+            checkBoxB.Size = new System.Drawing.Size(91, 21);
+            checkBoxB.TabIndex = 2;
+            checkBoxB.Text = "Antenna B";
+            checkBoxB.UseVisualStyleBackColor = true;
+            checkBoxB.CheckedChanged += checkBoxB_CheckedChanged;
+            // 
+            // checkBoxA
+            // 
+            checkBoxA.AutoSize = true;
+            checkBoxA.Checked = true;
+            checkBoxA.CheckState = System.Windows.Forms.CheckState.Checked;
+            checkBoxA.Location = new System.Drawing.Point(18, 31);
+            checkBoxA.Name = "checkBoxA";
+            checkBoxA.Size = new System.Drawing.Size(92, 21);
+            checkBoxA.TabIndex = 1;
+            checkBoxA.Text = "Antenna A";
+            checkBoxA.UseVisualStyleBackColor = true;
+            checkBoxA.CheckedChanged += checkBoxA_CheckedChanged;
+            // 
             // groupBoxRemarks
             // 
             groupBoxRemarks.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -111,28 +137,6 @@
             buttonPrint.Text = "Print...";
             buttonPrint.UseVisualStyleBackColor = true;
             buttonPrint.Click += buttonPrint_Click;
-            // 
-            // checkBoxA
-            // 
-            checkBoxA.AutoSize = true;
-            checkBoxA.Location = new System.Drawing.Point(18, 31);
-            checkBoxA.Name = "checkBoxA";
-            checkBoxA.Size = new System.Drawing.Size(92, 21);
-            checkBoxA.TabIndex = 1;
-            checkBoxA.Text = "Antenna A";
-            checkBoxA.UseVisualStyleBackColor = true;
-            checkBoxA.CheckedChanged += checkBoxA_CheckedChanged;
-            // 
-            // checkBoxB
-            // 
-            checkBoxB.AutoSize = true;
-            checkBoxB.Location = new System.Drawing.Point(125, 31);
-            checkBoxB.Name = "checkBoxB";
-            checkBoxB.Size = new System.Drawing.Size(91, 21);
-            checkBoxB.TabIndex = 2;
-            checkBoxB.Text = "Antenna B";
-            checkBoxB.UseVisualStyleBackColor = true;
-            checkBoxB.CheckedChanged += checkBoxB_CheckedChanged;
             // 
             // CARPRadarPlot
             // 
