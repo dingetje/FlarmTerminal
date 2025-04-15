@@ -2,10 +2,6 @@
 using System.Reflection;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
-using FlarmTerminal.GUI;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace FlarmTerminal
 {

@@ -31,6 +31,7 @@ using System.Windows.Controls;
 using System.Windows.Media; // Add this namespace for Brushes and FontFamily
 using FontAwesome.Sharp;
 using Color = System.Drawing.Color;
+using Svg;
 
 namespace FlarmTerminal
 {
@@ -1193,6 +1194,42 @@ namespace FlarmTerminal
             {
                 MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void helpToolStripButton_Click(object sender, EventArgs e)
+        {
+            var aboutDialog = new AboutBox();
+            aboutDialog.ShowDialog();
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            var bitmap = LogoLoader.LoadLogo();
+            if (bitmap != null)
+            {
+                // Draw the Bitmap onto the PictureBox using PaintEventArgs e
+                e.Graphics.DrawImage(bitmap, new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height));
+            }
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void printToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cutToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyToolStripButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

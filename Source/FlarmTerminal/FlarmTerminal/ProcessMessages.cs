@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using UCNLNMEA;
+﻿using UCNLNMEA;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;

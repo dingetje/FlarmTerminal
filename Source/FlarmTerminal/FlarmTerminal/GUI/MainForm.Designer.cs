@@ -80,7 +80,17 @@
             toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripButtonRecord = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            cutToolStripButton = new System.Windows.Forms.ToolStripButton();
+            copyToolStripButton = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             recordTtimer = new System.Windows.Forms.Timer(components);
+            pictureBox1 = new System.Windows.Forms.PictureBox();
             statusStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -88,6 +98,7 @@
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // textBoxTerminal
@@ -95,13 +106,13 @@
             textBoxTerminal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxTerminal.BackColor = System.Drawing.Color.LightYellow;
             textBoxTerminal.Font = new System.Drawing.Font("Consolas", 9.75F);
-            textBoxTerminal.Location = new System.Drawing.Point(0, 24);
+            textBoxTerminal.Location = new System.Drawing.Point(0, 26);
             textBoxTerminal.MinimumSize = new System.Drawing.Size(400, 300);
             textBoxTerminal.Name = "textBoxTerminal";
             textBoxTerminal.ReadOnly = true;
             textBoxTerminal.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             textBoxTerminal.ShowSelectionMargin = true;
-            textBoxTerminal.Size = new System.Drawing.Size(590, 587);
+            textBoxTerminal.Size = new System.Drawing.Size(599, 713);
             textBoxTerminal.TabIndex = 2;
             textBoxTerminal.Text = "";
             textBoxTerminal.MouseDown += textBoxTerminal_MouseDown;
@@ -111,11 +122,11 @@
             richTextBoxProperties.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             richTextBoxProperties.BackColor = System.Drawing.Color.LightSteelBlue;
             richTextBoxProperties.Font = new System.Drawing.Font("Courier New", 9.75F);
-            richTextBoxProperties.Location = new System.Drawing.Point(2, 24);
+            richTextBoxProperties.Location = new System.Drawing.Point(2, 26);
             richTextBoxProperties.Name = "richTextBoxProperties";
             richTextBoxProperties.ReadOnly = true;
             richTextBoxProperties.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            richTextBoxProperties.Size = new System.Drawing.Size(536, 584);
+            richTextBoxProperties.Size = new System.Drawing.Size(546, 710);
             richTextBoxProperties.TabIndex = 0;
             richTextBoxProperties.Text = "";
             richTextBoxProperties.MouseDown += richTextBoxProperties_MouseDown;
@@ -123,9 +134,9 @@
             // statusStrip
             // 
             statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripDropDownConnectButton, toolStripStatusLabelPort, toolStripStatusComPortProperties, toolStripStatusLabelGPSUTC, toolStripStatusLabelPosition, toolStripStatusLabelClearMemory, toolStripProgressBar });
-            statusStrip.Location = new System.Drawing.Point(2, 679);
+            statusStrip.Location = new System.Drawing.Point(2, 807);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new System.Drawing.Size(1132, 22);
+            statusStrip.Size = new System.Drawing.Size(1151, 22);
             statusStrip.TabIndex = 0;
             statusStrip.Text = "statusStrip2";
             statusStrip.ItemClicked += statusStrip_ItemClicked;
@@ -194,12 +205,13 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.BackColor = System.Drawing.Color.White;
             menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, settingsToolStripMenuItem, viewToolStripMenuItem, commandToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(2, 2);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            menuStrip1.Size = new System.Drawing.Size(1132, 24);
+            menuStrip1.Size = new System.Drawing.Size(1151, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -427,8 +439,8 @@
             splitContainer1.Panel2.Controls.Add(labelProperties);
             splitContainer1.Panel2.Controls.Add(richTextBoxProperties);
             splitContainer1.Panel2MinSize = 400;
-            splitContainer1.Size = new System.Drawing.Size(1132, 611);
-            splitContainer1.SplitterDistance = 590;
+            splitContainer1.Size = new System.Drawing.Size(1151, 739);
+            splitContainer1.SplitterDistance = 599;
             splitContainer1.TabIndex = 2;
             // 
             // label1Terminal
@@ -453,12 +465,13 @@
             // 
             // toolStrip1
             // 
+            toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord });
+            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord, toolStripSeparator4, saveToolStripButton, printToolStripButton, toolStripSeparator, cutToolStripButton, copyToolStripButton, toolStripSeparator2, helpToolStripButton, toolStripSeparator3 });
             toolStrip1.Location = new System.Drawing.Point(2, 26);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new System.Drawing.Size(1132, 39);
+            toolStrip1.Size = new System.Drawing.Size(357, 39);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -509,16 +522,102 @@
             toolStripButtonRecord.ToolTipText = "Start/Stop Recording";
             toolStripButtonRecord.Click += toolStripButtonRecord_Click;
             // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(6, 39);
+            // 
+            // saveToolStripButton
+            // 
+            saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            saveToolStripButton.Image = (System.Drawing.Image)resources.GetObject("saveToolStripButton.Image");
+            saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            saveToolStripButton.Name = "saveToolStripButton";
+            saveToolStripButton.Size = new System.Drawing.Size(36, 36);
+            saveToolStripButton.Text = "&Save";
+            saveToolStripButton.Click += saveToolStripButton_Click;
+            // 
+            // printToolStripButton
+            // 
+            printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            printToolStripButton.Image = (System.Drawing.Image)resources.GetObject("printToolStripButton.Image");
+            printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            printToolStripButton.Name = "printToolStripButton";
+            printToolStripButton.Size = new System.Drawing.Size(36, 36);
+            printToolStripButton.Text = "&Print";
+            printToolStripButton.Click += printToolStripButton_Click;
+            // 
+            // toolStripSeparator
+            // 
+            toolStripSeparator.Name = "toolStripSeparator";
+            toolStripSeparator.Size = new System.Drawing.Size(6, 39);
+            // 
+            // cutToolStripButton
+            // 
+            cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            cutToolStripButton.Image = (System.Drawing.Image)resources.GetObject("cutToolStripButton.Image");
+            cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            cutToolStripButton.Name = "cutToolStripButton";
+            cutToolStripButton.Size = new System.Drawing.Size(36, 36);
+            cutToolStripButton.Text = "C&ut";
+            cutToolStripButton.Click += cutToolStripButton_Click;
+            // 
+            // copyToolStripButton
+            // 
+            copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            copyToolStripButton.Image = (System.Drawing.Image)resources.GetObject("copyToolStripButton.Image");
+            copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            copyToolStripButton.Name = "copyToolStripButton";
+            copyToolStripButton.Size = new System.Drawing.Size(36, 36);
+            copyToolStripButton.Text = "&Copy";
+            copyToolStripButton.Click += copyToolStripButton_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
+            // 
+            // helpToolStripButton
+            // 
+            helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            helpToolStripButton.Image = (System.Drawing.Image)resources.GetObject("helpToolStripButton.Image");
+            helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            helpToolStripButton.Name = "helpToolStripButton";
+            helpToolStripButton.Size = new System.Drawing.Size(36, 36);
+            helpToolStripButton.Text = "He&lp";
+            helpToolStripButton.Click += helpToolStripButton_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
+            // 
             // recordTtimer
             // 
             recordTtimer.Interval = 400;
             recordTtimer.Tick += recordTtimer_Tick;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = System.Drawing.Color.White;
+            pictureBox1.Location = new System.Drawing.Point(1033, 17);
+            pictureBox1.Margin = new System.Windows.Forms.Padding(5);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Padding = new System.Windows.Forms.Padding(5);
+            pictureBox1.Size = new System.Drawing.Size(100, 63);
+            pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
+            pictureBox1.WaitOnLoad = true;
+            pictureBox1.Paint += pictureBox1_Paint;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1136, 703);
+            BackColor = System.Drawing.Color.White;
+            ClientSize = new System.Drawing.Size(1155, 831);
+            Controls.Add(pictureBox1);
             Controls.Add(toolStrip1);
             Controls.Add(splitContainer1);
             Controls.Add(statusStrip);
@@ -545,6 +644,7 @@
             splitContainer1.ResumeLayout(false);
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -601,6 +701,16 @@
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem printPropertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printRawSerialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripButton printToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripButton cutToolStripButton;
+        private System.Windows.Forms.ToolStripButton copyToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton helpToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
