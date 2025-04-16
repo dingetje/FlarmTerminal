@@ -24,9 +24,10 @@ namespace FlarmTerminal.GUI
             this.textBoxDescription.Text += Environment.NewLine + Environment.NewLine;
             this.textBoxDescription.Text += "* NAudio" + Environment.NewLine;
             this.textBoxDescription.Text += "* ScottPlot.WinForms" + Environment.NewLine;
-            this.textBoxDescription.Text += "* SerialPortStream" + Environment.NewLine;
+            this.textBoxDescription.Text += "* RJCP.SerialPortStream" + Environment.NewLine;
             this.textBoxDescription.Text += "* Serilog" + Environment.NewLine;
             this.textBoxDescription.Text += "* Svg.NET" + Environment.NewLine;
+            this.textBoxDescription.Text += "* VPKSoft.WinFormsRtfPrint" + Environment.NewLine;
             this.textBoxDescription.Text += "* FontAwesome.Sharp" + Environment.NewLine;
             this.textBoxDescription.Text += "* UCNLNMEA, NMEA 0183 protocol support library" + Environment.NewLine;
             this.textBoxDescription.Text += Environment.NewLine + Environment.NewLine;

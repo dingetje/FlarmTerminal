@@ -22,6 +22,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NAudio.WinForms" Version="2.2.1" />
+    <PackageReference Include="RJCP.SerialPortStream" Version="3.0.1" />
     <PackageReference Include="ScottPlot.WinForms" Version="5.0.55" />
     <PackageReference Include="SerialPortStream" Version="2.4.2" />
     <PackageReference Include="Serilog" Version="4.2.1-dev-02337" />

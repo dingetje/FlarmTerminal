@@ -6,32 +6,17 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Configuration;
-using RJCP.IO.Ports;
 using Parity = RJCP.IO.Ports.Parity;
 using StopBits = RJCP.IO.Ports.StopBits;
 using System.Diagnostics;
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Numerics;
 using System.IO;
 using System.Timers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Reflection;
-using System.IO.Ports;
-using System.Collections;
-using System.Resources;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using UCNLNMEA;
 using VPKSoft.WinFormsRtfPrint;
 using Timer = System.Threading.Timer;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Windows.Controls;
-using System.Windows.Media; // Add this namespace for Brushes and FontFamily
 using FontAwesome.Sharp;
 using Color = System.Drawing.Color;
-using Svg;
 
 namespace FlarmTerminal
 {
@@ -115,9 +100,17 @@ namespace FlarmTerminal
             SetSelectionHangingIndent(richTextBoxProperties, 20);
             _volumeLevel = Properties.Settings.Default.Volume;
 
-            toolTip1.SetToolTip(scenario1CollissionToolStripMenuItem.GetCurrentParent(), "A single FLARM-equipped aircraft with ID 123456\nin a collision trajectory with 0\u00b0 relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.");
-            toolTip1.SetToolTip(scenario2ToolStripMenuItem.GetCurrentParent(), "A single ADS-B-equipped aircraft with ID 123456\nin a collision trajectory with 270\u00b0 relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.");
-            toolTip1.SetToolTip(scenario3ToolStripMenuItem.GetCurrentParent(), "A single non-directional aircraft(equipped with a Mode-S transponder) with\nID 123456 in a collision trajectory. Starts far away with no warning\nand goes through all alarm levels until collision. Lasts 30 seconds.");
+            toolTip1.InitialDelay = 500;
+            toolTip1.ReshowDelay = 100;
+            toolTip1.AutoPopDelay = 5000;
+
+            scenario1CollissionToolStripMenuItem.ToolTipText = "A single FLARM-equipped aircraft with ID 123456\nin a collision trajectory with 0° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
+            scenario2ToolStripMenuItem.ToolTipText = "A single ADS-B-equipped aircraft with ID 123456\nin a collision trajectory with 270° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
+            scenario3ToolStripMenuItem.ToolTipText = "A single non-directional aircraft (equipped with a Mode-S transponder) with\nID 123456 in a collision trajectory. Starts far away with no warning\nand goes through all alarm levels until collision. Lasts 30 seconds.";
+            scenario4ToolStripMenuItem.ToolTipText = "A fixed obstacle from an installed obstacle database with a valid license with\nID 123456. Starts far away with no warning and goes through all alarm levels\nuntil collision. Lasts 30 seconds.";
+            scenario5ToolStripMenuItem.ToolTipText = "An Alert Zone, i.e., a dynamic airspace in the form of a cylinder where special\nvigilance is required (e.g., active skydiving activity) with ID 123456.\nOwn ship flies towards the zone for 4 seconds before entering, crosses for 24 seconds,\nand continues on the other side for 2 seconds. Lasts 30 seconds.";
+            scenario6ToolStripMenuItem.ToolTipText = "A mixed scenario, where multiple traffic types and objects are combined. A\nFLARM-equipped aircraft (ID 123456), an ADS-B-equipped aircraft (ID 123457),\na non-directional aircraft (ID 123458), a fixed obstacle (ID 123459),\nand an alert zone (ID 123460) are all in the vicinity, none of which are\ngenerating a warning. Lasts 30 seconds.";
+
         }
 
         private void PrintPropertiesRichTextBox(object? sender, EventArgs e)
@@ -955,19 +948,13 @@ namespace FlarmTerminal
                 {
                     _flarmDisplay.SetLED(FlarmDisplay.LEDNames.Power, FlarmDisplay.LEDColor.Green, false);
                 }
-                _flarmDisplay.SetVolume(_volumeLevel/100.0f);
+                _flarmDisplay.SetVolume(_volumeLevel / 100.0f);
             }
             else
             {
                 _flarmDisplay.Visible = false;
             }
         }
-
-        private void scenario1CollissionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WriteCommand("$PFLAF,S,1");
-        }
-
         private void requestRunningScenarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAF,R");
@@ -1270,6 +1257,11 @@ namespace FlarmTerminal
             }
         }
 
+        private void scenario1CollissionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAF,S,1");
+        }
+
         private void scenario2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAF,S,2");
@@ -1278,6 +1270,20 @@ namespace FlarmTerminal
         private void scenario3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAF,S,3");
+        }
+
+        private void scenario4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAF,S,4");
+        }
+        private void scenario5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAF,S,5");
+        }
+
+        private void scenario6ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAF,S,6");
         }
 
         private void volumeToolStripMenuItem_Click(object sender, EventArgs e)

@@ -50,6 +50,7 @@
             printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             COMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             autoConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +98,6 @@
             recordTtimer = new System.Windows.Forms.Timer(components);
             pictureBox1 = new System.Windows.Forms.PictureBox();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
-            volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -281,11 +281,19 @@
             settingsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             settingsToolStripMenuItem.Text = "&Settings...";
             // 
+            // volumeToolStripMenuItem
+            // 
+            volumeToolStripMenuItem.Image = Properties.Resources.icons8_volume_48;
+            volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
+            volumeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            volumeToolStripMenuItem.Text = "Volume...";
+            volumeToolStripMenuItem.Click += volumeToolStripMenuItem_Click;
+            // 
             // COMPortToolStripMenuItem
             // 
             COMPortToolStripMenuItem.Image = Properties.Resources.serial_port_icon;
             COMPortToolStripMenuItem.Name = "COMPortToolStripMenuItem";
-            COMPortToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            COMPortToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             COMPortToolStripMenuItem.Text = "&COM Port...";
             COMPortToolStripMenuItem.ToolTipText = "Setup COM port...";
             COMPortToolStripMenuItem.Click += cOMPortToolStripMenuItem_Click;
@@ -294,7 +302,7 @@
             // 
             autoConnectToolStripMenuItem.CheckOnClick = true;
             autoConnectToolStripMenuItem.Name = "autoConnectToolStripMenuItem";
-            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             autoConnectToolStripMenuItem.Text = "&Auto Connect";
             autoConnectToolStripMenuItem.ToolTipText = "Enable Auto Connect";
             autoConnectToolStripMenuItem.Click += autoConnectToolStripMenuItem_Click;
@@ -318,7 +326,7 @@
             // commandToolStripMenuItem
             // 
             commandToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            commandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { requestVersionsToolStripMenuItem, requestIDToolStripMenuItem, requestToolStripMenuItem, requestSelftestResultToolStripMenuItem, readIDToolStripMenuItem, readPropertiesToolStripMenuItem, simulateScenarioToolStripMenuItem, dANGERToolStripMenuItem, setDeviceIDToolStripMenuItem });
+            commandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { readPropertiesToolStripMenuItem, requestVersionsToolStripMenuItem, requestIDToolStripMenuItem, requestToolStripMenuItem, requestSelftestResultToolStripMenuItem, readIDToolStripMenuItem, simulateScenarioToolStripMenuItem, dANGERToolStripMenuItem, setDeviceIDToolStripMenuItem });
             commandToolStripMenuItem.Enabled = false;
             commandToolStripMenuItem.Name = "commandToolStripMenuItem";
             commandToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -376,6 +384,7 @@
             // 
             // requestRunningScenarioToolStripMenuItem
             // 
+            requestRunningScenarioToolStripMenuItem.Image = Properties.Resources.question_help_17841;
             requestRunningScenarioToolStripMenuItem.Name = "requestRunningScenarioToolStripMenuItem";
             requestRunningScenarioToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             requestRunningScenarioToolStripMenuItem.Text = "Request &Running Scenario";
@@ -411,6 +420,7 @@
             scenario4ToolStripMenuItem.Name = "scenario4ToolStripMenuItem";
             scenario4ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             scenario4ToolStripMenuItem.Text = "Scenario 4";
+            scenario4ToolStripMenuItem.Click += scenario4ToolStripMenuItem_Click;
             // 
             // scenario5ToolStripMenuItem
             // 
@@ -418,6 +428,7 @@
             scenario5ToolStripMenuItem.Name = "scenario5ToolStripMenuItem";
             scenario5ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             scenario5ToolStripMenuItem.Text = "Scenario 5";
+            scenario5ToolStripMenuItem.Click += scenario5ToolStripMenuItem_Click;
             // 
             // scenario6ToolStripMenuItem
             // 
@@ -425,6 +436,7 @@
             scenario6ToolStripMenuItem.Name = "scenario6ToolStripMenuItem";
             scenario6ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             scenario6ToolStripMenuItem.Text = "Scenario 6";
+            scenario6ToolStripMenuItem.Click += scenario6ToolStripMenuItem_Click;
             // 
             // dANGERToolStripMenuItem
             // 
@@ -673,14 +685,6 @@
             // 
             toolTip1.IsBalloon = true;
             toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            // 
-            // volumeToolStripMenuItem
-            // 
-            volumeToolStripMenuItem.Image = Properties.Resources.icons8_volume_48;
-            volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
-            volumeToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
-            volumeToolStripMenuItem.Text = "Volume...";
-            volumeToolStripMenuItem.Click += volumeToolStripMenuItem_Click;
             // 
             // MainForm
             // 
