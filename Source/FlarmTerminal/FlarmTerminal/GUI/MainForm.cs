@@ -1253,5 +1253,14 @@ namespace FlarmTerminal
                 CopyAction(sender, e);
             }
         }
+
+        private void resetCARPDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to reset this FLARM device CARP data?", ProductName,
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                WriteCommand("$PFLAN,S,RESET");
+            }
+        }
     }
 }

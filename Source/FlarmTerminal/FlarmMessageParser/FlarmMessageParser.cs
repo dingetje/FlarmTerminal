@@ -85,6 +85,15 @@ namespace FlarmTerminal
                             {
                                 propertyName = FlarmProperties.GetConfigName(configItem);
                             }
+                            else if (Enum.TryParse(key, out FlarmProperties.PowerFlarmSpecific powerFlarmItem))
+                            {
+                                propertyName = FlarmProperties.GetPowerFlarmName(powerFlarmItem);
+                            }
+                            else if (Enum.TryParse(key, out FlarmProperties.IGCSpecific igcItem))
+                            {
+                                propertyName = FlarmProperties.GetIGCName(igcItem);
+                            }
+
                             switch (key)
                             {
                                 case "ACFT":
@@ -141,6 +150,7 @@ namespace FlarmTerminal
                                 case "CAP": // device capabilities
                                     if (value.Contains(";"))
                                     {
+                                        // split list of capabilities
                                         var capabilities = value.Split(';');
                                         var capList = new List<string>();
                                         foreach (var cap in capabilities)
@@ -368,8 +378,8 @@ namespace FlarmTerminal
                                                     WriteProperties("", "GDL90 Protocol");
                                                     break;
                                                 default:
-                                                    WriteProperties("", $"Unknown {value}");
-                                                    break;
+                                                WriteProperties("", $"Unknown {value}");
+                                                break;
                                             }
                                         }
                                         else
@@ -378,12 +388,12 @@ namespace FlarmTerminal
                                         }
                                     }
                                     break;
-                                case "THRE":
-                                    WriteProperties(propertyName, value + " m/s");
-                                    break;
-                                default:
-                                    WriteProperties(propertyName, value);
-                                    break;
+                            case "THRE":
+                                WriteProperties(propertyName, value + " m/s");
+                                break;
+                            default:
+                                WriteProperties(propertyName, value);
+                                break;
                             }
                         }
                         catch (Exception)

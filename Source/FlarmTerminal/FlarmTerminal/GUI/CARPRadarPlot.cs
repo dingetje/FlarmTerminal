@@ -26,9 +26,9 @@ namespace FlarmTerminal.GUI
         private double[,] _plotValues = {
             { 3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+//            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+//            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
         };
 
         public CARPRadarPlot(MainForm? m)
@@ -80,37 +80,37 @@ namespace FlarmTerminal.GUI
             {
                 _radar.Series[1].LegendText = "Antenna A";
 
-                _radar.Series[3].LegendText = "Max Antenna A";
-                _radar.Series[3].FillColor = Colors.Transparent;
-                _radar.Series[3].LineColor = Colors.Blue;
-                _radar.Series[3].LineWidth = 2;
-                _radar.Series[3].LinePattern = LinePattern.Solid;
+//                _radar.Series[3].LegendText = "Max Antenna A";
+//                _radar.Series[3].FillColor = Colors.Transparent;
+//                _radar.Series[3].LineColor = Colors.Blue;
+//                _radar.Series[3].LineWidth = 2;
+//                _radar.Series[3].LinePattern = LinePattern.Solid;
             }
             else
             {
                 _radar.Series[1].Values = new double[20];
-                _radar.Series[3].Values = new double[20];
+//                _radar.Series[3].Values = new double[20];
             }
 
             if (checkBoxB.Checked)
             {
                 _radar.Series[2].LegendText = "Antenna B";
 
-                _radar.Series[4].LegendText = "Max Antenna B";
-                _radar.Series[4].FillColor = Colors.Transparent;
-                _radar.Series[4].LineColor = Colors.Red;
-                _radar.Series[4].LineWidth = 2;
-                _radar.Series[4].LinePattern = LinePattern.Solid;
+//                _radar.Series[4].LegendText = "Max Antenna B";
+//                _radar.Series[4].FillColor = Colors.Transparent;
+//                _radar.Series[4].LineColor = Colors.Red;
+//                _radar.Series[4].LineWidth = 2;
+//                _radar.Series[4].LinePattern = LinePattern.Solid;
             }
             else
             {
                 _radar.Series[2].Values = new double[20];
-                _radar.Series[4].Values = new double[20];
+//                _radar.Series[4].Values = new double[20];
             }
 
             _radar.PolarAxis.StraightLines = true;
 
-            double[] tickPositions = { 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000 };
+            double[] tickPositions = { 1000, 2000, 3000, 5000, 7000, 10000 /*, 15000, 20000, 25000 */};
             string[] tickLabels = tickPositions.Select(x => (x / 1000.0).ToString() + " km").ToArray();
 
             _radar.PolarAxis.SetCircles(tickPositions, tickLabels);
@@ -137,6 +137,8 @@ namespace FlarmTerminal.GUI
                     arrayIndex++;
                 }
             }
+            // Commented out Max Antenna A and B for now
+            /*
             foreach (var antenna in new char[] { 'A', 'B' })
             {
                 var rangeDoubles = _mainForm?.GetCARPMaxData(antenna);
@@ -149,6 +151,7 @@ namespace FlarmTerminal.GUI
                     arrayIndex++;
                 }
             }
+            */
         }
 
         private string AlignProperty(string key)
