@@ -128,7 +128,7 @@ namespace FlarmTerminal.GUI
                 {
                     for (int i = 0; i < 20; i++)
                     {
-                        _plotValues[arrayIndex, i] = rangeData[i];
+                        _plotValues[arrayIndex, 19 - i] = rangeData[i];
                         if (rangeData[i] < 3000)
                         {
                             _belowSafeRange = true;

@@ -1312,5 +1312,16 @@ namespace FlarmTerminal
             // forward to FlarmDisplay as float between 0.0 and 1.0
             _flarmDisplay?.SetVolume(e / 100.0f);
         }
+
+        private void saveIGCFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Works on PowerFlarm only
+            WriteCommand("$PFLAI,IGCREADOUT");
+        }
+
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAR,0");
+        }
     }
 }
