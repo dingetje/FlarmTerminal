@@ -30,6 +30,7 @@ namespace FlarmTerminal.GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialPortConfig));
             panel1 = new System.Windows.Forms.Panel();
             label1 = new System.Windows.Forms.Label();
             pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -286,6 +287,7 @@ namespace FlarmTerminal.GUI
             Controls.Add(lvComPorts);
             Controls.Add(pictureBox1);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimizeBox = false;
             MinimumSize = new Size(550, 450);
             Name = "SerialPortConfig";

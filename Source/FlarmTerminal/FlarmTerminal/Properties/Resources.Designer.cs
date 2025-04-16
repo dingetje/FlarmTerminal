@@ -93,6 +93,16 @@ namespace FlarmTerminal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap display_small {
+            get {
+                object obj = ResourceManager.GetObject("display-small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap exit_PNG35 {
             get {
                 object obj = ResourceManager.GetObject("exit_PNG35", resourceCulture);
@@ -136,6 +146,36 @@ namespace FlarmTerminal.Properties {
         public static System.Drawing.Bitmap Play {
             get {
                 object obj = ResourceManager.GetObject("Play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap print_icon_2727222_64 {
+            get {
+                object obj = ResourceManager.GetObject("print-icon-2727222_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap question_help_17841 {
+            get {
+                object obj = ResourceManager.GetObject("question_help_17841", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap question_help_178411 {
+            get {
+                object obj = ResourceManager.GetObject("question_help_178411", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -46,8 +46,8 @@
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             readFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             printToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             printRawSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             COMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,7 +84,6 @@
             saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             printToolStripButton = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            cutToolStripButton = new System.Windows.Forms.ToolStripButton();
             copyToolStripButton = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             helpToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -228,28 +227,34 @@
             readFileToolStripMenuItem.Name = "readFileToolStripMenuItem";
             readFileToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             readFileToolStripMenuItem.Text = "Playback &File...";
+            readFileToolStripMenuItem.ToolTipText = "Playback...";
             readFileToolStripMenuItem.Click += readFileToolStripMenuItem_Click;
             // 
             // printToolStripMenuItem1
             // 
-            printToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { printPropertiesToolStripMenuItem, printRawSerialToolStripMenuItem });
+            printToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { printRawSerialToolStripMenuItem, printPropertiesToolStripMenuItem });
+            printToolStripMenuItem1.Image = Properties.Resources.print_icon_2727222_64;
             printToolStripMenuItem1.Name = "printToolStripMenuItem1";
             printToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
             printToolStripMenuItem1.Text = "Print";
             // 
-            // printPropertiesToolStripMenuItem
-            // 
-            printPropertiesToolStripMenuItem.Name = "printPropertiesToolStripMenuItem";
-            printPropertiesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            printPropertiesToolStripMenuItem.Text = "Print Properties...";
-            printPropertiesToolStripMenuItem.Click += printPropertiesToolStripMenuItem_Click;
-            // 
             // printRawSerialToolStripMenuItem
             // 
+            printRawSerialToolStripMenuItem.Image = Properties.Resources.print_icon_2727222_64;
             printRawSerialToolStripMenuItem.Name = "printRawSerialToolStripMenuItem";
             printRawSerialToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             printRawSerialToolStripMenuItem.Text = "Print Raw Serial...";
+            printRawSerialToolStripMenuItem.ToolTipText = "Print...";
             printRawSerialToolStripMenuItem.Click += printRawSerialToolStripMenuItem_Click;
+            // 
+            // printPropertiesToolStripMenuItem
+            // 
+            printPropertiesToolStripMenuItem.Image = Properties.Resources.print_icon_2727222_64;
+            printPropertiesToolStripMenuItem.Name = "printPropertiesToolStripMenuItem";
+            printPropertiesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            printPropertiesToolStripMenuItem.Text = "Print Properties...";
+            printPropertiesToolStripMenuItem.ToolTipText = "Print...";
+            printPropertiesToolStripMenuItem.Click += printPropertiesToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
@@ -258,6 +263,7 @@
             exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
             exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             exitToolStripMenuItem.Text = "E&xit";
+            exitToolStripMenuItem.ToolTipText = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // settingsToolStripMenuItem
@@ -273,6 +279,7 @@
             COMPortToolStripMenuItem.Name = "COMPortToolStripMenuItem";
             COMPortToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             COMPortToolStripMenuItem.Text = "&COM Port...";
+            COMPortToolStripMenuItem.ToolTipText = "Setup COM port...";
             COMPortToolStripMenuItem.Click += cOMPortToolStripMenuItem_Click;
             // 
             // autoConnectToolStripMenuItem
@@ -281,6 +288,7 @@
             autoConnectToolStripMenuItem.Name = "autoConnectToolStripMenuItem";
             autoConnectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             autoConnectToolStripMenuItem.Text = "&Auto Connect";
+            autoConnectToolStripMenuItem.ToolTipText = "Enable Auto Connect";
             autoConnectToolStripMenuItem.Click += autoConnectToolStripMenuItem_Click;
             // 
             // viewToolStripMenuItem
@@ -289,9 +297,11 @@
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             viewToolStripMenuItem.Text = "&View";
+            viewToolStripMenuItem.ToolTipText = "Show/Hide FLARM display...";
             // 
             // fLARMDisplayToolStripMenuItem
             // 
+            fLARMDisplayToolStripMenuItem.Image = Properties.Resources.display_small;
             fLARMDisplayToolStripMenuItem.Name = "fLARMDisplayToolStripMenuItem";
             fLARMDisplayToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             fLARMDisplayToolStripMenuItem.Text = "FLARM Display";
@@ -417,8 +427,9 @@
             // 
             // aboutToolStripMenuItem
             // 
+            aboutToolStripMenuItem.Image = Properties.Resources.question_help_178411;
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             aboutToolStripMenuItem.Text = "&About...";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -468,10 +479,10 @@
             toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord, toolStripSeparator4, saveToolStripButton, printToolStripButton, toolStripSeparator, cutToolStripButton, copyToolStripButton, toolStripSeparator2, helpToolStripButton, toolStripSeparator3 });
+            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord, toolStripSeparator4, saveToolStripButton, printToolStripButton, toolStripSeparator, copyToolStripButton, toolStripSeparator2, helpToolStripButton, toolStripSeparator3 });
             toolStrip1.Location = new System.Drawing.Point(2, 26);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new System.Drawing.Size(357, 39);
+            toolStrip1.Size = new System.Drawing.Size(321, 39);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -540,7 +551,7 @@
             // printToolStripButton
             // 
             printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            printToolStripButton.Image = (System.Drawing.Image)resources.GetObject("printToolStripButton.Image");
+            printToolStripButton.Image = Properties.Resources.print_icon_2727222_64;
             printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             printToolStripButton.Name = "printToolStripButton";
             printToolStripButton.Size = new System.Drawing.Size(36, 36);
@@ -551,16 +562,6 @@
             // 
             toolStripSeparator.Name = "toolStripSeparator";
             toolStripSeparator.Size = new System.Drawing.Size(6, 39);
-            // 
-            // cutToolStripButton
-            // 
-            cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            cutToolStripButton.Image = (System.Drawing.Image)resources.GetObject("cutToolStripButton.Image");
-            cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            cutToolStripButton.Name = "cutToolStripButton";
-            cutToolStripButton.Size = new System.Drawing.Size(36, 36);
-            cutToolStripButton.Text = "C&ut";
-            cutToolStripButton.Click += cutToolStripButton_Click;
             // 
             // copyToolStripButton
             // 
@@ -580,11 +581,12 @@
             // helpToolStripButton
             // 
             helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            helpToolStripButton.Image = (System.Drawing.Image)resources.GetObject("helpToolStripButton.Image");
+            helpToolStripButton.Image = Properties.Resources.question_help_178411;
             helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             helpToolStripButton.Name = "helpToolStripButton";
             helpToolStripButton.Size = new System.Drawing.Size(36, 36);
             helpToolStripButton.Text = "He&lp";
+            helpToolStripButton.ToolTipText = "About...";
             helpToolStripButton.Click += helpToolStripButton_Click;
             // 
             // toolStripSeparator3
@@ -623,6 +625,7 @@
             Controls.Add(statusStrip);
             Controls.Add(menuStrip1);
             DoubleBuffered = true;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MinimumSize = new System.Drawing.Size(800, 500);
@@ -704,7 +707,6 @@
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.ToolStripButton printToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton cutToolStripButton;
         private System.Windows.Forms.ToolStripButton copyToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton helpToolStripButton;

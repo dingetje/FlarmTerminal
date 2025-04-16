@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CARPRadarPlot));
             formsPlot1 = new ScottPlot.WinForms.FormsPlot();
             buttonOK = new System.Windows.Forms.Button();
             groupBoxPlot = new System.Windows.Forms.GroupBox();
@@ -148,6 +149,7 @@
             Controls.Add(groupBoxRemarks);
             Controls.Add(groupBoxPlot);
             Controls.Add(buttonOK);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(750, 1024);
             Name = "CARPRadarPlot";
             Text = "CARP Range Radar Plot";

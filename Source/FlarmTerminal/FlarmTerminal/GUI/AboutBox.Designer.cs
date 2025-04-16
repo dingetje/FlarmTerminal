@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             labelProductName = new System.Windows.Forms.Label();
             labelVersion = new System.Windows.Forms.Label();
@@ -173,17 +174,16 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.White;
             ClientSize = new System.Drawing.Size(734, 484);
-            ControlBox = false;
             Controls.Add(pictureBox1);
             Controls.Add(tableLayoutPanel);
             DoubleBuffered = true;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new System.Drawing.Size(750, 500);
             Name = "AboutBox";
             Padding = new System.Windows.Forms.Padding(10);
-            ShowIcon = false;
             ShowInTaskbar = false;
             SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeviceIDDialog));
             textBoxICAO = new System.Windows.Forms.TextBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
             radioButtonICAO = new System.Windows.Forms.RadioButton();
@@ -107,6 +108,7 @@
             Controls.Add(buttonCancel);
             Controls.Add(buttonOk);
             Controls.Add(groupBox1);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimumSize = new System.Drawing.Size(280, 220);
             Name = "DeviceIDDialog";

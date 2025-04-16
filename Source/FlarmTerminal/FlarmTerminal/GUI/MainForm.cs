@@ -1204,6 +1204,7 @@ namespace FlarmTerminal
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            // load the FLARM SVG logo and convert it to a Bitmap
             var bitmap = LogoLoader.LoadLogo();
             if (bitmap != null)
             {
@@ -1214,22 +1215,43 @@ namespace FlarmTerminal
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
-
+            if (richTextBoxProperties.Focused)
+            {
+                SavePropertiesToFile(sender, e);
+            }
+            if (textBoxTerminal.Focused)
+            {
+                SaveTerminalToFile(sender, e);
+            }
         }
 
         private void printToolStripButton_Click(object sender, EventArgs e)
         {
+            if (richTextBoxProperties.Focused)
+            {
+                PrintPropertiesRichTextBox(sender, e);
+            }
 
+            if (textBoxTerminal.Focused)
+            {
+                PrintTerminalRichTextBox(sender, e);
+            }
         }
 
         private void cutToolStripButton_Click(object sender, EventArgs e)
         {
-
+            if (textBoxTerminal.Focused)
+            {
+                CutAction(sender, e);
+            }
         }
 
         private void copyToolStripButton_Click(object sender, EventArgs e)
         {
-
+            if (textBoxTerminal.Focused)
+            {
+                CopyAction(sender, e);
+            }
         }
     }
 }
