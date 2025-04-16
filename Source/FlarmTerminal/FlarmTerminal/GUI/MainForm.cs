@@ -67,6 +67,7 @@ namespace FlarmTerminal
         private CarpDateTime _carpDateTime = new();
         private System.Threading.Timer? _carpDataRequestTimer;
         private CARPRadarPlot? _carpRadarPlotDialog = null;
+        private int _volumeLevel = 50;
 
         public CarpDateTime CarpDateTime
         {
@@ -112,6 +113,11 @@ namespace FlarmTerminal
             _flarmMessagesParser.DualPortDetected += HandleDualPortEnabled;
             // init the hanging indent for the properties window
             SetSelectionHangingIndent(richTextBoxProperties, 20);
+            _volumeLevel = Properties.Settings.Default.Volume;
+
+            toolTip1.SetToolTip(scenario1CollissionToolStripMenuItem.GetCurrentParent(), "A single FLARM-equipped aircraft with ID 123456\nin a collision trajectory with 0\u00b0 relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.");
+            toolTip1.SetToolTip(scenario2ToolStripMenuItem.GetCurrentParent(), "A single ADS-B-equipped aircraft with ID 123456\nin a collision trajectory with 270\u00b0 relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.");
+            toolTip1.SetToolTip(scenario3ToolStripMenuItem.GetCurrentParent(), "A single non-directional aircraft(equipped with a Mode-S transponder) with\nID 123456 in a collision trajectory. Starts far away with no warning\nand goes through all alarm levels until collision. Lasts 30 seconds.");
         }
 
         private void PrintPropertiesRichTextBox(object? sender, EventArgs e)
@@ -949,6 +955,7 @@ namespace FlarmTerminal
                 {
                     _flarmDisplay.SetLED(FlarmDisplay.LEDNames.Power, FlarmDisplay.LEDColor.Green, false);
                 }
+                _flarmDisplay.SetVolume(_volumeLevel/100.0f);
             }
             else
             {
@@ -1261,6 +1268,43 @@ namespace FlarmTerminal
             {
                 WriteCommand("$PFLAN,S,RESET");
             }
+        }
+
+        private void scenario2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAF,S,2");
+        }
+
+        private void scenario3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteCommand("$PFLAF,S,3");
+        }
+
+        private void volumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var volumeDialog = new VolumeDialog(_volumeLevel);
+            volumeDialog.VolumeLevelChanged += VolumeDialog_VolumeLevelChanged;
+            if (volumeDialog.ShowDialog() == DialogResult.OK)
+            {
+                var volume = volumeDialog.GetVolumeLevel();
+                if (volume >= 0 && volume <= 100)
+                {
+                    _volumeLevel = volume;
+                    Properties.Settings.Default.Volume = _volumeLevel;
+                    Properties.Settings.Default.Save();
+                }
+            }
+            else
+            {
+                // reset volume to default
+                _flarmDisplay?.SetVolume(_volumeLevel / 100.0f);
+            }
+        }
+
+        private void VolumeDialog_VolumeLevelChanged(object? sender, int e)
+        {
+            // forward to FlarmDisplay as float between 0.0 and 1.0
+            _flarmDisplay?.SetVolume(e / 100.0f);
         }
     }
 }

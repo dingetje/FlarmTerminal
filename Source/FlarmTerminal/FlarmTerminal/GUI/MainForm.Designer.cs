@@ -62,12 +62,18 @@
             readIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             readPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             simulateScenarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            scenario1CollissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             requestRunningScenarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            scenario1CollissionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            scenario2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            scenario3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            scenario4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            scenario5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            scenario6ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             dANGERToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             resetToFactorySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             clearMemoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             clearAllFlightLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            resetCARPDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             setDeviceIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,7 +96,8 @@
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             recordTtimer = new System.Windows.Forms.Timer(components);
             pictureBox1 = new System.Windows.Forms.PictureBox();
-            resetCARPDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
+            volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -269,7 +276,7 @@
             // 
             // settingsToolStripMenuItem
             // 
-            settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { COMPortToolStripMenuItem, autoConnectToolStripMenuItem });
+            settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { volumeToolStripMenuItem, COMPortToolStripMenuItem, autoConnectToolStripMenuItem });
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             settingsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             settingsToolStripMenuItem.Text = "&Settings...";
@@ -278,7 +285,7 @@
             // 
             COMPortToolStripMenuItem.Image = Properties.Resources.serial_port_icon;
             COMPortToolStripMenuItem.Name = "COMPortToolStripMenuItem";
-            COMPortToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            COMPortToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             COMPortToolStripMenuItem.Text = "&COM Port...";
             COMPortToolStripMenuItem.ToolTipText = "Setup COM port...";
             COMPortToolStripMenuItem.Click += cOMPortToolStripMenuItem_Click;
@@ -287,7 +294,7 @@
             // 
             autoConnectToolStripMenuItem.CheckOnClick = true;
             autoConnectToolStripMenuItem.Name = "autoConnectToolStripMenuItem";
-            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             autoConnectToolStripMenuItem.Text = "&Auto Connect";
             autoConnectToolStripMenuItem.ToolTipText = "Enable Auto Connect";
             autoConnectToolStripMenuItem.Click += autoConnectToolStripMenuItem_Click;
@@ -361,24 +368,63 @@
             // 
             // simulateScenarioToolStripMenuItem
             // 
-            simulateScenarioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { scenario1CollissionToolStripMenuItem, requestRunningScenarioToolStripMenuItem });
+            simulateScenarioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { requestRunningScenarioToolStripMenuItem, scenario1CollissionToolStripMenuItem, scenario2ToolStripMenuItem, scenario3ToolStripMenuItem, scenario4ToolStripMenuItem, scenario5ToolStripMenuItem, scenario6ToolStripMenuItem });
+            simulateScenarioToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
             simulateScenarioToolStripMenuItem.Name = "simulateScenarioToolStripMenuItem";
             simulateScenarioToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
             simulateScenarioToolStripMenuItem.Text = "Simulate Scenario";
             // 
-            // scenario1CollissionToolStripMenuItem
-            // 
-            scenario1CollissionToolStripMenuItem.Name = "scenario1CollissionToolStripMenuItem";
-            scenario1CollissionToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            scenario1CollissionToolStripMenuItem.Text = "Scenario 1 (collision)";
-            scenario1CollissionToolStripMenuItem.Click += scenario1CollissionToolStripMenuItem_Click;
-            // 
             // requestRunningScenarioToolStripMenuItem
             // 
             requestRunningScenarioToolStripMenuItem.Name = "requestRunningScenarioToolStripMenuItem";
-            requestRunningScenarioToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            requestRunningScenarioToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             requestRunningScenarioToolStripMenuItem.Text = "Request &Running Scenario";
             requestRunningScenarioToolStripMenuItem.Click += requestRunningScenarioToolStripMenuItem_Click;
+            // 
+            // scenario1CollissionToolStripMenuItem
+            // 
+            scenario1CollissionToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
+            scenario1CollissionToolStripMenuItem.Name = "scenario1CollissionToolStripMenuItem";
+            scenario1CollissionToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            scenario1CollissionToolStripMenuItem.Text = "Scenario 1 (collision)";
+            scenario1CollissionToolStripMenuItem.Click += scenario1CollissionToolStripMenuItem_Click;
+            // 
+            // scenario2ToolStripMenuItem
+            // 
+            scenario2ToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
+            scenario2ToolStripMenuItem.Name = "scenario2ToolStripMenuItem";
+            scenario2ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            scenario2ToolStripMenuItem.Text = "Scenario 2 (ADSB collision)";
+            scenario2ToolStripMenuItem.Click += scenario2ToolStripMenuItem_Click;
+            // 
+            // scenario3ToolStripMenuItem
+            // 
+            scenario3ToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
+            scenario3ToolStripMenuItem.Name = "scenario3ToolStripMenuItem";
+            scenario3ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            scenario3ToolStripMenuItem.Text = "Scenario 3 (Non directional)";
+            scenario3ToolStripMenuItem.Click += scenario3ToolStripMenuItem_Click;
+            // 
+            // scenario4ToolStripMenuItem
+            // 
+            scenario4ToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
+            scenario4ToolStripMenuItem.Name = "scenario4ToolStripMenuItem";
+            scenario4ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            scenario4ToolStripMenuItem.Text = "Scenario 4";
+            // 
+            // scenario5ToolStripMenuItem
+            // 
+            scenario5ToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
+            scenario5ToolStripMenuItem.Name = "scenario5ToolStripMenuItem";
+            scenario5ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            scenario5ToolStripMenuItem.Text = "Scenario 5";
+            // 
+            // scenario6ToolStripMenuItem
+            // 
+            scenario6ToolStripMenuItem.Image = Properties.Resources.icons8_simulation_48;
+            scenario6ToolStripMenuItem.Name = "scenario6ToolStripMenuItem";
+            scenario6ToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            scenario6ToolStripMenuItem.Text = "Scenario 6";
             // 
             // dANGERToolStripMenuItem
             // 
@@ -392,7 +438,7 @@
             // 
             resetToFactorySettingsToolStripMenuItem.Image = Properties.Resources.danger_32x32;
             resetToFactorySettingsToolStripMenuItem.Name = "resetToFactorySettingsToolStripMenuItem";
-            resetToFactorySettingsToolStripMenuItem.Size = new System.Drawing.Size(208, 30);
+            resetToFactorySettingsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             resetToFactorySettingsToolStripMenuItem.Text = "Reset to factory settings";
             resetToFactorySettingsToolStripMenuItem.Click += resetToFactorySettingsToolStripMenuItem_Click;
             // 
@@ -400,7 +446,7 @@
             // 
             clearMemoryToolStripMenuItem.Image = Properties.Resources.danger_32x32;
             clearMemoryToolStripMenuItem.Name = "clearMemoryToolStripMenuItem";
-            clearMemoryToolStripMenuItem.Size = new System.Drawing.Size(208, 30);
+            clearMemoryToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             clearMemoryToolStripMenuItem.Text = "Clear Memory";
             clearMemoryToolStripMenuItem.Click += clearMemoryToolStripMenuItem_Click;
             // 
@@ -408,9 +454,18 @@
             // 
             clearAllFlightLogsToolStripMenuItem.Image = Properties.Resources.danger_32x32;
             clearAllFlightLogsToolStripMenuItem.Name = "clearAllFlightLogsToolStripMenuItem";
-            clearAllFlightLogsToolStripMenuItem.Size = new System.Drawing.Size(208, 30);
+            clearAllFlightLogsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             clearAllFlightLogsToolStripMenuItem.Text = "Clear All Flight Logs";
             clearAllFlightLogsToolStripMenuItem.Click += clearAllFlightLogsToolStripMenuItem_Click;
+            // 
+            // resetCARPDataToolStripMenuItem
+            // 
+            resetCARPDataToolStripMenuItem.Image = Properties.Resources.danger_32x32;
+            resetCARPDataToolStripMenuItem.Name = "resetCARPDataToolStripMenuItem";
+            resetCARPDataToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            resetCARPDataToolStripMenuItem.Text = "Reset CARP data";
+            resetCARPDataToolStripMenuItem.ToolTipText = "Reset CARP data";
+            resetCARPDataToolStripMenuItem.Click += resetCARPDataToolStripMenuItem_Click;
             // 
             // setDeviceIDToolStripMenuItem
             // 
@@ -430,7 +485,7 @@
             // 
             aboutToolStripMenuItem.Image = Properties.Resources.question_help_178411;
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             aboutToolStripMenuItem.Text = "&About...";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
@@ -614,14 +669,18 @@
             pictureBox1.WaitOnLoad = true;
             pictureBox1.Paint += pictureBox1_Paint;
             // 
-            // resetCARPDataToolStripMenuItem
+            // toolTip1
             // 
-            resetCARPDataToolStripMenuItem.Image = Properties.Resources.danger_32x32;
-            resetCARPDataToolStripMenuItem.Name = "resetCARPDataToolStripMenuItem";
-            resetCARPDataToolStripMenuItem.Size = new System.Drawing.Size(208, 30);
-            resetCARPDataToolStripMenuItem.Text = "Reset CARP data";
-            resetCARPDataToolStripMenuItem.ToolTipText = "Reset CARP data";
-            resetCARPDataToolStripMenuItem.Click += resetCARPDataToolStripMenuItem_Click;
+            toolTip1.IsBalloon = true;
+            toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
+            // volumeToolStripMenuItem
+            // 
+            volumeToolStripMenuItem.Image = Properties.Resources.icons8_volume_48;
+            volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
+            volumeToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            volumeToolStripMenuItem.Text = "Volume...";
+            volumeToolStripMenuItem.Click += volumeToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -724,6 +783,13 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem resetCARPDataToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem scenario2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scenario3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scenario4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scenario5ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scenario6ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem volumeToolStripMenuItem;
     }
 }
 

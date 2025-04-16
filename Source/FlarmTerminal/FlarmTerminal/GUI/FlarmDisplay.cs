@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Media;
 using System.Reflection;
 using System.Threading;
+using Microsoft.VisualBasic.Logging;
 using NAudio.Wave;
 
 namespace FlarmTerminal.GUI
@@ -18,6 +19,7 @@ namespace FlarmTerminal.GUI
     {
         private Mutex _mutex = new Mutex();
         private WaveOutEvent _outputDevice = new WaveOutEvent();
+        private object _lockOutputDevice = new();
 
         public enum LEDColor
         {
@@ -307,8 +309,12 @@ namespace FlarmTerminal.GUI
                     {
                         _outputDevice.Stop();
                     }
-                    _outputDevice.Init(audioFile);
-                    _outputDevice.Play();
+
+                    lock (_lockOutputDevice)
+                    {
+                        _outputDevice.Init(audioFile);
+                        _outputDevice.Play();
+                    }
                     while(_outputDevice.PlaybackState == PlaybackState.Playing)
                     {
                         Thread.Sleep(20);
@@ -318,6 +324,21 @@ namespace FlarmTerminal.GUI
             catch (Exception)
             {
 
+            }
+        }
+        public void SetVolume(float volume)
+        {
+            // Ensure volume is between 0.0 (mute) and 1.0 (full volume)
+            if (volume < 0.0f || volume > 1.0f)
+            {
+                return;
+            }
+            if (_outputDevice != null)
+            {
+                lock (_lockOutputDevice)
+                {
+                    _outputDevice.Volume = volume;
+                }
             }
         }
 
