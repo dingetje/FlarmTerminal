@@ -5,4 +5,4 @@ The tool offers a command set based on the FLARM documents:
  - FTD-012-Data-Port-Interface-Control-Document-ICD-7.20.pdf
  - FTD-014-FLARM-Configuration-Specification-1.18.pdf
 
-![flarmterminal-mainform](https://github.com/user-attachments/assets/570d3ad0-6e33-4dde-8f8f-648249e6db22)
+![image](https://github.com/user-attachments/assets/8dd7a3c9-de04-40bf-836d-7a0fe0c5cf8f)
