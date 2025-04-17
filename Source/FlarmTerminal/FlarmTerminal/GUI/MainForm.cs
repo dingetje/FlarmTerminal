@@ -111,6 +111,17 @@ namespace FlarmTerminal
             scenario5ToolStripMenuItem.ToolTipText = "An Alert Zone, i.e., a dynamic airspace in the form of a cylinder where special\nvigilance is required (e.g., active skydiving activity) with ID 123456.\nOwn ship flies towards the zone for 4 seconds before entering, crosses for 24 seconds,\nand continues on the other side for 2 seconds. Lasts 30 seconds.";
             scenario6ToolStripMenuItem.ToolTipText = "A mixed scenario, where multiple traffic types and objects are combined. A\nFLARM-equipped aircraft (ID 123456), an ADS-B-equipped aircraft (ID 123457),\na non-directional aircraft (ID 123458), a fixed obstacle (ID 123459),\nand an alert zone (ID 123460) are all in the vicinity, none of which are\ngenerating a warning. Lasts 30 seconds.";
 
+            // add FontAwesome images to menu items
+            readPropertiesToolStripMenuItem.Image = IconChar.Tags.ToBitmap(IconFont.Solid, 32, Color.Black);
+            readIDToolStripMenuItem.Image = IconChar.IdCard.ToBitmap(IconFont.Solid, 32, Color.Black);
+            requestSelftestResultToolStripMenuItem.Image = IconChar.Flask.ToBitmap(IconFont.Solid, 32, Color.Green);
+            restartToolStripMenuItem.Image = IconChar.Sync.ToBitmap(IconFont.Solid, 32, Color.Black);
+            requestCarpRangeMenuItem.Image = IconChar.Podcast.ToBitmap(IconFont.Solid, 32, Color.Blue);
+            requestDebugMenuItem.Image = IconChar.Bug.ToBitmap(IconFont.Solid, 32, Color.Black);
+            saveIGCFilesToolStripMenuItem.Image = IconChar.Save.ToBitmap(IconFont.Solid, 32, Color.Black);
+            requestVersionsToolStripMenuItem.Image = IconChar.Info.ToBitmap(IconFont.Solid, 32, Color.Black);
+            setDeviceIDToolStripMenuItem.Image = IconChar.Wrench.ToBitmap(IconFont.Solid, 32, Color.Black);
+            requestRunningScenarioToolStripMenuItem.Image = IconChar.Cogs.ToBitmap(IconFont.Solid, 32, Color.Black);
         }
 
         private void PrintPropertiesRichTextBox(object? sender, EventArgs e)
@@ -497,8 +508,12 @@ namespace FlarmTerminal
             }
             else
             {
-                MessageBox.Show("Sorry, no CARP data available", ProductName, MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
+                using (new CenterWinDialog(this))
+                {
+                    var msg = "Sorry, no CARP data available";
+                    _log.Warning(msg);
+                    MessageBox.Show(msg, Program.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
@@ -512,7 +527,7 @@ namespace FlarmTerminal
             WriteCommand("$PFLAS,R");
         }
 
-        private void requestToolStripMenuItem_Click(object sender, EventArgs e)
+        private void requestCarpRangeMenuItem_Click(object sender, EventArgs e)
         {
             // request CARP data, only PowerFlarms will respond!
             WriteCommand("$PFLAN,R,RANGE");
@@ -809,7 +824,10 @@ namespace FlarmTerminal
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        using (new CenterWinDialog(this))
+                        {
+                            MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -899,10 +917,10 @@ namespace FlarmTerminal
             }
             else
             {
-                // Save NMEA to file (text file)
+                // Save Serial Data to file (text file)
                 var saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.Filter = "Text File|*.txt|All Files|*.*";
-                saveFileDialog1.Title = "Save NMEA to File";
+                saveFileDialog1.Title = "Save Serial Data to File";
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -914,8 +932,11 @@ namespace FlarmTerminal
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Failed to open file for recording: Error: " + ex.ToString(),
-                            ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        using (new CenterWinDialog(this))
+                        {
+                            MessageBox.Show("Failed to open file for recording: Error: " + ex.ToString(),
+                                ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -1024,28 +1045,38 @@ namespace FlarmTerminal
 
         private void resetToFactorySettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to reset this FLARM device to factory settings?", ProductName,
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            using (new CenterWinDialog(this))
             {
-                WriteCommand("$PFLAR,99");
+                if (MessageBox.Show("Are you sure you want to reset this FLARM device to factory settings?",
+                        ProductName,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    WriteCommand("$PFLAR,99");
+                }
             }
         }
 
         private void clearMemoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM device?", ProductName,
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            using (new CenterWinDialog(this))
             {
-                WriteCommand("$PFLAC,S,CLEARMEM");
+                if (MessageBox.Show("Are you sure you want to clear the memory of this FLARM device?", ProductName,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    WriteCommand("$PFLAC,S,CLEARMEM");
+                }
             }
         }
 
         private void clearAllFlightLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM device?", ProductName,
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            using (new CenterWinDialog(this))
             {
-                WriteCommand("$PFLAC,CLEARLOGS");
+                if (MessageBox.Show("Are you sure you want to clear the flight logs of this FLARM device?", ProductName,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    WriteCommand("$PFLAC,CLEARLOGS");
+                }
             }
         }
 
@@ -1057,7 +1088,7 @@ namespace FlarmTerminal
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _log.Information("Exiting application");
-            Environment.Exit(0);
+            Application.Exit();
         }
 
         private void setDeviceIDToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1087,7 +1118,6 @@ namespace FlarmTerminal
                     return _properties["ID"];
                 }
             }
-
             return "";
         }
 
@@ -1186,14 +1216,20 @@ namespace FlarmTerminal
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                using (new CenterWinDialog(this))
+                {
+                    MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
         private void helpToolStripButton_Click(object sender, EventArgs e)
         {
-            var aboutDialog = new AboutBox();
-            aboutDialog.ShowDialog();
+            using (new CenterWinDialog(this))
+            {
+                var aboutDialog = new AboutBox();
+                aboutDialog.ShowDialog();
+            }
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -1250,39 +1286,48 @@ namespace FlarmTerminal
 
         private void resetCARPDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to reset this FLARM device CARP data?", ProductName,
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            using (new CenterWinDialog(this))
             {
-                WriteCommand("$PFLAN,S,RESET");
+                if (MessageBox.Show("Are you sure you want to reset this FLARM device CARP data?", ProductName,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    WriteCommand("$PFLAN,S,RESET");
+                }
             }
         }
 
         private void scenario1CollissionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _log.Debug("Requesting Simulation Scenario 1");
             WriteCommand("$PFLAF,S,1");
         }
 
         private void scenario2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _log.Debug("Requesting Simulation Scenario 2");
             WriteCommand("$PFLAF,S,2");
         }
 
         private void scenario3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _log.Debug("Requesting Simulation Scenario 3");
             WriteCommand("$PFLAF,S,3");
         }
 
         private void scenario4ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _log.Debug("Requesting Simulation Scenario 4");
             WriteCommand("$PFLAF,S,4");
         }
         private void scenario5ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _log.Debug("Requesting Simulation Scenario 5");
             WriteCommand("$PFLAF,S,5");
         }
 
         private void scenario6ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _log.Debug("Requesting Simulation Scenario 6");
             WriteCommand("$PFLAF,S,6");
         }
 

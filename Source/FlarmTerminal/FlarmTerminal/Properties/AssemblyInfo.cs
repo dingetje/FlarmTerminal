@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("FLARM Terminal can be used to query a FLARM device via serial cable")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dingetje")]
-[assembly: AssemblyProduct("FlarmTerminal")]
+[assembly: AssemblyProduct("FLARM Terminal")]
 [assembly: AssemblyCopyright("Copyleft (L) 2024-2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

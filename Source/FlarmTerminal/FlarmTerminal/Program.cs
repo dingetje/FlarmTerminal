@@ -8,7 +8,7 @@ namespace FlarmTerminal
     [SupportedOSPlatform("windows")]
     internal static class Program
     {
-        public const string ApplicationName = "Flarm Terminal";
+        public const string ApplicationName = "FLARM Terminal";
         public static FlarmTerminalLogger logger = new FlarmTerminalLogger();
         
         /// <summary>
