@@ -7,3 +7,7 @@ The tool offers a command set based on the FLARM documents:
 
 ![image](https://github.com/user-attachments/assets/3e5b575e-0ea4-4e47-aa41-4c10ef696ade)
 
+# CARP Range Plot
+For PowerFlarm devices, the tool offers collecting and interpreting the CARP range data.
+
+![image](https://github.com/user-attachments/assets/8ec05af4-ca8a-46b7-82ac-8af86df12f9a)
