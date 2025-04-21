@@ -1305,6 +1305,28 @@ namespace UCNLNMEA
                             // Example: $PFLAV,A,1.00,7.22,*0A (no obstacle database)
                             {"V", "c-c,x.x,x.x,c-c" },
 
+                            // PFLAQ,<Operation>,<Info>,<Progress>
+                            // Progress information for operations which take significant time. Not all values
+                            // between 0 and 100 will occur. An operation may terminate prematurely. In this
+                            // case, a $PFLAE will usually be output.
+                            // <Operation> String. Maximum 10 ASCII characters identifying operation
+                            // in progress:
+                            //  IGC = IGC files download
+                            //  FW = Firmware update (only PowerFLARM-based devices)
+                            //  OBST = Obstacle database update
+                            //  DUMP = Diagnostic dump
+                            //  RESTORE = Restore file system (only PowerFLARMbased devices)
+                            //  SCAN = Internal consistency check
+                            //
+                            // Info: String. Complementary info, e.g. the file name currently
+                            // being processed. Only sent from PowerFLARM-based devices but may be empty. In Classic FLARM-based
+                            // devices, this field is omitted.
+                            //
+                            // Progress: Integer. Progress of the operation in percent. 0 = not started, 100 = finished.
+                            // May not always output 100% at the end of the operation.
+
+                            {"Q", "c-c, c-c, x" },
+
                             // $PFLAN,A,RANGE,RFTOP,A,3637,4986,5080,4423,4311,4061,3733,4131,4743,4774,4330,4428,3299,3177,3477,2849,2632,2937,2552,2553*5E
                             // $PFLAN,A,RANGE,RFCNT,A,2460,2277,2119,1777,1571,1824,2438,2807,3365,4405,3134,2397,2118,1927,1957,1997,2070,1955,1796,2581*4A
                             // $PFLAN,A,RANGE,RFDEV,A,3342,4797,4638,3907,16704,13749,2910,3640,4232,4103,11965,16312,3058,3549,3640,2821,2587,15203,2561,2305*79

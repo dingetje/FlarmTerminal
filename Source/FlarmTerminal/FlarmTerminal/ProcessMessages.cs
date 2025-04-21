@@ -169,6 +169,9 @@ namespace FlarmTerminal
                             case "E":
                                 ProcessFLAE(nmea.parameters);
                                 break;
+                            case "Q":
+                                ProcessFLAQ(nmea.parameters);
+                                break;
                         }
 
                         break;
@@ -179,6 +182,11 @@ namespace FlarmTerminal
             {
                 //
             }
+        }
+
+        private void ProcessFLAQ(object[] parameters)
+        {
+            // TODO: add support for progress messages
         }
 
         private void ProcessGGA(object[] parameters)
