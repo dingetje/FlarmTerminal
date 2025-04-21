@@ -564,10 +564,6 @@ namespace FlarmTerminal
                 menuItem.Image = IconChar.Eraser.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(ClearAction);
                 contextMenu.Items.Add(menuItem);
-                menuItem = new ToolStripMenuItem("Cut");
-                menuItem.Image = IconChar.Cut.ToBitmap(IconFont.Solid, 32, Color.Black);
-                menuItem.Click += new EventHandler(CutAction);
-                contextMenu.Items.Add(menuItem);
                 menuItem = new ToolStripMenuItem("Copy Selection");
                 menuItem.Image = IconChar.Copy.ToBitmap(IconFont.Solid, 32, Color.Black);
                 menuItem.Click += new EventHandler(CopyAction);
@@ -633,11 +629,6 @@ namespace FlarmTerminal
         private void ClearAction(object sender, EventArgs e)
         {
             textBoxTerminal.Clear();
-        }
-
-        void CutAction(object sender, EventArgs e)
-        {
-            textBoxTerminal.Cut();
         }
 
         void CopyAction(object sender, EventArgs e)
@@ -1269,14 +1260,6 @@ namespace FlarmTerminal
             }
         }
 
-        private void cutToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (textBoxTerminal.Focused)
-            {
-                CutAction(sender, e);
-            }
-        }
-
         private void copyToolStripButton_Click(object sender, EventArgs e)
         {
             if (textBoxTerminal.Focused)
@@ -1380,9 +1363,20 @@ namespace FlarmTerminal
         {
             switch (severity)
             {
-                case 0:
+                case 0: // no error, i.e. normal operation. 
+                case 1: // information only, i.e. normal operation
                     iconToolStripButtonFLARMStatus.IconChar = IconChar.PlaneUp;
                     iconToolStripButtonFLARMStatus.IconColor = Color.Green;
+                    iconToolStripButtonFLARMStatus.ToolTipText = "FLARM status: " + message;
+                    break;
+                case 2: //  functionality may be reduced
+                    iconToolStripButtonFLARMStatus.IconChar = IconChar.PlaneUp;
+                    iconToolStripButtonFLARMStatus.IconColor = Color.Orange;
+                    iconToolStripButtonFLARMStatus.ToolTipText = "FLARM status: " + message;
+                    break;
+                case 3: //  fatal problem, device will not work
+                    iconToolStripButtonFLARMStatus.IconChar = IconChar.PlaneUp;
+                    iconToolStripButtonFLARMStatus.IconColor = Color.Red;
                     iconToolStripButtonFLARMStatus.ToolTipText = "FLARM status: " + message;
                     break;
             }
