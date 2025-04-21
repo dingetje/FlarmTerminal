@@ -62,6 +62,10 @@ namespace FlarmTerminal
             {
                 _mainForm?.UpdateCARPMaxRadar(antenna, rangeDoubles);
             };
+            _processMessages.FLARMSelfTestStatus += (int Severity, int ErrorCode, string Message) =>
+            {
+                _mainForm?.UpdateSelfTestStatus(Severity,ErrorCode,Message);
+            };
         }
 
         public void Dispose()

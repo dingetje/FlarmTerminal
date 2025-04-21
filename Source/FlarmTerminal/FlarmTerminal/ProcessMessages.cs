@@ -86,16 +86,21 @@ namespace FlarmTerminal
         public GlobalGPSDataHandler GlobalGPSData = null;
         List<SatelliteData> satellites;
 
-        private Dictionary<char,List<Int32>> _carpCnt = new Dictionary<char, List<Int32>>()
+        public delegate void SelfTestStatis(int Severity, int ErrorCode, string Message);
+        public SelfTestStatis FLARMSelfTestStatus = null;
+
+        private Dictionary<char, List<Int32>> _carpCnt = new Dictionary<char, List<Int32>>()
         {
             { 'A', new List<Int32>() },
             { 'B', new List<Int32>() }
         };
+
         private Dictionary<char, List<double>> _carpRange = new Dictionary<char, List<Double>>()
         {
             { 'A', new List<Double>() },
             { 'B', new List<Double>() }
         };
+
         private Dictionary<char, List<double>> _carpStdDev = new Dictionary<char, List<Double>>()
         {
             { 'A', new List<Double>() },
@@ -103,15 +108,19 @@ namespace FlarmTerminal
         };
 
         public delegate void CARPDataReceived(char antenna, double[] rangeDoubles);
+
         public CARPDataReceived FLARMCARPDataReceived = null;
 
         public delegate void CARPTimeSpan(DateTime startTime, DateTime endTime);
+
         public CARPTimeSpan FLARMCARPTimeSpanReceived = null;
 
         public delegate void CARPPointStats(long pointCount);
+
         public CARPPointStats FLARMCARPPoints = null;
 
         public delegate void CARPMaxDataReceived(char antenna, double[] rangeDoubles);
+
         public CARPMaxDataReceived FLARMMaxCARPDataReceived = null;
 
         public ProcessMessages()
@@ -156,6 +165,9 @@ namespace FlarmTerminal
                                 break;
                             case "N":
                                 ProcessFLAN(nmea.parameters);
+                                break;
+                            case "E":
+                                ProcessFLAE(nmea.parameters);
                                 break;
                         }
 
@@ -457,7 +469,8 @@ namespace FlarmTerminal
                 {
                     if (parameters.Length == 24 && (string)parameters[0] == "A" && (string)parameters[1] == "RANGE")
                     {
-                        if ((string)parameters[2] == "RFTOP" || (string)parameters[2] == "RFCNT" || (string)parameters[2] == "RFDEV")
+                        if ((string)parameters[2] == "RFTOP" || (string)parameters[2] == "RFCNT" ||
+                            (string)parameters[2] == "RFDEV")
                         {
                             // A or B antenna
                             char antenna = parameters[3].ToString()[0];
@@ -469,7 +482,7 @@ namespace FlarmTerminal
                                     for (int i = 0; i < 20; i++)
                                     {
                                         _carpCnt[antenna].Add(Convert.ToInt32(parameters[4 + i]));
-                                        if(_carpCnt[antenna][i] > 50)
+                                        if (_carpCnt[antenna][i] > 50)
                                         {
                                             rangeDoubles[i] = _carpRange[antenna][i];
                                         }
@@ -478,10 +491,12 @@ namespace FlarmTerminal
                                             rangeDoubles[i] = 0;
                                         }
                                     }
+
                                     if (FLARMCARPDataReceived != null)
                                     {
                                         FLARMCARPDataReceived?.Invoke(antenna, rangeDoubles);
                                     }
+
                                     break;
                                 case "RFTOP":
                                     _carpRange[antenna].Clear();
@@ -489,6 +504,7 @@ namespace FlarmTerminal
                                     {
                                         _carpRange[antenna].Add(Convert.ToDouble(parameters[4 + i]));
                                     }
+
                                     break;
                                 case "RFDEV":
                                     _carpStdDev[antenna].Clear();
@@ -501,10 +517,12 @@ namespace FlarmTerminal
                                     {
                                         FLARMMaxCARPDataReceived?.Invoke(antenna, _carpStdDev[antenna].ToArray());
                                     }
+
                                     break;
                             }
                         }
                     }
+
                     if (parameters.Length == 4 && (string)parameters[2] == "STATS")
                     {
                         if (FLARMCARPPoints != null)
@@ -513,6 +531,7 @@ namespace FlarmTerminal
                             FLARMCARPPoints?.Invoke(points);
                         }
                     }
+
                     if (parameters.Length == 5 && (string)parameters[2] == "TIMESPAN")
                     {
                         if (FLARMCARPTimeSpanReceived != null)
@@ -524,7 +543,106 @@ namespace FlarmTerminal
                             var dateTimeEnd = DateTimeOffset.FromUnixTimeSeconds(timestamp2).UtcDateTime;
 
                             // Invoke the delegate with the times
-                            FLARMCARPTimeSpanReceived?.Invoke(dateTimeStart,dateTimeEnd);
+                            FLARMCARPTimeSpanReceived?.Invoke(dateTimeStart, dateTimeEnd);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                //
+            }
+        }
+
+        private string ErrorCode2String(int errorCode)
+        {
+            switch (errorCode)
+            {
+                case 0x11: return "Firmware expired"; // (requires valid GPS information,
+                                                    // i.e. will not be available in the first minute or so after
+                                                    // power-on)
+                case 0x12: return "Firmware update error";
+                case 0x21: return "Power (e.g. voltage < 8V)";
+                case 0x22: return "UI error";
+                case 0x23: return "Audio error";
+                case 0x24: return "ADC error";
+                case 0x25: return "SD card error";
+                case 0x26: return "USB error";
+                case 0x27: return "LED error";
+                case 0x28: return "EEPROM error";
+                case 0x29: return "General hardware error";
+                case 0x2A: return "Transponder receiver Mode-C/S/ADS-B unserviceable";
+                case 0x2B: return "EEPROM error";
+                case 0x2C: return "GPIO error";
+                case 0x31: return "GPS communication";
+                case 0x32: return "Configuration of GPS module";
+                case 0x33: return "GPS antenna";
+                case 0x41: return "RF communication";
+                case 0x42:
+                    return "Another FLARM device with the same radio ID is\r\nbeing received. Alarms are suppressed for the relevant\r\ndevice.";
+                case 0x43: return "Wrong ICAO 24-bit address or radio ID";
+                case 0x51: return "Communication";
+                case 0x61: return "Flash memory";
+                case 0x71: return "Pressure sensor";
+                case 0x81: return "Obstacle database(e.g.incorrect file type)";
+                case 0x82: return "Obstacle database expired";
+                case 0x91: return "Flight recorder";
+                case 0x93: return "Engine-noise recording not possible";
+                case 0x94: return "Range analyzer";
+                case 0xA1: return "Configuration error, e.g. while reading\r\nflarmcfg.txt from SD/USB";
+                case 0xB1: return "Invalid obstacle database license (e.g. wrong\r\nserial number)";
+                case 0xB2: return "Invalid IGC feature license";
+                case 0xB3: return "Invalid AUD feature license";
+                case 0xB4: return "Invalid ENL feature license";
+                case 0xB5: return "Invalid RFB feature license";
+                case 0xB6: return "Invalid TIS feature license";
+                case 0x100: return "Generic error";
+                case 0x101: return "Flash File System error";
+                case 0x110: return "Failure updating firmware of external display";
+                case 0x120: return "Device is operated outside the designated\r\nregion. The device does not work.";
+                case 0xF1: return "Other";
+            }
+            return string.Empty;
+        }
+        private void ProcessFLAE(object[] parameters)
+        {
+            // $PFLAE,<QueryType>,<Severity>,<ErrorCode>[,<Message>]
+            // Self-test results after startup and error information during operation.
+            // Always watch for this sentence. Inform the user when functionality is not
+            // available due to errors.
+            // 
+            // Message: Field is omitted if data port version <7 or if DEVTYPE = Flarm04.
+            // String. Maximum 40 ASCII characters.
+            // Textual description of the error in English. The field may be empty.
+            try
+            {
+                if (parameters.Length > 0 && parameters[0] != null)
+                {
+                    // Answer on query?
+                    if (parameters[0].ToString() == "A")
+                    {
+                        if (parameters.Length > 1)
+                        {
+                            int severity = 0;
+                            severity = Convert.ToInt32(parameters[1]);
+
+                            int errorCode = 0;
+                            string message = string.Empty;
+                            if (parameters.Length > 2)
+                            {
+                                var hexString = parameters[2].ToString();
+                                errorCode = Int32.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+                            }
+                            if (parameters.Length > 3)
+                            {
+                                message = parameters[3].ToString();
+                            }
+                            else
+                            {
+                                message = ErrorCode2String(errorCode);
+                            }
+                            // Call the delegate with the error code and message
+                            FLARMSelfTestStatus?.Invoke(severity, errorCode, message);
                         }
                     }
                 }

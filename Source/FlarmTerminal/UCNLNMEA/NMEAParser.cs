@@ -1277,7 +1277,7 @@ namespace UCNLNMEA
                             // Self-test results after startup and error information during operation.
                             // Always watch for this sentence. Inform the user when functionality is not
                             // available due to errors.
-                            {"E", "c-c,x,hh,c-c"},
+                            {"E", "c-c,x,hhh,c-c"},
 
                             // $PFLAL,<DebugMessage>
                             // Debug message that is periodically emitted. The content of the debug message is
@@ -1825,7 +1825,7 @@ namespace UCNLNMEA
                 }
                 else
                 {
-                    throw new ArgumentException(string.Format("Unknown proprietary sentese \"{0}\", manufacturerID: \"{1}\"", sentenceID, manufacturerID));
+                    throw new ArgumentException(string.Format("Unknown proprietary sentence \"{0}\", manufacturerID: \"{1}\"", sentenceID, manufacturerID));
                 }
             }
             else

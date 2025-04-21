@@ -158,7 +158,7 @@ namespace FlarmTerminal
                                             switch (cap)
                                             {
                                                 case "ADSR":
-                                                    capList.Add("ADS-R/TIS-B reception functionality)");
+                                                    capList.Add("ADS-R/TIS-B reception functionality");
                                                     break;
                                                 case "AUD":
                                                     capList.Add("Audio output connection");

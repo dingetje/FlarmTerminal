@@ -331,6 +331,7 @@ namespace FlarmTerminal
                     if (_requestSelfTestResultsMode)
                     {
                         _lastCommand = "$PFLAE";
+                        // last line of self test result?
                         if (serialData.Contains("$PFLAE,A*33"))
                         {
                             _requestSelfTestResultsMode = false;
@@ -362,7 +363,7 @@ namespace FlarmTerminal
                         }
                     }
 
-                    // properties?
+                    // properties answer?
                     if (serialData.StartsWith("$PFLAC,A,") && _flarmMessagesParser != null)
                     {
                         _flarmMessagesParser.ParseProperties(serialData);
@@ -1367,6 +1368,24 @@ namespace FlarmTerminal
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAR,0");
+        }
+
+        private void iconToolStripButtonFLARMStatus_Click(object sender, EventArgs e)
+        {
+            // request self test result
+            WriteCommand("$PFLAE,R");
+        }
+
+        internal void UpdateSelfTestStatus(int severity, int errorCode, string message)
+        {
+            switch (severity)
+            {
+                case 0:
+                    iconToolStripButtonFLARMStatus.IconChar = IconChar.PlaneUp;
+                    iconToolStripButtonFLARMStatus.IconColor = Color.Green;
+                    iconToolStripButtonFLARMStatus.ToolTipText = "FLARM status: " + message;
+                    break;
+            }
         }
     }
 }
