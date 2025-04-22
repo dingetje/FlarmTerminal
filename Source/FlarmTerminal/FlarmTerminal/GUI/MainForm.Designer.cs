@@ -95,9 +95,9 @@
             toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             copyToolStripButton = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             iconToolStripButtonFLARMStatus = new FontAwesome.Sharp.IconToolStripButton();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             recordTtimer = new System.Windows.Forms.Timer(components);
             pictureBox1 = new System.Windows.Forms.PictureBox();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
@@ -577,7 +577,7 @@
             toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord, toolStripSeparator4, saveToolStripButton, printToolStripButton, toolStripSeparator, copyToolStripButton, toolStripSeparator2, iconToolStripButtonFLARMStatus, toolStripSeparator3, helpToolStripButton });
             toolStrip1.Location = new System.Drawing.Point(2, 26);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new System.Drawing.Size(388, 39);
+            toolStrip1.Size = new System.Drawing.Size(357, 39);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -673,22 +673,6 @@
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
-            // helpToolStripButton
-            // 
-            helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            helpToolStripButton.Image = Properties.Resources.question_help_178411;
-            helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            helpToolStripButton.Name = "helpToolStripButton";
-            helpToolStripButton.Size = new System.Drawing.Size(36, 36);
-            helpToolStripButton.Text = "He&lp";
-            helpToolStripButton.ToolTipText = "About...";
-            helpToolStripButton.Click += helpToolStripButton_Click;
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
-            // 
             // iconToolStripButtonFLARMStatus
             // 
             iconToolStripButtonFLARMStatus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -703,6 +687,22 @@
             iconToolStripButtonFLARMStatus.ToolTipText = "FLARM status";
             iconToolStripButtonFLARMStatus.Click += iconToolStripButtonFLARMStatus_Click;
             // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
+            // 
+            // helpToolStripButton
+            // 
+            helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            helpToolStripButton.Image = Properties.Resources.question_help_178411;
+            helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            helpToolStripButton.Name = "helpToolStripButton";
+            helpToolStripButton.Size = new System.Drawing.Size(36, 36);
+            helpToolStripButton.Text = "He&lp";
+            helpToolStripButton.ToolTipText = "About...";
+            helpToolStripButton.Click += helpToolStripButton_Click;
+            // 
             // recordTtimer
             // 
             recordTtimer.Interval = 400;
@@ -710,6 +710,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             pictureBox1.BackColor = System.Drawing.Color.White;
             pictureBox1.Location = new System.Drawing.Point(1033, 17);
             pictureBox1.Margin = new System.Windows.Forms.Padding(5);
