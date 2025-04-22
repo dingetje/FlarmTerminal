@@ -335,16 +335,22 @@ namespace FlarmTerminal
         {
             try
             {
-                bool Alarm = (int)parameters[4] > 0;
+                bool Alarm = false;
+                if (parameters.Length > 4 && parameters[4] != null)
+                {
+                     Alarm = (int)parameters[4] > 0;
+                }
                 // delegate used?
                 if (FLARMLedStatusRecieved != null)
                 {
                     bool[] ledStatus = new bool[4];
                     for (int i = 0; i < 4; i++)
                     {
-                        ledStatus[i] = (int)parameters[i] != 0;
+                        if (parameters[i] != null)
+                        {
+                            ledStatus[i] = (int)parameters[i] != 0;
+                        }
                     }
-
                     FLARMLedStatusRecieved?.Invoke(ledStatus);
                 }
 

@@ -1361,6 +1361,12 @@ namespace FlarmTerminal
 
         internal void UpdateSelfTestStatus(int severity, int errorCode, string message)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateSelfTestStatus(severity, errorCode, message)));
+                return;
+            }
+
             switch (severity)
             {
                 case 0: // no error, i.e. normal operation. 
