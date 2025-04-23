@@ -9,9 +9,13 @@
     <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <SelfContained>false</SelfContained>
+    <ApplicationIcon>terminal-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\FLARM LOGO RGB.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="terminal-icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\FLARM LOGO RGB.svg" />
