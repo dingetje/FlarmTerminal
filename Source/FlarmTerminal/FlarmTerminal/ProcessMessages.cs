@@ -123,6 +123,9 @@ namespace FlarmTerminal
 
         public CARPMaxDataReceived FLARMMaxCARPDataReceived = null;
 
+        public delegate void UpdateProgress(string label, int progress);
+        public UpdateProgress UpdateProgressNotification = null;
+
         public ProcessMessages()
         {
             commandProcessor = new Dictionary<SentenceIdentifiers, ProcessCommandDelegate>()
@@ -184,9 +187,34 @@ namespace FlarmTerminal
             }
         }
 
+        /// <summary>
+        /// PFLAQ,<Operation>,<Info>,<Progress>
+        /// </summary>
+        /// <param name="parameters"></param>
         private void ProcessFLAQ(object[] parameters)
         {
-            // TODO: add support for progress messages
+            if (parameters.Length > 1 && parameters[0] != null && parameters[1] != null)
+            {
+                int progress = 0;
+                if (Int32.TryParse(parameters[1].ToString(), out progress))
+                {
+                    switch (parameters[0])
+                    {
+                        case "FW": // firmware update
+                            if (UpdateProgressNotification != null)
+                            {
+                                UpdateProgressNotification?.Invoke("Firmware Update", progress);
+                            }
+                            break;
+                        case "IGC": // IGC download to SD card or USB drive
+                            if (UpdateProgressNotification != null)
+                            {
+                                UpdateProgressNotification?.Invoke("IGC Download", progress);
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
         private void ProcessGGA(object[] parameters)

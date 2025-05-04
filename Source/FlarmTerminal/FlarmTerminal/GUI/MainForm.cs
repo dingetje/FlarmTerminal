@@ -54,6 +54,8 @@ namespace FlarmTerminal
         private CARPRadarPlot? _carpRadarPlotDialog = null;
         private int _volumeLevel = 50;
 
+        private bool _updateInProgress = false;
+
         public CarpDateTime CarpDateTime
         {
             get { return _carpDateTime; }
@@ -105,12 +107,18 @@ namespace FlarmTerminal
             toolTip1.AutoPopDelay = 5000;
             toolStripProgressBar.Visible = false;
 
-            scenario1CollissionToolStripMenuItem.ToolTipText = "A single FLARM-equipped aircraft with ID 123456\nin a collision trajectory with 0° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
-            scenario2ToolStripMenuItem.ToolTipText = "A single ADS-B-equipped aircraft with ID 123456\nin a collision trajectory with 270° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
-            scenario3ToolStripMenuItem.ToolTipText = "A single non-directional aircraft (equipped with a Mode-S transponder) with\nID 123456 in a collision trajectory. Starts far away with no warning\nand goes through all alarm levels until collision. Lasts 30 seconds.";
-            scenario4ToolStripMenuItem.ToolTipText = "A fixed obstacle from an installed obstacle database with a valid license with\nID 123456. Starts far away with no warning and goes through all alarm levels\nuntil collision. Lasts 30 seconds.";
-            scenario5ToolStripMenuItem.ToolTipText = "An Alert Zone, i.e., a dynamic airspace in the form of a cylinder where special\nvigilance is required (e.g., active skydiving activity) with ID 123456.\nOwn ship flies towards the zone for 4 seconds before entering, crosses for 24 seconds,\nand continues on the other side for 2 seconds. Lasts 30 seconds.";
-            scenario6ToolStripMenuItem.ToolTipText = "A mixed scenario, where multiple traffic types and objects are combined. A\nFLARM-equipped aircraft (ID 123456), an ADS-B-equipped aircraft (ID 123457),\na non-directional aircraft (ID 123458), a fixed obstacle (ID 123459),\nand an alert zone (ID 123460) are all in the vicinity, none of which are\ngenerating a warning. Lasts 30 seconds.";
+            scenario1CollissionToolStripMenuItem.ToolTipText =
+                "A single FLARM-equipped aircraft with ID 123456\nin a collision trajectory with 0° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
+            scenario2ToolStripMenuItem.ToolTipText =
+                "A single ADS-B-equipped aircraft with ID 123456\nin a collision trajectory with 270° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
+            scenario3ToolStripMenuItem.ToolTipText =
+                "A single non-directional aircraft (equipped with a Mode-S transponder) with\nID 123456 in a collision trajectory. Starts far away with no warning\nand goes through all alarm levels until collision. Lasts 30 seconds.";
+            scenario4ToolStripMenuItem.ToolTipText =
+                "A fixed obstacle from an installed obstacle database with a valid license with\nID 123456. Starts far away with no warning and goes through all alarm levels\nuntil collision. Lasts 30 seconds.";
+            scenario5ToolStripMenuItem.ToolTipText =
+                "An Alert Zone, i.e., a dynamic airspace in the form of a cylinder where special\nvigilance is required (e.g., active skydiving activity) with ID 123456.\nOwn ship flies towards the zone for 4 seconds before entering, crosses for 24 seconds,\nand continues on the other side for 2 seconds. Lasts 30 seconds.";
+            scenario6ToolStripMenuItem.ToolTipText =
+                "A mixed scenario, where multiple traffic types and objects are combined. A\nFLARM-equipped aircraft (ID 123456), an ADS-B-equipped aircraft (ID 123457),\na non-directional aircraft (ID 123458), a fixed obstacle (ID 123459),\nand an alert zone (ID 123460) are all in the vicinity, none of which are\ngenerating a warning. Lasts 30 seconds.";
 
             // add FontAwesome images to menu items
             readPropertiesToolStripMenuItem.Image = IconChar.Tags.ToBitmap(IconFont.Solid, 32, Color.Black);
@@ -339,6 +347,11 @@ namespace FlarmTerminal
                         }
                     }
 
+                    if (_updateInProgress && serialData.Contains("$PFLAE"))
+                    {
+                        hideProgress();
+                    }
+
                     if (serialData.StartsWith("$PFLAC,A,CLEARMEM,"))
                     {
                         var items = serialData.Split(',');
@@ -347,13 +360,14 @@ namespace FlarmTerminal
                             int percent = 0;
                             if (Int32.TryParse(items[3], out percent))
                             {
-                                toolStripStatusLabelClearMemory.Visible = true;
+                                toolStripProgressStatusLabel.Visible = true;
+                                toolStripProgressStatusLabel.Text = "Clearing Memory";
                                 toolStripProgressBar.Visible = true;
                                 toolStripProgressBar.Value = percent;
                                 if (percent == 100)
                                 {
                                     toolStripProgressBar.Visible = false;
-                                    toolStripStatusLabelClearMemory.Visible = false;
+                                    toolStripProgressStatusLabel.Visible = false;
                                     using (new CenterWinDialog(this))
                                     {
                                         MessageBox.Show("FLARM memory cleared", ProductName, MessageBoxButtons.OK,
@@ -667,6 +681,7 @@ namespace FlarmTerminal
                     {
                         continue;
                     }
+
                     WriteCommand($"$PFLAC,R,{item}");
                     Application.DoEvents();
                 }
@@ -962,6 +977,7 @@ namespace FlarmTerminal
                 {
                     _flarmDisplay.SetLED(FlarmDisplay.LEDNames.Power, FlarmDisplay.LEDColor.Green, false);
                 }
+
                 _flarmDisplay.SetVolume(_volumeLevel / 100.0f);
             }
             else
@@ -969,6 +985,7 @@ namespace FlarmTerminal
                 _flarmDisplay.Visible = false;
             }
         }
+
         private void requestRunningScenarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WriteCommand("$PFLAF,R");
@@ -1111,6 +1128,7 @@ namespace FlarmTerminal
                     return _properties["ID"];
                 }
             }
+
             return "";
         }
 
@@ -1138,20 +1156,24 @@ namespace FlarmTerminal
                     break;
             }
         }
+
         public List<double>? GetCARPData(char antenna)
         {
             if (_carpData.TryGetValue(antenna, out var data))
             {
                 return data;
             }
+
             return null;
         }
+
         public List<double>? GetCARPMaxData(char antenna)
         {
             if (_carpMaxData.TryGetValue(antenna, out var data))
             {
                 return data;
             }
+
             return null;
         }
 
@@ -1242,6 +1264,7 @@ namespace FlarmTerminal
             {
                 SavePropertiesToFile(sender, e);
             }
+
             if (textBoxTerminal.Focused)
             {
                 SaveTerminalToFile(sender, e);
@@ -1304,6 +1327,7 @@ namespace FlarmTerminal
             _log.Debug("Requesting Simulation Scenario 4");
             WriteCommand("$PFLAF,S,4");
         }
+
         private void scenario5ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _log.Debug("Requesting Simulation Scenario 5");
@@ -1404,11 +1428,38 @@ namespace FlarmTerminal
             {
                 using (new CenterWinDialog(this))
                 {
-                    MessageBox.Show($"Failed to open the website: {ex.Message}", 
-                        Program.ApplicationName, 
-                        MessageBoxButtons.OK, 
+                    MessageBox.Show($"Failed to open the website: {ex.Message}",
+                        Program.ApplicationName,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        internal void hideProgress()
+        {
+            toolStripProgressBar.Visible = false;
+            toolStripProgressStatusLabel.Visible = false;
+            _updateInProgress = false;
+        }
+
+        internal void UpdateProgressNotification(string message, int progress)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<string, int>(UpdateProgressNotification), message, progress);
+                return;
+            }
+
+            _updateInProgress = true;
+            toolStripProgressBar.Visible = true;
+            toolStripProgressBar.Value = progress;
+            toolStripProgressStatusLabel.Visible = true;
+            toolStripProgressStatusLabel.Text = message;
+            Application.DoEvents();
+            if (progress >= 100)
+            {
+                hideProgress();
             }
         }
     }

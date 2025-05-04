@@ -66,6 +66,10 @@ namespace FlarmTerminal
             {
                 _mainForm?.UpdateSelfTestStatus(Severity,ErrorCode,Message);
             };
+            _processMessages.UpdateProgressNotification += (string message, int progress) =>
+            {
+                _mainForm?.UpdateProgressNotification(message, progress);
+            };
         }
 
         public void Dispose()

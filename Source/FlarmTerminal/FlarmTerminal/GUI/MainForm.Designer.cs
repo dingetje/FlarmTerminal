@@ -40,7 +40,7 @@
             toolStripStatusComPortProperties = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripStatusLabelGPSUTC = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripStatusLabelPosition = new System.Windows.Forms.ToolStripStatusLabel();
-            toolStripStatusLabelClearMemory = new System.Windows.Forms.ToolStripStatusLabel();
+            toolStripProgressStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,7 +143,7 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripDropDownConnectButton, toolStripStatusLabelPort, toolStripStatusComPortProperties, toolStripStatusLabelGPSUTC, toolStripStatusLabelPosition, toolStripStatusLabelClearMemory, toolStripProgressBar });
+            statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripDropDownConnectButton, toolStripStatusLabelPort, toolStripStatusComPortProperties, toolStripStatusLabelGPSUTC, toolStripStatusLabelPosition, toolStripProgressStatusLabel, toolStripProgressBar });
             statusStrip.Location = new System.Drawing.Point(2, 807);
             statusStrip.Name = "statusStrip";
             statusStrip.Size = new System.Drawing.Size(1151, 22);
@@ -201,12 +201,12 @@
             toolStripStatusLabelPosition.Name = "toolStripStatusLabelPosition";
             toolStripStatusLabelPosition.Size = new System.Drawing.Size(0, 17);
             // 
-            // toolStripStatusLabelClearMemory
+            // toolStripProgressStatusLabel
             // 
-            toolStripStatusLabelClearMemory.Name = "toolStripStatusLabelClearMemory";
-            toolStripStatusLabelClearMemory.Size = new System.Drawing.Size(99, 17);
-            toolStripStatusLabelClearMemory.Text = "Clearing Memory";
-            toolStripStatusLabelClearMemory.Visible = false;
+            toolStripProgressStatusLabel.Name = "toolStripProgressStatusLabel";
+            toolStripProgressStatusLabel.Size = new System.Drawing.Size(99, 17);
+            toolStripProgressStatusLabel.Text = "Clearing Memory";
+            toolStripProgressStatusLabel.Visible = false;
             // 
             // toolStripProgressBar
             // 
@@ -816,7 +816,7 @@
         private System.Windows.Forms.ToolStripMenuItem clearMemoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearAllFlightLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelClearMemory;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripProgressStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem setDeviceIDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem printPropertiesToolStripMenuItem;
