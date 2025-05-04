@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             labelProductName = new System.Windows.Forms.Label();
@@ -37,6 +38,7 @@
             okButton = new System.Windows.Forms.Button();
             logoPictureBox = new System.Windows.Forms.PictureBox();
             pictureBox1 = new System.Windows.Forms.PictureBox();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
             tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -165,6 +167,8 @@
             pictureBox1.Size = new System.Drawing.Size(100, 63);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "https://www.flarm.com");
+            pictureBox1.Click += pictureBox1_Click;
             pictureBox1.Paint += pictureBox1_Paint;
             // 
             // AboutBox
@@ -206,5 +210,6 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

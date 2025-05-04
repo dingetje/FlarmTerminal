@@ -96,6 +96,8 @@ namespace FlarmTerminal
 
                             switch (key)
                             {
+                                case "CLEARMEM":
+                                    break;
                                 case "ACFT":
                                     switch (value)
                                     {

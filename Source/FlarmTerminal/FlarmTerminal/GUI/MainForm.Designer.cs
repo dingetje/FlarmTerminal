@@ -720,7 +720,9 @@
             pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "https://www.flarm.com");
             pictureBox1.WaitOnLoad = true;
+            pictureBox1.Click += pictureBox1_Click;
             pictureBox1.Paint += pictureBox1_Paint;
             // 
             // toolTip1

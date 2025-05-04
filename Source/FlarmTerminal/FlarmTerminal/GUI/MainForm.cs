@@ -103,6 +103,7 @@ namespace FlarmTerminal
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 100;
             toolTip1.AutoPopDelay = 5000;
+            toolStripProgressBar.Visible = false;
 
             scenario1CollissionToolStripMenuItem.ToolTipText = "A single FLARM-equipped aircraft with ID 123456\nin a collision trajectory with 0° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
             scenario2ToolStripMenuItem.ToolTipText = "A single ADS-B-equipped aircraft with ID 123456\nin a collision trajectory with 270° relative bearing.\nStarts far away with no warning and goes through\nall alarm levels until collision. Lasts 30 seconds.";
@@ -1385,6 +1386,29 @@ namespace FlarmTerminal
                     iconToolStripButtonFLARMStatus.IconColor = Color.Red;
                     iconToolStripButtonFLARMStatus.ToolTipText = "FLARM status: " + message;
                     break;
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            //Open https://www.flarm.com/
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://www.flarm.com/",
+                    UseShellExecute = true // Ensures the URL opens in the default browser
+                });
+            }
+            catch (Exception ex)
+            {
+                using (new CenterWinDialog(this))
+                {
+                    MessageBox.Show($"Failed to open the website: {ex.Message}", 
+                        Program.ApplicationName, 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
+                }
             }
         }
     }
