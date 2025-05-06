@@ -61,6 +61,18 @@ namespace FlarmTerminal.GUI
             lvComPorts.Columns[lvComPorts.Columns.Count - 1].Width = -2;
         }
 
+        private void KeepResponsive()
+        {
+            try
+            {
+                Application.DoEvents(); // Safely process events
+            }
+            catch (ObjectDisposedException)
+            {
+                // Handle cases where the form or controls are already disposed
+            }
+        }
+
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             Cursor? previousCursor = Cursor.Current;
@@ -70,7 +82,7 @@ namespace FlarmTerminal.GUI
                 {
                     Cursor.Current = Cursors.WaitCursor;
                 }
-                Application.DoEvents();
+                KeepResponsive();
                 _serialPorts = SerialPortSearcher.Search().ToArray();
                 lvComPorts.Items.Clear();
                 foreach (var port in _serialPorts)
@@ -224,7 +236,7 @@ namespace FlarmTerminal.GUI
         {
             Cursor? currentCursor = _MainForm.Cursor;
             _MainForm.Cursor = Cursors.WaitCursor;
-            Application.DoEvents();
+            KeepResponsive();
             // search for COM ports
             buttonRefresh_Click(this, EventArgs.Empty);
             ResizeColumnHeader();

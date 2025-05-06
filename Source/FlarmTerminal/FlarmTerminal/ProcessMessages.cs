@@ -196,23 +196,48 @@ namespace FlarmTerminal
             if (parameters.Length > 1 && parameters[0] != null && parameters[1] != null)
             {
                 int progress = 0;
-                if (Int32.TryParse(parameters[1].ToString(), out progress))
+                switch (parameters[0])
                 {
-                    switch (parameters[0])
-                    {
-                        case "FW": // firmware update
+                    case "FW": // firmware update
+                        if (Int32.TryParse(parameters[1].ToString(), out progress))
+                        {
                             if (UpdateProgressNotification != null)
                             {
                                 UpdateProgressNotification?.Invoke("Firmware Update", progress);
                             }
-                            break;
-                        case "IGC": // IGC download to SD card or USB drive
+                        }
+                        break;
+                    case "IGC": // IGC download to SD card or USB drive
+                        if (Int32.TryParse(parameters[1].ToString(), out progress))
+                        {
                             if (UpdateProgressNotification != null)
                             {
                                 UpdateProgressNotification?.Invoke("IGC Download", progress);
                             }
-                            break;
-                    }
+                        }
+                        else
+                        {
+                            var info = parameters[1].ToString();
+
+                            if (parameters.Length > 2 && parameters[2] != null)
+                            {
+                                if (Int32.TryParse(parameters[2].ToString(), out progress))
+                                {
+                                    if (UpdateProgressNotification != null)
+                                    {
+                                        if (info == null)
+                                        {
+                                            UpdateProgressNotification?.Invoke("IGC Download", progress);
+                                        }
+                                        else
+                                        {
+                                            UpdateProgressNotification?.Invoke("IGC " + info, progress);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
             }
         }

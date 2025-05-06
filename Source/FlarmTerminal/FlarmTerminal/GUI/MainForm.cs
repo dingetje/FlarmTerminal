@@ -276,7 +276,7 @@ namespace FlarmTerminal
                         toolStripStatusComPortProperties.Text = _comPortHandler.GetPortProperties();
                         // don't allow to change COM port while connected
                         COMPortToolStripMenuItem.Enabled = false;
-                        Application.DoEvents();
+                        KeepResponsive();
                     }
                 }
                 catch (Exception ex)
@@ -402,12 +402,26 @@ namespace FlarmTerminal
                         textBoxTerminal.AppendText(serialData);
                     }
 
-                    Application.DoEvents();
+                    KeepResponsive();
+
                 }));
             }
             else
             {
                 Debug.WriteLine("InvokeRequired is false: " + serialData);
+            }
+        }
+
+
+        private void KeepResponsive()
+        {
+            try
+            {
+                Application.DoEvents(); // Safely process events
+            }
+            catch (ObjectDisposedException)
+            {
+                // Handle cases where the form or controls are already disposed
             }
         }
 
@@ -683,11 +697,11 @@ namespace FlarmTerminal
                     }
 
                     WriteCommand($"$PFLAC,R,{item}");
-                    Application.DoEvents();
+                    KeepResponsive();
                 }
 
                 Thread.Sleep(100);
-                Application.DoEvents();
+                KeepResponsive();
                 // read radio ID and stop properties reading mode
                 WriteCommand($"$PFLAC,R,RADIOID");
             }
@@ -1456,7 +1470,7 @@ namespace FlarmTerminal
             toolStripProgressBar.Value = progress;
             toolStripProgressStatusLabel.Visible = true;
             toolStripProgressStatusLabel.Text = message;
-            Application.DoEvents();
+            KeepResponsive();
             if (progress >= 100)
             {
                 hideProgress();
