@@ -1476,5 +1476,11 @@ namespace FlarmTerminal
                 hideProgress();
             }
         }
+
+        private void openFlarmConfigEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dlg = new FlarmConfigEditor();
+            dlg.ShowDialog();
+        }
     }
 }

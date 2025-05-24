@@ -45,6 +45,7 @@
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             readFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            flarmConfigEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             printToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             printRawSerialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -227,7 +228,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { readFileToolStripMenuItem, printToolStripMenuItem1, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { readFileToolStripMenuItem, flarmConfigEditorToolStripMenuItem, printToolStripMenuItem1, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             fileToolStripMenuItem.Text = "&File";
@@ -240,6 +241,13 @@
             readFileToolStripMenuItem.Text = "Playback &File...";
             readFileToolStripMenuItem.ToolTipText = "Playback...";
             readFileToolStripMenuItem.Click += readFileToolStripMenuItem_Click;
+            // 
+            // flarmConfigEditorToolStripMenuItem
+            // 
+            flarmConfigEditorToolStripMenuItem.Name = "flarmConfigEditorToolStripMenuItem";
+            flarmConfigEditorToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            flarmConfigEditorToolStripMenuItem.Text = "FLARM Config...";
+            flarmConfigEditorToolStripMenuItem.Click += openFlarmConfigEditorToolStripMenuItem_Click;
             // 
             // printToolStripMenuItem1
             // 
@@ -841,6 +849,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveIGCFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
         private FontAwesome.Sharp.IconToolStripButton iconToolStripButtonFLARMStatus;
+        private System.Windows.Forms.ToolStripMenuItem flarmConfigEditorToolStripMenuItem;
     }
 }
 
