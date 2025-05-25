@@ -237,16 +237,18 @@
             // 
             readFileToolStripMenuItem.Image = Properties.Resources.file;
             readFileToolStripMenuItem.Name = "readFileToolStripMenuItem";
-            readFileToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            readFileToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             readFileToolStripMenuItem.Text = "Playback &File...";
             readFileToolStripMenuItem.ToolTipText = "Playback...";
             readFileToolStripMenuItem.Click += readFileToolStripMenuItem_Click;
             // 
             // flarmConfigEditorToolStripMenuItem
             // 
+            flarmConfigEditorToolStripMenuItem.Image = Properties.Resources.text_icon;
             flarmConfigEditorToolStripMenuItem.Name = "flarmConfigEditorToolStripMenuItem";
-            flarmConfigEditorToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            flarmConfigEditorToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             flarmConfigEditorToolStripMenuItem.Text = "FLARM Config...";
+            flarmConfigEditorToolStripMenuItem.ToolTipText = "Create/Edit flarmcfg.txt";
             flarmConfigEditorToolStripMenuItem.Click += openFlarmConfigEditorToolStripMenuItem_Click;
             // 
             // printToolStripMenuItem1
@@ -254,7 +256,7 @@
             printToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { printRawSerialToolStripMenuItem, printPropertiesToolStripMenuItem });
             printToolStripMenuItem1.Image = Properties.Resources.print_icon_2727222_64;
             printToolStripMenuItem1.Name = "printToolStripMenuItem1";
-            printToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
+            printToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             printToolStripMenuItem1.Text = "Print";
             // 
             // printRawSerialToolStripMenuItem
@@ -280,14 +282,14 @@
             exitToolStripMenuItem.Image = Properties.Resources.exit_PNG35;
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
-            exitToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.ToolTipText = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // settingsToolStripMenuItem
             // 
-            settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { volumeToolStripMenuItem, COMPortToolStripMenuItem, autoConnectToolStripMenuItem });
+            settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { COMPortToolStripMenuItem, autoConnectToolStripMenuItem, volumeToolStripMenuItem });
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             settingsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             settingsToolStripMenuItem.Text = "&Settings...";
@@ -296,7 +298,7 @@
             // 
             volumeToolStripMenuItem.Image = Properties.Resources.icons8_volume_48;
             volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
-            volumeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            volumeToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             volumeToolStripMenuItem.Text = "Volume...";
             volumeToolStripMenuItem.Click += volumeToolStripMenuItem_Click;
             // 
@@ -304,7 +306,7 @@
             // 
             COMPortToolStripMenuItem.Image = Properties.Resources.serial_port_icon;
             COMPortToolStripMenuItem.Name = "COMPortToolStripMenuItem";
-            COMPortToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            COMPortToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             COMPortToolStripMenuItem.Text = "&COM Port...";
             COMPortToolStripMenuItem.ToolTipText = "Setup COM port...";
             COMPortToolStripMenuItem.Click += cOMPortToolStripMenuItem_Click;
@@ -313,7 +315,7 @@
             // 
             autoConnectToolStripMenuItem.CheckOnClick = true;
             autoConnectToolStripMenuItem.Name = "autoConnectToolStripMenuItem";
-            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
             autoConnectToolStripMenuItem.Text = "&Auto Connect";
             autoConnectToolStripMenuItem.ToolTipText = "Enable Auto Connect";
             autoConnectToolStripMenuItem.Click += autoConnectToolStripMenuItem_Click;

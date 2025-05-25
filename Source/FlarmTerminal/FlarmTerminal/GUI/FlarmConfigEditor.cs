@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,13 +9,17 @@ namespace FlarmTerminal.GUI
 {
     public partial class FlarmConfigEditor : Form
     {
-        public FlarmConfigEditor()
+        private MainForm? _mainForm = null;
+
+        public FlarmConfigEditor(MainForm? mainForm = null)
         {
             InitializeComponent();
+            _mainForm = mainForm;
             // Only call PopulateFields if not in design mode
             if (!DesignMode)
             {
                 PopulateFields();
+                UpdateReadFromDeviceButtonState();
             }
         }
 
@@ -202,10 +207,43 @@ namespace FlarmTerminal.GUI
             _model.BAUD = comboBoxBAUD.Text.Split(' ')[0];
         }
 
+        public void PopulateFromDeviceProperties(Dictionary<string, string> properties)
+        {
+            if (properties == null) return;
+            // Use the config name as key for lookup, not the raw ID
+            var configMap = new Dictionary<string, Action<string>>()
+            {
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.ID), v => _model.ID = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.NMEAOUT), v => _model.NMEAOUT = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.ACFT), v => _model.ACFT = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.CFLAGS), v => _model.CFLAGS = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.PRIV), v => _model.PRIV = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.NOTRACK), v => _model.NOTRACK = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.THRE), v => _model.THRE = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.LOGINT), v => _model.LOGINT = v.Split(' ')[0] },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.PILOT), v => _model.PILOT = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.COMPCLASS), v => _model.COMPCLASS = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.COMPID), v => _model.COMPID = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.GLIDERID), v => _model.GLIDERID = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.GLIDERTYPE), v => _model.GLIDERTYPE = v },
+                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.BAUD), v => _model.BAUD = v },
+            };
+            foreach (var kvp in configMap)
+            {
+                if (properties.TryGetValue(kvp.Key, out var value))
+                {
+                    kvp.Value(value);
+                }
+            }
+            UpdateUIFromModel();
+        }
+
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             using (var dlg = new OpenFileDialog())
             {
+                dlg.Title = "Open FLARM configuration file";
+                dlg.FileName = "flarmcfg.txt";
                 dlg.Filter = "FLARM Config (*.txt)|*.txt|All Files|*.*";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -219,11 +257,17 @@ namespace FlarmTerminal.GUI
             UpdateModelFromUI();
             using (var dlg = new SaveFileDialog())
             {
+                dlg.Title = "Save FLARM configuration file";
                 dlg.Filter = "FLARM Config (*.txt)|*.txt|All Files|*.*";
+                dlg.FileName = "flarmcfg.txt";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     File.WriteAllText(dlg.FileName, _model.ToFileContent());
-                    MessageBox.Show("Configuration saved.", "FLARM Config", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    using (new CenterWinDialog(this))
+                    {
+                        MessageBox.Show("Configuration saved.", "FLARM Config", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
                 }
             }
         }
@@ -231,12 +275,75 @@ namespace FlarmTerminal.GUI
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             UpdateModelFromUI();
-            MessageBox.Show(_model.ToFileContent(), "Preview flarmcfg.txt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            using (new CenterWinDialog(this))
+            {
+                MessageBox.Show(_model.ToFileContent(), "Preview flarmcfg.txt", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonHelpID_Click(object sender, EventArgs e)
+        {
+            Help.ShowPopup(textBoxID, "Enter the ICAO 24-bit aircraft address here or use FFFFFF to use the default factory ID (not recommended).", textBoxID.PointToScreen(new Point(0, textBoxID.Height)));
+        }
+
+        private void UpdateReadFromDeviceButtonState()
+        {
+            buttonReadFromDevice.Enabled = _mainForm != null && _mainForm.IsHandleCreated && _mainForm.InvokeRequired
+                ? (bool)_mainForm.Invoke(new Func<bool>(() => _mainForm.IsConnectedPublic()))
+                : (_mainForm != null && _mainForm.IsConnectedPublic());
+        }
+
+        private void buttonReadFromDevice_Click(object sender, EventArgs e)
+        {
+            if (_mainForm != null && _mainForm.IsConnectedPublic())
+            {
+                // Ask MainForm to read properties from device
+                _mainForm.Invoke(new Action(() => _mainForm.ReadPropertiesPublic()));
+                // Wait for properties to be updated, then populate fields
+                // Use a timer to poll for updated properties
+                Timer timer = new Timer();
+                timer.Interval = 500;
+                int pollCount = 0;
+                timer.Tick += (s, args) =>
+                {
+                    pollCount++;
+                    var props = _mainForm.DeviceProperties;
+                    if (props != null && props.ContainsKey("ID"))
+                    {
+                        timer.Stop();
+                        PopulateFromDeviceProperties(props);
+                        MessageBox.Show("Device properties loaded into the editor.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (pollCount > 10) // Timeout after 5 seconds
+                    {
+                        timer.Stop();
+                        MessageBox.Show("Failed to read properties from device.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                };
+                timer.Start();
+            }
+            else
+            {
+                MessageBox.Show("No serial connection established.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            UpdateReadFromDeviceButtonState();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            UpdateReadFromDeviceButtonState();
         }
     }
 

@@ -24,6 +24,7 @@ namespace FlarmTerminal.GUI
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonPreview;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Button buttonReadFromDevice;
         private System.Windows.Forms.TabControl tabControlMain;
         private System.Windows.Forms.TabPage tabPageBasic;
         private System.Windows.Forms.TabPage tabPageIGC;
@@ -65,6 +66,7 @@ namespace FlarmTerminal.GUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FlarmConfigEditor));
             tabControlMain = new System.Windows.Forms.TabControl();
             tabPageIGC = new System.Windows.Forms.TabPage();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
             label1 = new System.Windows.Forms.Label();
             labelLOGINT = new System.Windows.Forms.Label();
             numericUpDownLOGINT = new System.Windows.Forms.NumericUpDown();
@@ -79,6 +81,7 @@ namespace FlarmTerminal.GUI
             labelGLIDERTYPE = new System.Windows.Forms.Label();
             textBoxGLIDERTYPE = new System.Windows.Forms.TextBox();
             tabPageBasic = new System.Windows.Forms.TabPage();
+            buttonHelpID = new System.Windows.Forms.Button();
             labelID = new System.Windows.Forms.Label();
             textBoxID = new System.Windows.Forms.TextBox();
             labelNMEAOUT = new System.Windows.Forms.Label();
@@ -100,14 +103,15 @@ namespace FlarmTerminal.GUI
             buttonSave = new System.Windows.Forms.Button();
             buttonPreview = new System.Windows.Forms.Button();
             buttonCancel = new System.Windows.Forms.Button();
+            buttonReadFromDevice = new System.Windows.Forms.Button();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
-            pictureBox1 = new System.Windows.Forms.PictureBox();
+            helpProvider1 = new System.Windows.Forms.HelpProvider();
             tabControlMain.SuspendLayout();
             tabPageIGC.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownLOGINT).BeginInit();
             tabPageBasic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTHRE).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // tabControlMain
@@ -143,6 +147,17 @@ namespace FlarmTerminal.GUI
             tabPageIGC.TabIndex = 1;
             tabPageIGC.Text = "Flight Recorder";
             tabPageIGC.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            pictureBox1.Image = Properties.Resources.text_icon;
+            pictureBox1.InitialImage = (System.Drawing.Image)resources.GetObject("pictureBox1.InitialImage");
+            pictureBox1.Location = new System.Drawing.Point(492, 272);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(64, 64);
+            pictureBox1.TabIndex = 15;
+            pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -254,6 +269,7 @@ namespace FlarmTerminal.GUI
             // 
             // tabPageBasic
             // 
+            tabPageBasic.Controls.Add(buttonHelpID);
             tabPageBasic.Controls.Add(labelID);
             tabPageBasic.Controls.Add(textBoxID);
             tabPageBasic.Controls.Add(labelNMEAOUT);
@@ -279,6 +295,16 @@ namespace FlarmTerminal.GUI
             tabPageBasic.Text = "Basic Settings";
             tabPageBasic.UseVisualStyleBackColor = true;
             // 
+            // buttonHelpID
+            // 
+            buttonHelpID.Location = new System.Drawing.Point(261, 20);
+            buttonHelpID.Name = "buttonHelpID";
+            buttonHelpID.Size = new System.Drawing.Size(20, 20);
+            buttonHelpID.TabIndex = 17;
+            buttonHelpID.Text = "?";
+            buttonHelpID.UseVisualStyleBackColor = true;
+            buttonHelpID.Click += buttonHelpID_Click;
+            // 
             // labelID
             // 
             labelID.AutoSize = true;
@@ -290,8 +316,10 @@ namespace FlarmTerminal.GUI
             // 
             // textBoxID
             // 
+            helpProvider1.SetHelpString(textBoxID, "Enter the ICAO 24-bit aircraft address here or use FFFFFF for the default factory ID");
             textBoxID.Location = new System.Drawing.Point(160, 17);
             textBoxID.Name = "textBoxID";
+            helpProvider1.SetShowHelp(textBoxID, true);
             textBoxID.Size = new System.Drawing.Size(94, 23);
             textBoxID.TabIndex = 1;
             toolTip1.SetToolTip(textBoxID, resources.GetString("textBoxID.ToolTip"));
@@ -421,54 +449,58 @@ namespace FlarmTerminal.GUI
             // 
             // buttonLoad
             // 
-            buttonLoad.Location = new System.Drawing.Point(30, 400);
+            buttonLoad.Location = new System.Drawing.Point(31, 388);
             buttonLoad.Name = "buttonLoad";
-            buttonLoad.Size = new System.Drawing.Size(100, 30);
+            buttonLoad.Size = new System.Drawing.Size(68, 44);
             buttonLoad.TabIndex = 1;
             buttonLoad.Text = "Load";
+            toolTip1.SetToolTip(buttonLoad, "Load from file");
             buttonLoad.UseVisualStyleBackColor = true;
             buttonLoad.Click += buttonLoad_Click;
             // 
             // buttonSave
             // 
-            buttonSave.Location = new System.Drawing.Point(172, 400);
+            buttonSave.Location = new System.Drawing.Point(130, 388);
             buttonSave.Name = "buttonSave";
-            buttonSave.Size = new System.Drawing.Size(100, 30);
+            buttonSave.Size = new System.Drawing.Size(68, 44);
             buttonSave.TabIndex = 2;
             buttonSave.Text = "Save";
+            toolTip1.SetToolTip(buttonSave, "Save to file");
             buttonSave.UseVisualStyleBackColor = true;
             buttonSave.Click += buttonSave_Click;
             // 
             // buttonPreview
             // 
-            buttonPreview.Location = new System.Drawing.Point(314, 400);
+            buttonPreview.Location = new System.Drawing.Point(229, 388);
             buttonPreview.Name = "buttonPreview";
-            buttonPreview.Size = new System.Drawing.Size(100, 30);
+            buttonPreview.Size = new System.Drawing.Size(68, 44);
             buttonPreview.TabIndex = 3;
             buttonPreview.Text = "Preview";
+            toolTip1.SetToolTip(buttonPreview, "Preview flarmcfg.txt");
             buttonPreview.UseVisualStyleBackColor = true;
             buttonPreview.Click += buttonPreview_Click;
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new System.Drawing.Point(456, 400);
+            buttonCancel.Location = new System.Drawing.Point(438, 388);
             buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new System.Drawing.Size(100, 30);
+            buttonCancel.Size = new System.Drawing.Size(68, 44);
             buttonCancel.TabIndex = 4;
             buttonCancel.Text = "Cancel";
+            toolTip1.SetToolTip(buttonCancel, "Close dialog");
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += buttonCancel_Click;
             // 
-            // pictureBox1
+            // buttonReadFromDevice
             // 
-            pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            pictureBox1.Image = Properties.Resources.text_icon;
-            pictureBox1.InitialImage = (System.Drawing.Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new System.Drawing.Point(492, 272);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new System.Drawing.Size(64, 64);
-            pictureBox1.TabIndex = 15;
-            pictureBox1.TabStop = false;
+            buttonReadFromDevice.Location = new System.Drawing.Point(328, 388);
+            buttonReadFromDevice.Name = "buttonReadFromDevice";
+            buttonReadFromDevice.Size = new System.Drawing.Size(79, 44);
+            buttonReadFromDevice.TabIndex = 5;
+            buttonReadFromDevice.Text = "Read from Device";
+            toolTip1.SetToolTip(buttonReadFromDevice, "Read configuration from connected FLARM device via RS232");
+            buttonReadFromDevice.UseVisualStyleBackColor = true;
+            buttonReadFromDevice.Click += buttonReadFromDevice_Click;
             // 
             // FlarmConfigEditor
             // 
@@ -480,6 +512,7 @@ namespace FlarmTerminal.GUI
             Controls.Add(buttonSave);
             Controls.Add(buttonPreview);
             Controls.Add(buttonCancel);
+            Controls.Add(buttonReadFromDevice);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(400, 350);
             Name = "FlarmConfigEditor";
@@ -487,16 +520,18 @@ namespace FlarmTerminal.GUI
             tabControlMain.ResumeLayout(false);
             tabPageIGC.ResumeLayout(false);
             tabPageIGC.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownLOGINT).EndInit();
             tabPageBasic.ResumeLayout(false);
             tabPageBasic.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTHRE).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
         #endregion
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.HelpProvider helpProvider1;
+        private System.Windows.Forms.Button buttonHelpID;
     }
 }

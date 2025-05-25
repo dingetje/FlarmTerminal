@@ -435,6 +435,9 @@ namespace FlarmTerminal
             return false;
         }
 
+        public bool IsConnectedPublic() => IsConnected();
+        public void ReadPropertiesPublic() => ReadProperties();
+
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (IsConnected())
@@ -1479,7 +1482,7 @@ namespace FlarmTerminal
 
         private void openFlarmConfigEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dlg = new FlarmConfigEditor();
+            var dlg = new FlarmConfigEditor(this); // Pass MainForm instance
             dlg.ShowDialog();
         }
     }
