@@ -51,9 +51,9 @@
             printPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             COMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             autoConnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fLARMDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             commandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +85,8 @@
             label1Terminal = new System.Windows.Forms.Label();
             labelProperties = new System.Windows.Forms.Label();
             toolStrip1 = new System.Windows.Forms.ToolStrip();
+            toolStripButtonConnect = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             toolStripButtonPlay = new System.Windows.Forms.ToolStripButton();
             toolStripButtonPause = new System.Windows.Forms.ToolStripButton();
             toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
@@ -294,19 +296,11 @@
             settingsToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             settingsToolStripMenuItem.Text = "&Settings...";
             // 
-            // volumeToolStripMenuItem
-            // 
-            volumeToolStripMenuItem.Image = Properties.Resources.icons8_volume_48;
-            volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
-            volumeToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
-            volumeToolStripMenuItem.Text = "Volume...";
-            volumeToolStripMenuItem.Click += volumeToolStripMenuItem_Click;
-            // 
             // COMPortToolStripMenuItem
             // 
             COMPortToolStripMenuItem.Image = Properties.Resources.serial_port_icon;
             COMPortToolStripMenuItem.Name = "COMPortToolStripMenuItem";
-            COMPortToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            COMPortToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             COMPortToolStripMenuItem.Text = "&COM Port...";
             COMPortToolStripMenuItem.ToolTipText = "Setup COM port...";
             COMPortToolStripMenuItem.Click += cOMPortToolStripMenuItem_Click;
@@ -315,10 +309,18 @@
             // 
             autoConnectToolStripMenuItem.CheckOnClick = true;
             autoConnectToolStripMenuItem.Name = "autoConnectToolStripMenuItem";
-            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(188, 30);
+            autoConnectToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             autoConnectToolStripMenuItem.Text = "&Auto Connect";
             autoConnectToolStripMenuItem.ToolTipText = "Enable Auto Connect";
             autoConnectToolStripMenuItem.Click += autoConnectToolStripMenuItem_Click;
+            // 
+            // volumeToolStripMenuItem
+            // 
+            volumeToolStripMenuItem.Image = Properties.Resources.icons8_volume_48;
+            volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
+            volumeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            volumeToolStripMenuItem.Text = "Volume...";
+            volumeToolStripMenuItem.Click += volumeToolStripMenuItem_Click;
             // 
             // viewToolStripMenuItem
             // 
@@ -584,12 +586,27 @@
             toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord, toolStripSeparator4, saveToolStripButton, printToolStripButton, toolStripSeparator, copyToolStripButton, toolStripSeparator2, iconToolStripButtonFLARMStatus, toolStripSeparator3, helpToolStripButton });
+            toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripButtonConnect, toolStripSeparator5, toolStripButtonPlay, toolStripButtonPause, toolStripButtonStop, toolStripSeparator1, toolStripButtonRecord, toolStripSeparator4, saveToolStripButton, printToolStripButton, toolStripSeparator, copyToolStripButton, toolStripSeparator2, iconToolStripButtonFLARMStatus, toolStripSeparator3, helpToolStripButton });
             toolStrip1.Location = new System.Drawing.Point(2, 26);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new System.Drawing.Size(357, 39);
+            toolStrip1.Size = new System.Drawing.Size(430, 39);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButtonConnect
+            // 
+            toolStripButtonConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolStripButtonConnect.Image = (System.Drawing.Image)resources.GetObject("toolStripButtonConnect.Image");
+            toolStripButtonConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            toolStripButtonConnect.Name = "toolStripButtonConnect";
+            toolStripButtonConnect.Size = new System.Drawing.Size(36, 36);
+            toolStripButtonConnect.Text = "Connect/Disconnect";
+            toolStripButtonConnect.Click += toolStripButtonConnect_Click;
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 39);
             // 
             // toolStripButtonPlay
             // 
@@ -852,6 +869,8 @@
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
         private FontAwesome.Sharp.IconToolStripButton iconToolStripButtonFLARMStatus;
         private System.Windows.Forms.ToolStripMenuItem flarmConfigEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButtonConnect;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

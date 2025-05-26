@@ -1,22 +1,23 @@
-﻿using FlarmTerminal.GUI;
+﻿using ExCSS;
+using FlarmTerminal.GUI;
 using FlarmTerminal.Properties;
+using FontAwesome.Sharp;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading;
+using System.Timers;
 using System.Windows.Forms;
-using System.Drawing;
-using System.Configuration;
+using VPKSoft.WinFormsRtfPrint;
+using Color = System.Drawing.Color;
 using Parity = RJCP.IO.Ports.Parity;
 using StopBits = RJCP.IO.Ports.StopBits;
-using System.Diagnostics;
-using System.IO;
-using System.Timers;
-using System.Collections.Generic;
-using System.Linq;
-using VPKSoft.WinFormsRtfPrint;
 using Timer = System.Threading.Timer;
-using FontAwesome.Sharp;
-using Color = System.Drawing.Color;
 
 namespace FlarmTerminal
 {
@@ -276,6 +277,7 @@ namespace FlarmTerminal
                         toolStripStatusComPortProperties.Text = _comPortHandler.GetPortProperties();
                         // don't allow to change COM port while connected
                         COMPortToolStripMenuItem.Enabled = false;
+                        toolStripButtonConnect.Image = Resources.connected;
                         KeepResponsive();
                     }
                 }
@@ -450,6 +452,7 @@ namespace FlarmTerminal
                     commandToolStripMenuItem.Enabled = false;
                     COMPortToolStripMenuItem.Enabled = true;
                     _isInitialized = false;
+                    toolStripButtonConnect.Image = Resources.disconnected;
 
                 }
                 catch (Exception ex)
@@ -690,23 +693,14 @@ namespace FlarmTerminal
             if (_flarmMessagesParser != null)
             {
                 richTextBoxProperties.Clear();
+                _properties.Clear();
                 // issue all commands to read common properties
                 foreach (var item in Enum.GetValues(typeof(FlarmProperties.ConfigurationItems)))
                 {
-                    // read below as last item
-                    if (item.ToString() == "RADIOID")
-                    {
-                        continue;
-                    }
-
                     WriteCommand($"$PFLAC,R,{item}");
+                    Thread.Sleep(50);
                     KeepResponsive();
                 }
-
-                Thread.Sleep(100);
-                KeepResponsive();
-                // read radio ID and stop properties reading mode
-                WriteCommand($"$PFLAC,R,RADIOID");
             }
         }
 
@@ -730,11 +724,25 @@ namespace FlarmTerminal
         {
             _properties[key] = value;
             var keyPadRight = key;
+            // but if found in the enum, use the human friendly name
+            if (Enum.TryParse(key, out FlarmProperties.ConfigurationItems configItem))
+            {
+                keyPadRight = FlarmProperties.GetConfigItemDisplayName(configItem);
+            }
+            else if (Enum.TryParse(key, out FlarmProperties.PowerFlarmSpecific powerFlarmItem))
+            {
+                keyPadRight = FlarmProperties.GetPowerFlarmName(powerFlarmItem);
+            }
+            else if (Enum.TryParse(key, out FlarmProperties.IGCSpecific igcItem))
+            {
+                keyPadRight = FlarmProperties.GetIGCName(igcItem);
+            }
+            // pad the property name to 20 characters
             while (keyPadRight.Length < 20)
             {
                 keyPadRight += " ";
             }
-
+            // and show in the properties window
             WriteToProperties($"{keyPadRight}: {value}\r\n");
         }
 
@@ -1131,7 +1139,7 @@ namespace FlarmTerminal
                 else
                 {
                     // Standard Serial Number
-                    WriteCommand($"$PFLAC,S,ID,0xffffff");
+                    WriteCommand($"$PFLAC,S,ID,ffffff");
                 }
             }
         }
@@ -1484,6 +1492,18 @@ namespace FlarmTerminal
         {
             var dlg = new FlarmConfigEditor(this); // Pass MainForm instance
             dlg.ShowDialog();
+        }
+
+        private void toolStripButtonConnect_Click(object sender, EventArgs e)
+        {
+            if (IsConnected())
+            {
+                disconnectToolStripMenuItem_Click(this,null);
+            }
+            else
+            {
+                connectToolStripMenuItem_Click(this, null);
+            }
         }
     }
 }

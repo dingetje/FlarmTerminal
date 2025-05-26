@@ -83,7 +83,7 @@ namespace FlarmTerminal
                 { ConfigurationItems.RADIOID, "Radio ID" }
             };
 
-        public static string GetConfigName(ConfigurationItems item)
+        public static string GetConfigItemDisplayName(ConfigurationItems item)
         {
             if (!_configNameLookup.TryGetValue(item, out string value))
             {

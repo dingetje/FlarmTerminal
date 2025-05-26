@@ -169,7 +169,7 @@ namespace FlarmTerminal.GUI
         {
             var font = new Font("Consolas", 9);
             var brush = Brushes.Black;
-            var key = FlarmProperties.GetConfigName(item);
+            var key = FlarmProperties.GetConfigItemDisplayName(item);
             if (!string.IsNullOrEmpty(key))
             {
                 var text = AlignProperty(key);

@@ -210,31 +210,21 @@ namespace FlarmTerminal.GUI
         public void PopulateFromDeviceProperties(Dictionary<string, string> properties)
         {
             if (properties == null) return;
-            // Use the config name as key for lookup, not the raw ID
-            var configMap = new Dictionary<string, Action<string>>()
-            {
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.ID), v => _model.ID = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.NMEAOUT), v => _model.NMEAOUT = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.ACFT), v => _model.ACFT = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.CFLAGS), v => _model.CFLAGS = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.PRIV), v => _model.PRIV = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.NOTRACK), v => _model.NOTRACK = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.THRE), v => _model.THRE = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.LOGINT), v => _model.LOGINT = v.Split(' ')[0] },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.PILOT), v => _model.PILOT = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.COMPCLASS), v => _model.COMPCLASS = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.COMPID), v => _model.COMPID = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.GLIDERID), v => _model.GLIDERID = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.GLIDERTYPE), v => _model.GLIDERTYPE = v },
-                { FlarmTerminal.FlarmProperties.GetConfigName(FlarmTerminal.FlarmProperties.ConfigurationItems.BAUD), v => _model.BAUD = v },
-            };
-            foreach (var kvp in configMap)
-            {
-                if (properties.TryGetValue(kvp.Key, out var value))
-                {
-                    kvp.Value(value);
-                }
-            }
+            // Use the raw property item names as keys
+            if (properties.TryGetValue("ID", out var id)) _model.ID = id;
+            if (properties.TryGetValue("NMEAOUT", out var nmeaout)) _model.NMEAOUT = nmeaout;
+            if (properties.TryGetValue("ACFT", out var acft)) _model.ACFT = acft;
+            if (properties.TryGetValue("CFLAGS", out var cflags)) _model.CFLAGS = cflags;
+            if (properties.TryGetValue("PRIV", out var priv)) _model.PRIV = priv;
+            if (properties.TryGetValue("NOTRACK", out var notrack)) _model.NOTRACK = notrack;
+            if (properties.TryGetValue("THRE", out var thre)) _model.THRE = thre.Replace("m/s", "");
+            if (properties.TryGetValue("LOGINT", out var logint)) _model.LOGINT = logint.Split(' ')[0];
+            if (properties.TryGetValue("PILOT", out var pilot)) _model.PILOT = pilot;
+            if (properties.TryGetValue("COMPCLASS", out var compclass)) _model.COMPCLASS = compclass;
+            if (properties.TryGetValue("COMPID", out var compid)) _model.COMPID = compid;
+            if (properties.TryGetValue("GLIDERID", out var gliderid)) _model.GLIDERID = gliderid;
+            if (properties.TryGetValue("GLIDERTYPE", out var glidertype)) _model.GLIDERTYPE = glidertype;
+            if (properties.TryGetValue("BAUD", out var baud)) _model.BAUD = baud;
             UpdateUIFromModel();
         }
 
@@ -314,23 +304,29 @@ namespace FlarmTerminal.GUI
                 {
                     pollCount++;
                     var props = _mainForm.DeviceProperties;
-                    if (props != null && props.ContainsKey("ID"))
+                    if (props != null && props.ContainsKey("RADIOID"))
                     {
                         timer.Stop();
                         PopulateFromDeviceProperties(props);
-                        MessageBox.Show("Device properties loaded into the editor.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Information);
+//                        MessageBox.Show("Device properties loaded into the editor.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (pollCount > 10) // Timeout after 5 seconds
                     {
                         timer.Stop();
-                        MessageBox.Show("Failed to read properties from device.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        using (new CenterWinDialog(this))
+                        {
+                            MessageBox.Show("Failed to read properties from device.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                 };
                 timer.Start();
             }
             else
             {
-                MessageBox.Show("No serial connection established.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                using (new CenterWinDialog(this))
+                {
+                    MessageBox.Show("No serial connection established.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
