@@ -106,6 +106,7 @@ namespace FlarmTerminal.GUI
             buttonReadFromDevice = new System.Windows.Forms.Button();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
             helpProvider1 = new System.Windows.Forms.HelpProvider();
+            buttonWriteToDevice = new System.Windows.Forms.Button();
             tabControlMain.SuspendLayout();
             tabPageIGC.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -460,7 +461,7 @@ namespace FlarmTerminal.GUI
             // 
             // buttonSave
             // 
-            buttonSave.Location = new System.Drawing.Point(130, 388);
+            buttonSave.Location = new System.Drawing.Point(123, 388);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new System.Drawing.Size(68, 44);
             buttonSave.TabIndex = 2;
@@ -471,7 +472,7 @@ namespace FlarmTerminal.GUI
             // 
             // buttonPreview
             // 
-            buttonPreview.Location = new System.Drawing.Point(229, 388);
+            buttonPreview.Location = new System.Drawing.Point(215, 388);
             buttonPreview.Name = "buttonPreview";
             buttonPreview.Size = new System.Drawing.Size(68, 44);
             buttonPreview.TabIndex = 3;
@@ -482,7 +483,7 @@ namespace FlarmTerminal.GUI
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new System.Drawing.Point(438, 388);
+            buttonCancel.Location = new System.Drawing.Point(513, 388);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new System.Drawing.Size(68, 44);
             buttonCancel.TabIndex = 4;
@@ -493,7 +494,7 @@ namespace FlarmTerminal.GUI
             // 
             // buttonReadFromDevice
             // 
-            buttonReadFromDevice.Location = new System.Drawing.Point(328, 388);
+            buttonReadFromDevice.Location = new System.Drawing.Point(307, 388);
             buttonReadFromDevice.Name = "buttonReadFromDevice";
             buttonReadFromDevice.Size = new System.Drawing.Size(79, 44);
             buttonReadFromDevice.TabIndex = 5;
@@ -502,11 +503,22 @@ namespace FlarmTerminal.GUI
             buttonReadFromDevice.UseVisualStyleBackColor = true;
             buttonReadFromDevice.Click += buttonReadFromDevice_Click;
             // 
+            // buttonWriteToDevice
+            // 
+            buttonWriteToDevice.Location = new System.Drawing.Point(410, 388);
+            buttonWriteToDevice.Name = "buttonWriteToDevice";
+            buttonWriteToDevice.Size = new System.Drawing.Size(79, 44);
+            buttonWriteToDevice.TabIndex = 6;
+            buttonWriteToDevice.Text = "Write to Device";
+            buttonWriteToDevice.UseVisualStyleBackColor = true;
+            buttonWriteToDevice.Click += buttonWriteToDevice_Click;
+            // 
             // FlarmConfigEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(601, 441);
+            Controls.Add(buttonWriteToDevice);
             Controls.Add(tabControlMain);
             Controls.Add(buttonLoad);
             Controls.Add(buttonSave);
@@ -533,5 +545,6 @@ namespace FlarmTerminal.GUI
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.HelpProvider helpProvider1;
         private System.Windows.Forms.Button buttonHelpID;
+        private System.Windows.Forms.Button buttonWriteToDevice;
     }
 }

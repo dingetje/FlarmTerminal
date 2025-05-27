@@ -19,7 +19,7 @@ namespace FlarmTerminal.GUI
             if (!DesignMode)
             {
                 PopulateFields();
-                UpdateReadFromDeviceButtonState();
+                UpdateReadAndWriteDeviceButtonState();
             }
         }
 
@@ -282,11 +282,13 @@ namespace FlarmTerminal.GUI
             Help.ShowPopup(textBoxID, "Enter the ICAO 24-bit aircraft address here or use FFFFFF to use the default factory ID (not recommended).", textBoxID.PointToScreen(new Point(0, textBoxID.Height)));
         }
 
-        private void UpdateReadFromDeviceButtonState()
+        private void UpdateReadAndWriteDeviceButtonState()
         {
-            buttonReadFromDevice.Enabled = _mainForm != null && _mainForm.IsHandleCreated && _mainForm.InvokeRequired
+            var enabled = _mainForm != null && _mainForm.IsHandleCreated && _mainForm.InvokeRequired
                 ? (bool)_mainForm.Invoke(new Func<bool>(() => _mainForm.IsConnectedPublic()))
                 : (_mainForm != null && _mainForm.IsConnectedPublic());
+            buttonReadFromDevice.Enabled = enabled;
+            buttonWriteToDevice.Enabled = enabled;
         }
 
         private void buttonReadFromDevice_Click(object sender, EventArgs e)
@@ -308,7 +310,7 @@ namespace FlarmTerminal.GUI
                     {
                         timer.Stop();
                         PopulateFromDeviceProperties(props);
-//                        MessageBox.Show("Device properties loaded into the editor.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //                        MessageBox.Show("Device properties loaded into the editor.", "Read from Device", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (pollCount > 10) // Timeout after 5 seconds
                     {
@@ -333,13 +335,27 @@ namespace FlarmTerminal.GUI
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            UpdateReadFromDeviceButtonState();
+            UpdateReadAndWriteDeviceButtonState();
         }
 
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            UpdateReadFromDeviceButtonState();
+            UpdateReadAndWriteDeviceButtonState();
+        }
+
+        private void buttonWriteToDevice_Click(object sender, EventArgs e)
+        {
+            if (_mainForm != null && _mainForm.IsConnectedPublic())
+            {
+                UpdateModelFromUI();
+                var commands = _model.ToFileContent().Split(Environment.NewLine);
+                foreach (var command in commands.Where(x => x.Contains("PFLAC,S")))
+                {
+                    _mainForm?.Invoke(new Action(() => _mainForm.WriteCommand(command)));
+                }
+                _mainForm?.Invoke(new Action(() => _mainForm.ReadPropertiesPublic()));
+            }
         }
     }
 

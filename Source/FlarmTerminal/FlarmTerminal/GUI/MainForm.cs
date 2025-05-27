@@ -500,7 +500,7 @@ namespace FlarmTerminal
             }
         }
 
-        private void WriteCommand(string command)
+        public void WriteCommand(string command)
         {
             if (_comPortHandler != null && _comPortHandler.IsConnected)
             {
